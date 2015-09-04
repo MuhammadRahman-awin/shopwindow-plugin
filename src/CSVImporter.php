@@ -9,6 +9,4 @@ class CSVImporter extends SplFileObject
     {
         parent::__construct($fileName);
     }
-
-
 }
