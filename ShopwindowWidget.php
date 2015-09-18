@@ -16,7 +16,7 @@ class ShopwindowWidget extends WP_Widget
             'className' => 'ShopwindowWidget',
             'description' => 'Sell your affiliate product from shopwindow product feed'
         );
-
+        $this->add_stylesheet();
         parent::__construct('ShopwindowWidget', 'Shopwindow product feed', $widget_details);
     }
 
@@ -32,6 +32,11 @@ class ShopwindowWidget extends WP_Widget
     public function widget($args, $instance)
     {
         echo 'hello world';
+    }
+
+    public function add_stylesheet() {
+        wp_register_style( 'shopwindow-style', plugins_url('assets/styles.css', __FILE__) );
+        wp_enqueue_style( 'shopwindow-style' );
     }
 }
 

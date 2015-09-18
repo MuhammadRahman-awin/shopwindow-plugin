@@ -1,18 +1,22 @@
 <?php
 require_once('src/CSVImporter.php');
 
-$max_size = ini_get('post_max_size');
+$max_size = ini_get('upload_max_filesize');
 
-if ( !empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) )
-    echo 'The uploaded zip was too large. You must upload a file smaller than ' . $max_size;
+var_dump($_SERVER['CONTENT_LENGTH']);
+var_dump($_FILES);
+var_dump($_POST);
+if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) ){
+    echo "<h1 class='error'>Failed!</h1><h3 class='error'></br><li>The uploaded zip was too large. You must upload a file smaller than". $max_size . "</li></br></h3>";
+}
 
 
-if (isset($_POST['submit']) && isset($_FILES)) {
+if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
+    var_dump($_FILES["dataFeed"]);
     $csvImporter = new CSVImporter($_FILES);
+
     if (! $csvImporter->isValid()) {
-        foreach($csvImporter->errors as $error) {
-            echo $error;
-        }
+        echo "<h1 class='error'>Failed!</h1><h3 class='error'></br><li>". $csvImporter->error. "</li></br></h3>";
     } else {
         $csvImporter->importToTable();
     }
@@ -25,7 +29,7 @@ if (isset($_POST['submit']) && isset($_FILES)) {
     <form enctype="multipart/form-data" name="csvUpload" method="post" action="">
 
         <h3>Upload your shopwindow data feed:
-            <input type="file" name="dataFeed" id="timetable">
+            <input type="file" name="dataFeed" id="dataFeed">
         </h3>
         <?php submit_button('Process Data Feed'); ?>
     </form>

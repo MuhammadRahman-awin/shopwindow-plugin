@@ -32,23 +32,20 @@ class FileUploadErrorHandler
             case UPLOAD_ERR_EXTENSION:
                 $this->message = "File upload stopped by extension";
                 break;
-            default:
-                $this->message = $this->getFileErrorMessage();
-                break;
         }
         return $this->message;
     }
 
     /**
-     * @param array $files
+     * @param array $file
      * @return string
      */
-    public function getFileErrorMessage(array $files)
+    public function getFileErrorMessage(array $file)
     {
-        if($_FILES["dataFeed"]["type"] === "text/csv") {
-            $this->message = "Invalid csv file ?";
+        if($file["type"] != "text/csv") {
+            return "Invalid csv file ?";
         }
 
-        return $this->message;
+        return null;
     }
 }
