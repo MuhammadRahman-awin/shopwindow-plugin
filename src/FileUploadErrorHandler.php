@@ -2,13 +2,24 @@
 
 class FileUploadErrorHandler
 {
-    private $message;
+    public $message;
+
+    public $valid = true;
+
+    /**
+     * @param array $fileData
+     */
+    public function __construct(array $fileData)
+    {
+        $this->getFileErrorMessage($fileData);
+        $this->getFileErrorCodeToMessage($fileData['error']);
+    }
 
     /**
      * @param string $code
      * @return string
      */
-    public function getFileErrorCodeToMessage($code)
+    private function getFileErrorCodeToMessage($code)
     {
         switch ($code) {
             case UPLOAD_ERR_INI_SIZE:
@@ -33,6 +44,10 @@ class FileUploadErrorHandler
                 $this->message = "File upload stopped by extension";
                 break;
         }
+        if ($this->message) {
+            $this->valid = false;
+        }
+
         return $this->message;
     }
 
@@ -40,12 +55,11 @@ class FileUploadErrorHandler
      * @param array $file
      * @return string
      */
-    public function getFileErrorMessage(array $file)
+    private function getFileErrorMessage(array $file)
     {
         if($file["type"] != "text/csv") {
-            return "Invalid csv file ?";
+            $this->valid = false;
+            $this->message = "Invalid csv file ?";
         }
-
-        return null;
     }
 }

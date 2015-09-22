@@ -1,23 +1,19 @@
 <?php
 require_once('src/CSVImporter.php');
+require_once('src/FileUploadErrorHandler.php');
 
-$max_size = ini_get('upload_max_filesize');
+$max_size = ini_get('post_max_size');
 
-var_dump($_SERVER['CONTENT_LENGTH']);
-var_dump($_FILES);
-var_dump($_POST);
 if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) ){
-    echo "<h1 class='error'>Failed!</h1><h3 class='error'></br><li>The uploaded zip was too large. You must upload a file smaller than". $max_size . "</li></br></h3>";
+    echo "<h1 class='error'>Failed!</h1><h3 class='error'></br>The uploaded file exceeds the post_max_size directive in php.ini (<". $max_size . ")</br></h3>";
 }
 
-
 if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
-    var_dump($_FILES["dataFeed"]);
-    $csvImporter = new CSVImporter($_FILES);
-
-    if (! $csvImporter->isValid()) {
-        echo "<h1 class='error'>Failed!</h1><h3 class='error'></br><li>". $csvImporter->error. "</li></br></h3>";
+    $errorHandler = new FileUploadErrorHandler($_FILES["dataFeed"]);
+    if (! $errorHandler->valid) {
+        echo "<h1 class='error'>Failed!</h1><h3 class='error'></br>". $errorHandler->message . "</br></h3>";
     } else {
+        $csvImporter = new CSVImporter($_FILES["dataFeed"]);
         $csvImporter->importToTable();
     }
 }
