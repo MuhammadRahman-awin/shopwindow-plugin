@@ -8,9 +8,9 @@ use FileUploadErrorHandler;
 
 class CSVImporterSpec extends ObjectBehavior
 {
-    function let($file, FileUploadErrorHandler $errorHandler)
+    function let($fileName)
     {
-        $this->beConstructedWith($file, $errorHandler);
+        $this->beConstructedWith($fileName);
     }
 
     function it_is_initializable()

@@ -3,11 +3,11 @@
 class CSVImporter extends SplFileObject
 {
     /**
-     * @param array $file
+     * @param string $fileName
      */
-    public function __construct($file)
+    public function __construct($fileName)
     {
-        parent::__construct($file["tmp_name"]);
+        parent::__construct($fileName);
         $this->setFlags(SplFileObject::READ_CSV);
     }
 
