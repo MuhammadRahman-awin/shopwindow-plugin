@@ -46,6 +46,9 @@ function init_shopwindow_widget()
     register_widget('ShopwindowWidget');
 }
 
+###############################################
+# MENU PAGES #
+###############################################
 add_action( 'admin_menu', "shopwindow_settings");
 function shopwindow_settings(){
     add_menu_page (
@@ -56,6 +59,13 @@ function shopwindow_settings(){
         '',
         plugins_url( 'shopwindow-plugin/icon.png' )
     );
+    add_submenu_page('shopwindow-plugin/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-plugin/ShopwindowAdmin.php');
+    add_submenu_page('shopwindow-plugin/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
+
+    function data_feed_guide()
+    {
+        include(plugin_dir_path( __FILE__ ) . 'src/data-feed-guide.php');
+    }
 }
 
 

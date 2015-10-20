@@ -6,3 +6,24 @@
     color: green;
     font-weight: bold;
 }
+.center {
+    margin: auto;
+    width: 50%;
+    height: 50px;
+    border:3px solid #8AC007;
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-top: 20px;
+    text-align: center;
+}
+.red {
+    color: red;
+}
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green;
+}

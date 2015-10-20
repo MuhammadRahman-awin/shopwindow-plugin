@@ -43,7 +43,7 @@ class DataFeedDBConnection
             description,
             productName,
             deliveryCost,
-            displayPrice
+            price
             )
         VALUES
             (
@@ -53,7 +53,7 @@ class DataFeedDBConnection
             esc_sql($row['description']). "','" .
             esc_sql($row['product_name']). "','" .
             $row['delivery_cost']. "','" .
-            $row['display_price']. "'
+            $row['currency']. ' '. $row['search_price']. "'
             )";
 
         $wpdb->query($query);
@@ -73,10 +73,10 @@ class DataFeedDBConnection
                   categoryName varchar(45) DEFAULT NULL,
                   awDeepLink varchar(45) DEFAULT NULL,
                   merchantImageUrl varchar(45) DEFAULT NULL,
-                  description varchar(500) DEFAULT NULL,
+                  description text CHARACTER SET utf8mb4,
                   productName varchar(255) DEFAULT NULL,
                   deliveryCost varchar(255) DEFAULT NULL,
-                  displayPrice varchar(15) DEFAULT NULL,
+                  price varchar(15) DEFAULT NULL,
                   PRIMARY KEY (id),
                   UNIQUE KEY id_UNIQUE (id)
                 ) $charset_collate;";
