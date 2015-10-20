@@ -1,4 +1,5 @@
 <?php
+require_once('DataFeedDBConnection.php');
 
 class CSVImporter extends SplFileObject
 {
@@ -13,6 +14,16 @@ class CSVImporter extends SplFileObject
 
     public function importToTable()
     {
-        var_dump($this->fgetcsv());
+        $db = new DataFeedDBConnection();
+        $db->truncateTable();
+        $headers = $this->fgetcsv();
+
+        while (!$this->eof()) {
+            $row = $this->fgetcsv();
+            if (count($headers) === count($row)) {
+                $data = array_combine($headers, $row);
+                $db->insertRow($data);
+            }
+        }
     }
 }

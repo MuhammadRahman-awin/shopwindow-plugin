@@ -54,7 +54,19 @@ function shopwindow_settings(){
         'manage_options',
         'shopwindow-plugin/ShopwindowAdmin.php',
         '',
-        plugins_url( 'shopwindow-plugin/icon.png' ),
-        79
+        plugins_url( 'shopwindow-plugin/icon.png' )
     );
+}
+
+
+##########################################################
+# DEACTIVATION #
+##########################################################
+register_deactivation_hook( __FILE__, 'datafeedUninstall' );
+function datafeedUninstall() {
+
+    global $wpdb;
+    $table = $wpdb->prefix."datafeed";
+
+    $wpdb->query("DROP TABLE IF EXISTS $table");
 }
