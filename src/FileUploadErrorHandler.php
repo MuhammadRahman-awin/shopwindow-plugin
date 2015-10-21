@@ -21,9 +21,10 @@ class FileUploadErrorHandler
      */
     private function getFileErrorCodeToMessage($code)
     {
+        $max_file_size = ini_get('upload_max_filesize');
         switch ($code) {
             case UPLOAD_ERR_INI_SIZE:
-                $this->message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+                $this->message = "The uploaded file exceeds ".$max_file_size."B limit in your php.ini";
                 break;
             case UPLOAD_ERR_FORM_SIZE:
                 $this->message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";

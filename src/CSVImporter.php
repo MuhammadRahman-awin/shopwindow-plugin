@@ -14,7 +14,6 @@ class CSVImporter extends SplFileObject
 
     public function importToTable()
     {
-        echo 'processing...';
         $db = new DataFeedDBConnection();
         $db->truncateTable();
         $headers = $this->fgetcsv();

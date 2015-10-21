@@ -8,6 +8,8 @@ Author: digitalwindow
 Author URI: http://mmrs151.tumblr.com/
 */
 
+require_once('src/FeedProcessor.php');
+
 class ShopwindowWidget extends WP_Widget
 {
     public function __construct()
@@ -17,12 +19,51 @@ class ShopwindowWidget extends WP_Widget
             'description' => 'Sell your affiliate product from shopwindow product feed'
         );
         $this->add_stylesheet();
+
         parent::__construct('ShopwindowWidget', 'Shopwindow product feed', $widget_details);
     }
 
     public function form($instance)
     {
+        ?>
+        <div xmlns="http://www.w3.org/1999/html">
+        <span>
+            <table border="0">
+                <tr><td>Title</td>
+                    <td>
+                        <input
+                            name="<?php echo $this->get_field_name( 'title' ); ?>"
+                            type="text"
+                            value="<?php echo $instance["title"] ?>"
+                            />
+                    </td>
+                </tr>
+                <tr><td>Number of product to display</td>
+                    <td>
+                        <input
+                            name="<?php echo $this->get_field_name( 'displayCount' ); ?>"
+                            type="number" min=1 step=1 value=5
+                            value="<?php echo $instance["displayCount"] ?>"
+                            />
+                    </td>
+                </tr>
+                <tr><td>Display product vertically</td>
+                    <td>
+                        <input
+                            type="checkbox"
+                            name="<?php echo $this->get_field_name( 'layout' ); ?>"
+                            value="vertical"
+                            <?php if($instance["layout"] === 'vertical'){ echo 'checked="checked"'; } ?>
+                            />
+                    </td>
+                </tr>
+            </table>
+        </span>
+        </div>
 
+        <div class='mfc-text'>
+        </div>
+        <?php
     }
 
     public function update( $new_instance, $old_instance ) {
@@ -31,7 +72,23 @@ class ShopwindowWidget extends WP_Widget
 
     public function widget($args, $instance)
     {
-        echo 'hello world';
+        echo $args['before_widget'];
+        $feedProcessor = new FeedProcessor();
+
+        if (! empty($instance['title'])) {
+            $feedProcessor->setTitle($instance['title']);
+        }
+        if (! empty($instance['displayCount'])) {
+            $feedProcessor->setProductCount($instance['displayCount']);
+        }
+        if ($instance['layout'] === 'vertical') {
+            $feedProcessor->setLayout($instance['layout']);
+        }
+
+        echo $feedProcessor->displayWidget();
+
+        echo $args['after_widget'];
+
     }
 
     public function add_stylesheet() {
@@ -55,12 +112,12 @@ function shopwindow_settings(){
         'Shopwindow',
         'Shopwindow',
         'manage_options',
-        'shopwindow-plugin/ShopwindowAdmin.php',
+        'shopwindow-product/ShopwindowAdmin.php',
         '',
-        plugins_url( 'shopwindow-plugin/icon.png' )
+        plugins_url( 'shopwindow-product/icon.png' )
     );
-    add_submenu_page('shopwindow-plugin/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-plugin/ShopwindowAdmin.php');
-    add_submenu_page('shopwindow-plugin/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
+    add_submenu_page('shopwindow-product/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-product/ShopwindowAdmin.php');
+    add_submenu_page('shopwindow-product/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
 
     function data_feed_guide()
     {

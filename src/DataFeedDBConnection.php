@@ -43,6 +43,7 @@ class DataFeedDBConnection
             description,
             productName,
             deliveryCost,
+            currency,
             price
             )
         VALUES
@@ -53,10 +54,25 @@ class DataFeedDBConnection
             esc_sql($row['description']). "','" .
             esc_sql($row['product_name']). "','" .
             $row['delivery_cost']. "','" .
-            $row['currency']. ' '. $row['search_price']. "'
+            $row['currency']. "','" .
+            $row['search_price']. "'
             )";
 
         $wpdb->query($query);
+    }
+
+    /**
+     * @param int $limit
+     * @return array
+     */
+    public function getLimitedRows($limit)
+    {
+        global $wpdb;
+
+        $sql = "SELECT * FROM  $this->dbTable ORDER BY RAND() LIMIT " . $limit;
+        $result = $wpdb->get_results($sql, ARRAY_A);
+
+        return $result;
     }
 
     /**
@@ -71,11 +87,12 @@ class DataFeedDBConnection
         $sql = "CREATE TABLE " . $this->dbTable. "(
                   id int(11) NOT NULL AUTO_INCREMENT,
                   categoryName varchar(45) DEFAULT NULL,
-                  awDeepLink varchar(45) DEFAULT NULL,
-                  merchantImageUrl varchar(45) DEFAULT NULL,
+                  awDeepLink varchar(500) DEFAULT NULL,
+                  merchantImageUrl varchar(500) DEFAULT NULL,
                   description text CHARACTER SET utf8mb4,
                   productName varchar(255) DEFAULT NULL,
                   deliveryCost varchar(255) DEFAULT NULL,
+                  currency varchar(11) DEFAULT NULL,
                   price varchar(15) DEFAULT NULL,
                   PRIMARY KEY (id),
                   UNIQUE KEY id_UNIQUE (id)
