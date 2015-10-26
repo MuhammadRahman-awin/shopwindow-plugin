@@ -20,3 +20,7 @@
 .green {
     color: green;
 }
+
+table.horizontal .price {
+    font-weight: bold;
+}

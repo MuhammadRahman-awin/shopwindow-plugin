@@ -18,13 +18,13 @@ class FeedProcessor
     /** @var  DataFeedDBConnection */
     private $db;
 
-	/** @var  WidgetPrinter */
-	private $printer;
+    /** @var  WidgetPrinter */
+    private $printer;
 
     public function __construct()
     {
         $this->db = new DataFeedDBConnection();
-	    $this->printer = new WidgetPrinter();
+        $this->printer = new WidgetPrinter();
     }
 
     /**
@@ -48,13 +48,12 @@ class FeedProcessor
         $this->layout = $layout;
     }
 
-	/**
-	 * @return string
-	 */
+    /**
+     * @return string
+     */
     public function displayWidget()
     {
-	    $data = $this->getProducts();
-	    var_dump($data[0]);
+        $data = $this->getProducts();
         if ($this->layout) {
             return $this->printer->verticalWidget($data);
         }
@@ -62,11 +61,38 @@ class FeedProcessor
         return $this->printer->horizontalWidget($data);
     }
 
-	/**
-	 * @return array
-	 */
-	private function getProducts()
-	{
-		return $this->db->getLimitedRows($this->productCount);
-	}
+    /**
+     * @return array
+     */
+    private function getProducts()
+    {
+        $data = $this->db->getLimitedRows(20);
+        $products = $this->getProductWithImage($data);
+
+        return $products;
+    }
+
+    /**
+     * @param array $products
+     * @return array
+     */
+    private function getProductWithImage($products)
+    {
+        $productWithImage = array();
+        $handle = curl_init();
+
+        foreach($products as $product) {
+
+            curl_setopt($handle, CURLOPT_URL, $product['merchantImageUrl']);
+            curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+            curl_exec($handle);
+            $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+            if($httpCode == 200) {
+                $productWithImage[] = $product;
+            }
+        }
+        $productWithImage = array_slice($productWithImage, 0, $this->productCount);
+
+        return $productWithImage;
+    }
 }
