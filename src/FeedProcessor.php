@@ -55,10 +55,15 @@ class FeedProcessor
     {
         $data = $this->getProducts();
         if ($this->layout) {
-            return $this->printer->verticalWidget($data);
+            return $this->printer->horizontalWidget($this->title, $data);
         }
 
-        return $this->printer->horizontalWidget($data);
+        return $this->printer->verticalWidget($this->title, $data);
+    }
+
+    public function getCountByCategory()
+    {
+
     }
 
     /**
@@ -82,7 +87,6 @@ class FeedProcessor
         $handle = curl_init();
 
         foreach($products as $product) {
-
             curl_setopt($handle, CURLOPT_URL, $product['merchantImageUrl']);
             curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
             curl_exec($handle);
@@ -90,9 +94,10 @@ class FeedProcessor
             if($httpCode == 200) {
                 $productWithImage[] = $product;
             }
-        }
-        $productWithImage = array_slice($productWithImage, 0, $this->productCount);
 
-        return $productWithImage;
+            if (count($productWithImage) === (int)$this->productCount) {
+                return $productWithImage;
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@
 
 class WidgetPrinter
 {
-    public function verticalWidget(array $data)
+    public function horizontalWidget(array $data)
     {
         $productList = '<div class="vertical">';
         foreach($data as $product) {
@@ -15,24 +15,35 @@ class WidgetPrinter
         return $productList;
     }
 
-    public function horizontalWidget(array $data)
+    public function verticalWidget($title, array $data)
     {
-        $productList = '<table class="horizontal">';
+        $productList = '<table class="horizontal">
+                            <tr><th class="title" colspan="2"><span class="prev"> < </span>'. $title.'<span class="next"> > </span></th></tr>';
         foreach($data as $product) {
             $productList .= '
                     <tr>
-                        <td class="image"><a href='.$product['awDeepLink'].' target="_blank">
-                        	<img src='.$product['merchantImageUrl'].' /></a>
+                        <td class="image"><a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                            <img src='.$product['merchantImageUrl'].' /></a>
                         </td>
-                        <td class="name" rowspan="2">'. $product['productName'].'</td>
-					</tr>
-					<tr>
-						<td class="price">'. $product['price'].'</td>
+                        <td class="description" rowspan="2">'. substr($product['description'], 0, 130).'...</td>
+                    </tr>
+                    <tr>
+                        <td class="price">'. $this->getCurrencySymbol($product['currency']).''.$product['price'].'</td>
                     </tr>
             ';
         }
         $productList .= '</table>';
         return $productList;
-        var_dump($data);
+    }
+
+	/**
+	 * @param Let$name
+	 * @return string
+	 */
+    private function getCurrencySymbol($name)
+    {
+        if (strtoupper($name) === 'GBP') {
+            return "&pound";
+        }
     }
 }

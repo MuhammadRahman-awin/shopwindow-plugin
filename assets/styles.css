@@ -21,6 +21,36 @@
     color: green;
 }
 
-table.horizontal .price {
-    font-weight: bold;
+table.horizontal
+    .prev{
+    padding-right: 60px;
 }
+    .next{
+        padding-left: 60px;
+    }
+    .title {
+        vertical-align: top;
+        padding: 5px;
+        font-size: large;
+    font-weight: bold;
+        border-bottom: 1px solid;
+    }
+    .image {
+        padding:1px;
+        width: 100px;
+        height: 100px;
+    }
+    .price {
+        font-weight: bold;
+        text-align: center;
+        font-size: larger;
+        color: darkmagenta;
+        font-family: inherit;
+        border-bottom: 1px solid;
+    }
+    .description {
+        vertical-align: top;
+        padding: 5px;
+        font-size: small;
+        border-bottom: 1px solid;
+    }

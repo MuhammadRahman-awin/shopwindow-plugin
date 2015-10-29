@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: ShopWindow product
+Plugin Name: ShopWindow feed
 Version: 1.0
-Plugin URI: https://wordpress.org/plugins/shopwindow-product
+Plugin URI: https://wordpress.org/plugins/shopwindow-feed
 Description: Sell your affiliate product from shopwindow product feed
-Author: digitalwindow
+Author: mmrs151
 Author URI: http://mmrs151.tumblr.com/
 */
 
@@ -47,13 +47,13 @@ class ShopwindowWidget extends WP_Widget
                             />
                     </td>
                 </tr>
-                <tr><td>Display product vertically</td>
+                <tr><td>Display product horizontally</td>
                     <td>
                         <input
                             type="checkbox"
                             name="<?php echo $this->get_field_name( 'layout' ); ?>"
-                            value="vertical"
-                            <?php if($instance["layout"] === 'vertical'){ echo 'checked="checked"'; } ?>
+                            value="horizontal"
+                            <?php if($instance["layout"] === 'horizontal'){ echo 'checked="checked"'; } ?>
                             />
                     </td>
                 </tr>
@@ -81,7 +81,7 @@ class ShopwindowWidget extends WP_Widget
         if (! empty($instance['displayCount'])) {
             $feedProcessor->setProductCount($instance['displayCount']);
         }
-        if ($instance['layout'] === 'vertical') {
+        if ($instance['layout'] === 'horizontal') {
             $feedProcessor->setLayout($instance['layout']);
         }
 
@@ -112,12 +112,12 @@ function shopwindow_settings(){
         'Shopwindow',
         'Shopwindow',
         'manage_options',
-        'shopwindow-product/ShopwindowAdmin.php',
+        'shopwindow-feed/ShopwindowAdmin.php',
         '',
-        plugins_url( 'shopwindow-product/icon.png' )
+        plugins_url( 'shopwindow-feed/icon.png' )
     );
-    add_submenu_page('shopwindow-product/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-product/ShopwindowAdmin.php');
-    add_submenu_page('shopwindow-product/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
+    add_submenu_page('shopwindow-feed/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-feed/ShopwindowAdmin.php');
+    add_submenu_page('shopwindow-feed/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
 
     function data_feed_guide()
     {

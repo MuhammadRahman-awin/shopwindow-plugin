@@ -69,7 +69,9 @@ class DataFeedDBConnection
     {
         global $wpdb;
 
-        $sql = "SELECT * FROM  $this->dbTable ORDER BY RAND() LIMIT " . $limit;
+        $sql = "SELECT * FROM  $this->dbTable
+                WHERE description !=''
+                ORDER BY RAND() LIMIT " . $limit;
         $result = $wpdb->get_results($sql, ARRAY_A);
 
         return $result;
