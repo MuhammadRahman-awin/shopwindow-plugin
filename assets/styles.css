@@ -1,3 +1,6 @@
+body{
+    font-family: inherit;
+}
 .error {
     color: red;
 }
@@ -21,18 +24,20 @@
     color: green;
 }
 
-table.horizontal
-    .prev{
-    padding-right: 60px;
-}
-    .next{
-        padding-left: 60px;
+table.vertical
+    .more{
+        vertical-align: top;
+        padding: 5px;
+        color: darkmagenta;
+        font-size: large;
+        font-weight: bold;
+        border-bottom: 1px solid;
     }
     .title {
         vertical-align: top;
         padding: 5px;
         font-size: large;
-    font-weight: bold;
+        font-weight: bold;
         border-bottom: 1px solid;
     }
     .image {

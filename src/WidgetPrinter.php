@@ -17,8 +17,8 @@ class WidgetPrinter
 
     public function verticalWidget($title, array $data)
     {
-        $productList = '<table class="horizontal">
-                            <tr><th class="title" colspan="2"><span class="prev"> < </span>'. $title.'<span class="next"> > </span></th></tr>';
+        $productList = '<table class="vertical">
+                            <tr><th class="title" colspan="2">'. $title.'</th></tr>';
         foreach($data as $product) {
             $productList .= '
                     <tr>
@@ -32,6 +32,7 @@ class WidgetPrinter
                     </tr>
             ';
         }
+        $productList .= '<tr><th class="more" colspan="2">next > </th></tr>';
         $productList .= '</table>';
         return $productList;
     }
