@@ -1,6 +1,3 @@
-body{
-    font-family: inherit;
-}
 .error {
     color: red;
 }
@@ -23,21 +20,25 @@ body{
 .green {
     color: green;
 }
+table.vertical tr{
+    border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+}
 table.vertical tr td{
-    border: 1px solid rgba(51, 51, 51, 0.1);
+    border: none;
 }
 table.vertical th{
-    border: 1px solid rgba(51, 51, 51, 0.1);
+    border: none;
     color: #000;
 }
 table.vertical
-    .more{
+    .next{
         vertical-align: top;
         padding: 5px;
         color: darkmagenta;
         font-size: large;
         font-weight: bold;
         text-align: right;
+        cursor: pointer;
     }
     .title {
         vertical-align: middle;

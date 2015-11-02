@@ -19,6 +19,7 @@ class ShopwindowWidget extends WP_Widget
             'description' => 'Sell your affiliate product from shopwindow product feed'
         );
         $this->add_stylesheet();
+        $this->setScript();
 
         parent::__construct('ShopwindowWidget', 'Shopwindow product feed', $widget_details);
     }
@@ -91,9 +92,33 @@ class ShopwindowWidget extends WP_Widget
 
     }
 
-    public function add_stylesheet() {
+    private function add_stylesheet() {
         wp_register_style( 'shopwindow-style', plugins_url('assets/styles.css', __FILE__) );
         wp_enqueue_style( 'shopwindow-style' );
+    }
+
+    private function setScript()
+    {
+        // Get the Path to this plugin's folder
+        $path = plugin_dir_url( __FILE__ );
+
+        // Enqueue our script
+        wp_enqueue_script( 'shopwindow-feed',
+            $path. 'assets/shopwindow-feed.js',
+            array( 'jquery' ),
+            '1.0.0', true );
+
+        // Get the protocol of the current page
+        $protocol = isset( $_SERVER['HTTPS'] ) ? 'https://' : 'http://';
+
+        // Set the ajaxurl Parameter which will be output right before
+        // our ajax-delete-posts.js file so we can use ajaxurl
+        $params = array(
+            // Get the url to the admin-ajax.php file using admin_url()
+            'ajaxurl' => admin_url( 'admin-ajax.php', $protocol ),
+        );
+        // Print the script to our page
+        wp_localize_script( 'shopwindow-feed', 'shopwindow_params', $params );
     }
 }
 

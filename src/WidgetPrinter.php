@@ -21,18 +21,25 @@ class WidgetPrinter
                             <tr><th class="title" colspan="2">'. $title.'</th></tr>';
         foreach($data as $product) {
             $productList .= '
-                    <tr>
-                        <td class="image"><a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
-                            <img src='.$product['merchantImageUrl'].' /></a>
+                    <tr class="image">
+                        <td class="image">
+                            <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                                <img src='.$product['merchantImageUrl'].' />
+                            </a>
                         </td>
-                        <td class="description" rowspan="2">'. substr($product['description'], 0, 130).'...</td>
+                        <td class="description" rowspan="2">
+                            '. substr($product['description'], 0, 130).'
+                            <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                                ...more
+                            </a>
+                        </td>
                     </tr>
                     <tr>
                         <td class="price">'. $this->getCurrencySymbol($product['currency']).''.$product['price'].'</td>
                     </tr>
             ';
         }
-        $productList .= '<tr><td class="more" colspan="2">next > </td></tr>';
+        $productList .= '<tr><td colspan="2" class="next"><span id="next" class="next"> next > </span></td></tr>';
         $productList .= '</table>';
         return $productList;
     }
@@ -45,6 +52,8 @@ class WidgetPrinter
     {
         if (strtoupper($name) === 'GBP') {
             return "&pound";
+        } elseif(strtoupper($name) === 'USD') {
+            return "$";
         }
     }
 }
