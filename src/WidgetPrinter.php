@@ -32,7 +32,7 @@ class WidgetPrinter
                     </tr>
             ';
         }
-        $productList .= '<tr><th class="more" colspan="2">next > </th></tr>';
+        $productList .= '<tr><td class="more" colspan="2">next > </td></tr>';
         $productList .= '</table>';
         return $productList;
     }

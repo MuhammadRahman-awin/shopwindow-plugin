@@ -23,7 +23,13 @@ body{
 .green {
     color: green;
 }
-
+table.vertical tr td{
+    border: 1px solid rgba(51, 51, 51, 0.1);
+}
+table.vertical th{
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    color: #000;
+}
 table.vertical
     .more{
         vertical-align: top;
@@ -31,19 +37,20 @@ table.vertical
         color: darkmagenta;
         font-size: large;
         font-weight: bold;
-        border-bottom: 1px solid;
+        text-align: right;
     }
     .title {
-        vertical-align: top;
+        vertical-align: middle;
+        text-align: center;
         padding: 5px;
         font-size: large;
         font-weight: bold;
-        border-bottom: 1px solid;
     }
     .image {
         padding:1px;
         width: 100px;
-        height: 100px;
+        height: 150px;
+        vertical-align: middle;
     }
     .price {
         font-weight: bold;
@@ -51,11 +58,13 @@ table.vertical
         font-size: larger;
         color: darkmagenta;
         font-family: inherit;
-        border-bottom: 1px solid;
+        vertical-align: middle;
     }
     .description {
-        vertical-align: top;
+        color: #000;
+        vertical-align: middle;
         padding: 5px;
         font-size: small;
-        border-bottom: 1px solid;
+        text-align: justify;
     }
+
