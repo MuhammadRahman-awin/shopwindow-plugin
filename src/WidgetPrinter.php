@@ -5,6 +5,8 @@ class WidgetPrinter
 {
     public function horizontalWidget(array $data)
     {
+        return '<div id="horizontalDiv">H</div>';
+
         $productList = '<div class="vertical">';
         foreach($data as $product) {
             $productList .= '
@@ -39,8 +41,8 @@ class WidgetPrinter
                     </tr>
             ';
         }
-        $productList .= '<tr><td colspan="2" class="next"><span id="next" class="next"> next > </span></td></tr>';
         $productList .= '</table>';
+
         return $productList;
     }
 

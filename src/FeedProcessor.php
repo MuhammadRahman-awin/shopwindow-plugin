@@ -61,17 +61,12 @@ class FeedProcessor
         return $this->printer->verticalWidget($this->title, $data);
     }
 
-    public function getCountByCategory()
-    {
-
-    }
-
     /**
      * @return array
      */
     private function getProducts()
     {
-        $data = $this->db->getLimitedRows(20);
+        $data = $this->db->getLimitedRows(10);
         $products = $this->getProductWithImage($data);
 
         return $products;

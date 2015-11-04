@@ -9,6 +9,7 @@ Author URI: http://mmrs151.tumblr.com/
 */
 
 require_once('src/FeedProcessor.php');
+require_once('src/sw-ajax.php');
 
 class ShopwindowWidget extends WP_Widget
 {
@@ -74,26 +75,20 @@ class ShopwindowWidget extends WP_Widget
     public function widget($args, $instance)
     {
         echo $args['before_widget'];
-        $feedProcessor = new FeedProcessor();
-
-        if (! empty($instance['title'])) {
-            $feedProcessor->setTitle($instance['title']);
-        }
-        if (! empty($instance['displayCount'])) {
-            $feedProcessor->setProductCount($instance['displayCount']);
-        }
-        if ($instance['layout'] === 'horizontal') {
-            $feedProcessor->setLayout($instance['layout']);
-        }
-
-        echo $feedProcessor->displayWidget();
-
+        echo '<form name="swFeed" id="swFeed">';
+        echo '<input name="title" type="hidden" value="' .$instance['title'].'"/>';
+        echo '<input name="displayCount" type="hidden" value="' .$instance['displayCount'].'"/>';
+        echo '<input name="layout" type="hidden" value="' .$instance['layout'].'"/>';
+        echo '<input name="action" type="hidden" value="get_sw_product"/>';
+        echo '</form>';
+        echo '<div id="ajaxResponse"></div>';
+        echo '<span id="next" class="next">next ></span>';
         echo $args['after_widget'];
 
     }
 
     private function add_stylesheet() {
-        wp_register_style( 'shopwindow-style', plugins_url('assets/styles.css', __FILE__) );
+        wp_register_style( 'shopwindow-style', plugins_url('assets/sw-styles.css', __FILE__) );
         wp_enqueue_style( 'shopwindow-style' );
     }
 
