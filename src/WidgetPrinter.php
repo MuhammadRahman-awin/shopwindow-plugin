@@ -3,17 +3,41 @@
 
 class WidgetPrinter
 {
-    public function horizontalWidget(array $data)
+    public function horizontalWidget($title, array $data)
     {
-        return '<div id="horizontalDiv">H</div>';
-
-        $productList = '<div class="vertical">';
+        $productList = '
+            <table class="horizontal">
+                <tr><th class="title" colspan="'.count($data).';">'. $title.'</th></tr>
+                <tr class="image">';
         foreach($data as $product) {
             $productList .= '
-
-                <a href='.$product['awDeepLink'].' target="_blank"> <img style="width:100px;height:100px;" src='.$product['merchantImageUrl'].' /></a>';
+                <td class="image">
+                    <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                        <img src='.$product['merchantImageUrl'].' />
+                    </a>
+                </td>
+            ';
         }
-        $productList .= '</div>';
+
+        $productList .= '
+                </tr>
+                <tr class="name">';
+        foreach($data as $product) {
+            $productList .= '
+                <td class="name">'. $product['productName'].'</td>
+            ';
+        }
+
+        $productList .= '
+                </tr>
+                <tr class="price">';
+        foreach($data as $product) {
+            $productList .= '
+                <td class="price">'. $this->getCurrencySymbol($product['currency']).''.$product['price'].'</td>
+            ';
+        }
+        $productList .= '
+                </tr>';
         return $productList;
     }
 

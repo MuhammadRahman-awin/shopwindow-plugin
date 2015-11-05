@@ -49,7 +49,7 @@ class DataFeedDBConnection
         VALUES
             (
             '" .esc_sql($row['category_name']). "','" .
-            $row['aw_deep_link']. "&plugin=wp','" .
+            $row['aw_deep_link']. "&plugin=shopwindow-feed','" .
             $row['merchant_image_url']. "','" .
             esc_sql($row['description']). "','" .
             esc_sql($row['product_name']). "','" .

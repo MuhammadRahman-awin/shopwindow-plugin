@@ -75,14 +75,22 @@ class ShopwindowWidget extends WP_Widget
     public function widget($args, $instance)
     {
         echo $args['before_widget'];
-        echo '<form name="swFeed" id="swFeed">';
-        echo '<input name="title" type="hidden" value="' .$instance['title'].'"/>';
-        echo '<input name="displayCount" type="hidden" value="' .$instance['displayCount'].'"/>';
-        echo '<input name="layout" type="hidden" value="' .$instance['layout'].'"/>';
-        echo '<input name="action" type="hidden" value="get_sw_product"/>';
-        echo '</form>';
-        echo '<div id="ajaxResponse"></div>';
-        echo '<span id="next" class="next">next ></span>';
+
+
+        $layout = $instance['layout'];
+        $layout = empty($layout) ? 'vertical' : $layout;
+        $layout = ucfirst($layout);
+        echo '<span class="title">'.$instance['title'].'<p id="next'.$layout.'" class="next"></p></span>';
+        echo '
+        <form name="swFeed" id="swFeed'.$layout.'">
+            <input name="title" type="hidden" value="' .$instance['title'].'"/>
+            <input name="displayCount" type="hidden" value="' .$instance['displayCount'].'"/>
+            <input name="layout" type="hidden" value="' .$instance['layout'].'"/>
+            <input name="action" type="hidden" value="get_sw_product"/>
+        </form>
+        <div id="ajaxResponse'.$layout.'"></div>
+        <span id="next'.$layout.'" class="next">ASD</span>';
+
         echo $args['after_widget'];
 
     }

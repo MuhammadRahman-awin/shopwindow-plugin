@@ -29,6 +29,7 @@ span.next{
     cursor: pointer;
     float: right;
 }
+/* VERTICAL WIDGET ELEMENTS*/
 table.vertical tr{
     border-bottom: 1px solid rgba(51, 51, 51, 0.1);
 }
@@ -49,7 +50,7 @@ table.vertical
     }
     .image {
         padding:1px;
-        width: 100px;
+        width: 150px;
         height: 150px;
         vertical-align: middle;
     }
@@ -71,4 +72,50 @@ table.vertical
     td.nextTd{
         text-align: right;
     }
+    img {
+        width: 150px;
+        height: 150px;
+    }
 
+/* HORIZONTAL WIDGET ELEMENTS */
+table.horizontal{
+    border: 1px solid rgba(51, 51, 51, 0.1);
+}
+table.horizontal td{
+    border: 1px solid rgba(51, 51, 51, 0.1);
+}
+table.horizontal
+    .title {
+        vertical-align: middle;
+        text-align: center;
+        padding: 5px;
+        font-size: large;
+        font-weight: bold;
+    }
+    .image {
+        padding:1px;
+        width: 200px;
+        height: 150px;
+        vertical-align: middle;
+    }
+    .name {
+        color: #000;
+        vertical-align: middle;
+        padding: 5px;
+        font-size: small;
+    }
+    .price {
+        font-weight: bold;
+        text-align: center;
+        font-size: larger;
+        color: darkmagenta;
+        font-family: inherit;
+        vertical-align: middle;
+    }
+img {
+    width: 130px;
+    height: 150px;
+}
+td{
+    border-left: 1px solid;
+}

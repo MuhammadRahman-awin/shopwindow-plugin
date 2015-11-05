@@ -6,16 +6,20 @@ add_action( 'wp_ajax_nopriv_get_sw_product', 'get_sw_product' );
 
 function get_sw_product()
 {
+    $title = $_REQUEST['title'];
+    $count = $_REQUEST['displayCount'];
+    $layout = $_REQUEST['layout'];
+
     $feedProcessor = new FeedProcessor();
 
-    if (! empty($instance['title'])) {
-        $feedProcessor->setTitle($instance['title']);
+    if (! empty($title)) {
+        $feedProcessor->setTitle($title);
     }
-    if (! empty($instance['displayCount'])) {
-        $feedProcessor->setProductCount($instance['displayCount']);
+    if (! empty($count)) {
+        $feedProcessor->setProductCount($count);
     }
-    if ($instance['layout'] === 'horizontal') {
-        $feedProcessor->setLayout($instance['layout']);
+    if ($layout === 'horizontal') {
+        $feedProcessor->setLayout($layout);
     }
 
     echo $feedProcessor->displayWidget();

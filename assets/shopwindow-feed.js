@@ -1,16 +1,18 @@
 var SW = {
     init: function () {
-        jQuery("#next").on('click', function () {
+        this.loadVerticalFeed();
+        this.loadHorizontalFeed();
+    },
+
+    loadHorizontalFeed: function(){
+        jQuery("#nextHorizontal").on('click', function () {
             jQuery.ajax({
                 url: shopwindow_params.ajaxurl,
-                'action':'get_sw_product',
-
                 data:
-                    jQuery('form#swFeed').serialize(),
-
+                    jQuery('form#swFeedHorizontal').serialize(),
                 success: function(response){
-                    console.log(response);
-                    jQuery('#ajaxResponse').html(response);
+                    jQuery('#ajaxResponseHorizontal').html(response);
+                    jQuery("#nextHorizontal").text('next >>')
                 },
                 error: function(errorThrown){
                     alert(JSON.stringify(errorThrown));
@@ -18,7 +20,27 @@ var SW = {
             })
         });
 
-        jQuery('#next').trigger('click');
+        jQuery('#nextHorizontal').trigger('click');
+    },
+
+    loadVerticalFeed: function() {
+        jQuery("#nextVertical").on('click', function () {
+            jQuery.ajax({
+                url: shopwindow_params.ajaxurl,
+                data:
+                    jQuery('form#swFeedVertical').serialize(),
+                success: function(response){
+                    jQuery('#ajaxResponseVertical').html(response);
+                    jQuery("#nextVertical").text('next >>')
+                },
+                error: function(errorThrown){
+                    alert(JSON.stringify(errorThrown));
+                }
+            })
+        });
+
+        jQuery('#nextVertical').trigger('click');
+
     }
 };
 
