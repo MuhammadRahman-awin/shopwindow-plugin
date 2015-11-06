@@ -12,10 +12,11 @@ var SW = {
                     jQuery('form#swFeedHorizontal').serialize(),
                 success: function(response){
                     jQuery('#ajaxResponseHorizontal').html(response);
-                    jQuery("#nextHorizontal").text('next >>')
+                    jQuery("#nextHorizontal").html("&raquo;");
+
                 },
                 error: function(errorThrown){
-                    alert(JSON.stringify(errorThrown));
+                    console.log(errorThrown);
                 }
             })
         });
@@ -31,10 +32,10 @@ var SW = {
                     jQuery('form#swFeedVertical').serialize(),
                 success: function(response){
                     jQuery('#ajaxResponseVertical').html(response);
-                    jQuery("#nextVertical").text('next >>')
+                    jQuery("#nextVertical").html('Next &raquo;')
                 },
                 error: function(errorThrown){
-                    alert(JSON.stringify(errorThrown));
+                    console.log(errorThrown);
                 }
             })
         });

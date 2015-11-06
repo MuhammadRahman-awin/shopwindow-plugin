@@ -44,7 +44,7 @@ class ShopwindowWidget extends WP_Widget
                     <td>
                         <input
                             name="<?php echo $this->get_field_name( 'displayCount' ); ?>"
-                            type="number" min=1 step=1 value=5
+                            type="number" min=1 step=1
                             value="<?php echo $instance["displayCount"] ?>"
                             />
                     </td>
@@ -80,7 +80,7 @@ class ShopwindowWidget extends WP_Widget
         $layout = $instance['layout'];
         $layout = empty($layout) ? 'vertical' : $layout;
         $layout = ucfirst($layout);
-        echo '<span class="title">'.$instance['title'].'<p id="next'.$layout.'" class="next"></p></span>';
+
         echo '
         <form name="swFeed" id="swFeed'.$layout.'">
             <input name="title" type="hidden" value="' .$instance['title'].'"/>
@@ -88,8 +88,10 @@ class ShopwindowWidget extends WP_Widget
             <input name="layout" type="hidden" value="' .$instance['layout'].'"/>
             <input name="action" type="hidden" value="get_sw_product"/>
         </form>
-        <div id="ajaxResponse'.$layout.'"></div>
-        <span id="next'.$layout.'" class="next">ASD</span>';
+        <div class="widgetContent">
+            <div class="ajaxResponse'.$layout.'" id="ajaxResponse'.$layout.'"></div>
+            <div class="next'.$layout.'"><button id="next'.$layout.'" class="next"></button></div>
+        </div>';
 
         echo $args['after_widget'];
 

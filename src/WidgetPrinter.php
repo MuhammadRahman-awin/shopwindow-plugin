@@ -24,7 +24,10 @@ class WidgetPrinter
                 <tr class="name">';
         foreach($data as $product) {
             $productList .= '
-                <td class="name">'. $product['productName'].'</td>
+                <td class="name">
+                <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                    '. $product['productName'].'
+                </a></td>
             ';
         }
 

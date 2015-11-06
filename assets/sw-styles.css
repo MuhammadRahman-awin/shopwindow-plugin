@@ -20,15 +20,7 @@
 .green {
     color: green;
 }
-span.next{
-    vertical-align: top;
-    padding: 5px;
-    color: darkmagenta;
-    font-size: large;
-    font-weight: bold;
-    cursor: pointer;
-    float: right;
-}
+
 /* VERTICAL WIDGET ELEMENTS*/
 table.vertical tr{
     border-bottom: 1px solid rgba(51, 51, 51, 0.1);
@@ -40,82 +32,109 @@ table.vertical th{
     border: none;
     color: #000;
 }
-table.vertical
-    .title {
-        vertical-align: middle;
-        text-align: center;
-        padding: 5px;
-        font-size: large;
-        font-weight: bold;
-    }
-    .image {
-        padding:1px;
-        width: 150px;
-        height: 150px;
-        vertical-align: middle;
-    }
-    .price {
-        font-weight: bold;
-        text-align: center;
-        font-size: larger;
-        color: darkmagenta;
-        font-family: inherit;
-        vertical-align: middle;
-    }
-    .description {
-        color: #000;
-        vertical-align: middle;
-        padding: 5px;
-        font-size: small;
-        text-align: justify;
-    }
-    td.nextTd{
-        text-align: right;
-    }
-    img {
-        width: 150px;
-        height: 150px;
-    }
+table.vertical .title {
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+    font-size: large;
+    font-weight: bold;
+}
+table.vertical .image {
+    padding:1px;
+    width: 150px;
+    height: 150px;
+    vertical-align: middle;
+}
+table.vertical .price {
+    font-weight: bold;
+    text-align: center;
+    font-size: larger;
+    color: darkmagenta;
+    font-family: inherit;
+    vertical-align: middle;
+}
+table.vertical .description {
+    color: #000;
+    vertical-align: middle;
+    padding: 5px;
+    font-size: small;
+    text-align: justify;
+}
+table.vertical td.nextTd{
+    text-align: right;
+}
+table.vertical img {
+    width: 150px;
+    height: 150px;
+}
+
+div .nextVertical button{
+    width: 100px;
+    height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    float: right;
+}
+div .nextVertical button:hover{
+    font-size: 14px;
+}
 
 /* HORIZONTAL WIDGET ELEMENTS */
+
 table.horizontal{
     border: 1px solid rgba(51, 51, 51, 0.1);
 }
 table.horizontal td{
     border: 1px solid rgba(51, 51, 51, 0.1);
 }
-table.horizontal
-    .title {
-        vertical-align: middle;
-        text-align: center;
-        padding: 5px;
-        font-size: large;
-        font-weight: bold;
-    }
-    .image {
-        padding:1px;
-        width: 200px;
-        height: 150px;
-        vertical-align: middle;
-    }
-    .name {
-        color: #000;
-        vertical-align: middle;
-        padding: 5px;
-        font-size: small;
-    }
-    .price {
-        font-weight: bold;
-        text-align: center;
-        font-size: larger;
-        color: darkmagenta;
-        font-family: inherit;
-        vertical-align: middle;
-    }
-img {
+table.horizontal img {
     width: 130px;
     height: 150px;
 }
-td{
-    border-left: 1px solid;
+table.horizontal .title {
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+    font-size: large;
+    font-weight: bold;
+}
+table.horizontal .image {
+    padding:1px;
+    width: 200px;
+    height: 150px;
+    vertical-align: middle;
+}
+table.horizontal .name {
+    color: #000;
+    vertical-align: middle;
+    padding: 5px;
+    font-size: small;
+}
+table.horizontal .name a:link{
+    color: #000;
+}
+table.horizontal .price {
+    font-weight: bold;
+    text-align: center;
+    font-size: larger;
+    color: darkmagenta;
+    font-family: inherit;
+    vertical-align: middle;
+}
+
+div .nextHorizontal{
+    position: relative;
+    top: -220px;
+    float: right;
+}
+
+div .nextHorizontal button{
+    width: 30px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+div .nextHorizontal button:hover{
+    font-size: 32px;
 }
