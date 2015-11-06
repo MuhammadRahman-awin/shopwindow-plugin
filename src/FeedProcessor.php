@@ -77,7 +77,20 @@ class FeedProcessor
      */
     public function hasFeedInDb()
     {
-        return $this->db->hasFeedInDb() > 0;
+        return $this->db->countFeedInDb() > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getFeedCount()
+    {
+        return $this->db->countFeedInDb();
+    }
+
+    public function getFreeDeliveryProducts()
+    {
+        return $this->db->getProductCountByFreeDeliveryCost();
     }
 
     /**

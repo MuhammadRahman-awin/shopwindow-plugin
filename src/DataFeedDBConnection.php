@@ -80,11 +80,41 @@ class DataFeedDBConnection
     /**
      * @return mixed
      */
-    public function hasFeedInDb()
+    public function countFeedInDb()
     {
         global $wpdb;
         $sql = "SELECT COUNT(*) FROM ".  $this->dbTable;
         $result = $wpdb->get_var($sql);
+
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductCountByFreeDeliveryCost()
+    {
+        global $wpdb;
+
+        $sql = "
+        SELECT SUM( amount)
+        FROM
+          (SELECT deliveryCost, COUNT(*) AS amount
+           FROM $this->dbTable
+           GROUP BY deliveryCost
+           HAVING deliveryCost<1) getCount;
+        ";
+        $result = $wpdb->get_var($sql);
+
+        return $result;
+    }
+
+    public function getProductCountByCategory()
+    {
+        global $wpdb;
+
+        $sql = "SELECT categoryName, count(*) FROM  $this->dbTable group by categoryName;";
+        $result = $wpdb->get_results($sql, ARRAY_A);
 
         return $result;
     }

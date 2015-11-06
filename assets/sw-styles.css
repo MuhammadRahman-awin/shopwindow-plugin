@@ -138,3 +138,22 @@ div .nextHorizontal button{
 div .nextHorizontal button:hover{
     font-size: 32px;
 }
+
+
+div .options{
+    border: 1px solid green;
+    margin-top: 100px;
+}
+div .options .count{
+    margin-top: 10px;
+    padding-right: 50%;
+    font-weight: bold;
+    margin-bottom: 50px;
+    text-align: right;
+    float: right;
+}
+div .options .form{
+    margin-top: 100px;
+    margin-left: 10px;
+
+}

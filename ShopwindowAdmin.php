@@ -1,6 +1,7 @@
 <?php
 require_once('src/CSVImporter.php');
 require_once('src/FileUploadErrorHandler.php');
+require_once('src/FeedProcessor.php');
 
 $max_size = ini_get('post_max_size');
 $max_file_size = ini_get('upload_max_filesize');
@@ -38,3 +39,26 @@ if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
     </form>
 </div>
 <?php
+$fp = new FeedProcessor();
+if($fp->hasFeedInDb()) {
+var_dump($fp->getFreeDeliveryProducts());
+   ?>
+    <div class="options">
+        <div class="count"><span>Total product found:</span><span id="count"> <?php echo $fp->getFeedCount(); ?></span></div>
+        <div class="form">
+            <form name="swOptions">
+                <table>
+                    <tr><th colspan="2">Filter products:</th></tr>
+                    <tr>
+                        <td>Free Delivery</td>
+                        <td>
+                            <?= $fp->getFreeDeliveryProducts() ?>
+                        </td>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+    </div>
+<?php
+}
