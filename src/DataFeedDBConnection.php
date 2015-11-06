@@ -78,6 +78,18 @@ class DataFeedDBConnection
     }
 
     /**
+     * @return mixed
+     */
+    public function hasFeedInDb()
+    {
+        global $wpdb;
+        $sql = "SELECT COUNT(*) FROM ".  $this->dbTable;
+        $result = $wpdb->get_var($sql);
+
+        return $result;
+    }
+
+    /**
      *
      */
     private function createTableIfNotExist()

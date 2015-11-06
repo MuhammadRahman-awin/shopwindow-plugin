@@ -73,6 +73,14 @@ class FeedProcessor
     }
 
     /**
+     * @return bool
+     */
+    public function hasFeedInDb()
+    {
+        return $this->db->hasFeedInDb() > 0;
+    }
+
+    /**
      * @param array $products
      * @return array
      */

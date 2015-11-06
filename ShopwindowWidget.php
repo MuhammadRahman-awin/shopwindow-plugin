@@ -157,6 +157,22 @@ function shopwindow_settings(){
 
 
 ##########################################################
+# ADMIN NOTIFICATION #
+##########################################################
+function my_admin_notice() {
+    $fp = new FeedProcessor();
+    if(! $fp->hasFeedInDb()) {
+    ?>
+        <div class="error">
+            <p><?php _e( '<a href="'.admin_url('admin.php?page=shopwindow-feed/ShopwindowAdmin.php').'">Import  your shopwindow data feed to display in widget!</a>', 'my-text-domain' ); ?></p>
+        </div>
+    <?php
+    }
+}
+add_action( 'admin_notices', 'my_admin_notice' );
+
+
+##########################################################
 # DEACTIVATION #
 ##########################################################
 register_deactivation_hook( __FILE__, 'datafeedUninstall' );

@@ -1,7 +1,6 @@
 <?php
 require_once('src/CSVImporter.php');
 require_once('src/FileUploadErrorHandler.php');
-require_once('src/FeedProcessor.php');
 
 $max_size = ini_get('post_max_size');
 $max_file_size = ini_get('upload_max_filesize');
