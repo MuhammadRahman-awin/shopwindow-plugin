@@ -3,6 +3,7 @@ var SW = {
         this.loadVerticalFeed();
         this.loadHorizontalFeed();
         this.togglePrceRangeInout();
+        this.resetForm();
     },
 
     loadHorizontalFeed: function(){
@@ -45,11 +46,23 @@ var SW = {
     },
 
     togglePrceRangeInout: function() {
+        if(jQuery("#maxPriceRange").is(':checked')) {
+            jQuery(".range").attr("readonly", false);
+        };
         jQuery("#maxPriceRange").focus(function () {
             jQuery(".range").attr("readonly", false);
         });
         jQuery(".maxPriceRadio").focus(function () {
             jQuery(".range").attr("readonly", true);
+        });
+    },
+
+    resetForm: function() {
+        jQuery("#resetFilters").on('click', function () {
+            var form = jQuery('form#swFilters');
+            form.find('input:text, input:password, input:file, select, textarea').val('');
+            form.find('input:radio, input:checkbox')
+                .removeAttr('checked').removeAttr('selected');
         });
     }
 };

@@ -39,10 +39,14 @@ if (! empty($_POST['filterOptions'])) {
     $maxPrice = ($_POST['maxPrice']);
     delete_option('maxPrice');
     add_option('maxPrice', $maxPrice);
+
+    $maxPriceRadio = ($_POST['maxPriceRadio']);
+    delete_option('maxPriceRadio');
+    add_option('maxPriceRadio', $maxPriceRadio);
 }
 ?>
 <div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-     xmlns="http://www.w3.org/1999/html">
+     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <h2>Import your shopwindow data feed to display in widget</h2>
         </br><h3 class="info">Maximum file size must be smaller than: <?php echo $max_file_size ?>B </h3>
     <p>[Update 'upload_max_filesize' directive in php.ini for larger import]</p>
@@ -64,11 +68,11 @@ if($fp->hasFeedInDb()) {
    <section>
     <div class="options">
         <div class="form">
-            <form name="swOptions"  method="post">
+            <form name="swFilters" id="swFilters"  method="post">
                 <table class="filter">
                     <tr><th colspan="2"><h2>Filter products</h2></th></tr>
                     <tr>
-                        <th colspan="2" class="default">(DEFAULT) Randomly displaying product from (<?= $fp->getFeedCount() ?>) items.
+                        <th colspan="2" class="default">(DEFAULT) Randomly display product from (<?= $fp->getFeedCount() ?>) items.
                         </th>
                     </tr>
                     <tr><th colspan="2" class="filterType">By Delivery Type</th></tr>
@@ -100,31 +104,38 @@ if($fp->hasFeedInDb()) {
                         ?>
                     <tr><th colspan="2" class="filterType">By price</th></tr>
                     <tr>
-                        <td><input class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10">Less than £10</td>
+                        <td><input <?php if(get_option('maxPriceRadio') == '10'){ echo 'checked="checked"';} ?>
+                                class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10">Less than £10</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(10) ?>)
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50">Less than £50</td>
+                        <td><input <?php if(get_option('maxPriceRadio') == '50'){ echo 'checked="checked"';} ?>
+                                class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50">Less than £50</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(50) ?>)
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100">Less than £100</td>
+                        <td><input <?php if(get_option('maxPriceRadio') == '100'){ echo 'checked="checked"';} ?>
+                                class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100">Less than £100</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(100) ?>)
                         </td>
                     </tr>
                     <tr><th colspan="2" class="filterType">By price range</th></tr>
                     <tr>
-                        <td><input type="radio" name="maxPriceRadio" value="" id="maxPriceRange">
+                        <td><input <?php if(get_option('maxPriceRadio') == ''){ echo 'checked="checked"';} ?>
+                                type="radio" name="maxPriceRadio" value="" id="maxPriceRange">
                             <input value="<?= get_option('minPrice') ?>" class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
                         <td><input value="<?= get_option('maxPrice') ?>" class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
                     </tr>
                 </table>
-                <?php submit_button('Save changes', 'primary', 'filterOptions'); ?>
+                <section class="submitButton">
+                    <input type="submit" name="filterOptions" id="filterOptions" class="button button-primary" value="Save changes">
+                    <input type="button" name="resetFilters" id="resetFilters" class="button" value="Reset filters">
+                </section>
             </form>
         </div>
     </div>

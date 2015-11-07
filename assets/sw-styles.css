@@ -174,7 +174,7 @@ table.filter th.filterType{
     text-decoration: underline;
 }
 
-p.submit{
+section.submitButton{
     float: left;
     padding: 20px;
 }
