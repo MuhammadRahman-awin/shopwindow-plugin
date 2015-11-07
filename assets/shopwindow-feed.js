@@ -45,11 +45,10 @@ var SW = {
     },
 
     togglePrceRangeInout: function() {
-        jQuery("#maxPriceRange")
-            .focus(function () {
+        jQuery("#maxPriceRange").focus(function () {
             jQuery(".range").attr("readonly", false);
-        })
-        .focusout(function () {
+        });
+        jQuery(".maxPriceRadio").focus(function () {
             jQuery(".range").attr("readonly", true);
         });
     }

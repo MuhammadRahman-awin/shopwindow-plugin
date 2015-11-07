@@ -31,7 +31,14 @@ if (! empty($_POST['filterOptions'])) {
     $categories = ($_POST['categories']);
     delete_option('categories');
     add_option('categories', $categories);
-    var_dump(get_option('categories'));
+
+    $minPrice = ($_POST['minPrice']);
+    delete_option('minPrice');
+    add_option('minPrice', $minPrice);
+
+    $maxPrice = ($_POST['maxPrice']);
+    delete_option('maxPrice');
+    add_option('maxPrice', $maxPrice);
 }
 ?>
 <div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
@@ -93,27 +100,28 @@ if($fp->hasFeedInDb()) {
                         ?>
                     <tr><th colspan="2" class="filterType">By price</th></tr>
                     <tr>
-                        <td><input type="radio" name="maxPriceRadio" value="10">Less than £10</td>
+                        <td><input class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10">Less than £10</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(10) ?>)
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="radio" name="maxPriceRadio" value="50">Less than £50</td>
+                        <td><input class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50">Less than £50</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(50) ?>)
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="radio" name="maxPriceRadio" value="100">Less than £100</td>
+                        <td><input class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100">Less than £100</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(100) ?>)
                         </td>
                     </tr>
+                    <tr><th colspan="2" class="filterType">By price range</th></tr>
                     <tr>
                         <td><input type="radio" name="maxPriceRadio" value="" id="maxPriceRange">
-                            <input class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
-                        <td><input class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
+                            <input value="<?= get_option('minPrice') ?>" class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
+                        <td><input value="<?= get_option('maxPrice') ?>" class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
                     </tr>
                 </table>
                 <?php submit_button('Save changes', 'primary', 'filterOptions'); ?>
