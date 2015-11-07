@@ -93,6 +93,21 @@ class FeedProcessor
         return $this->db->getProductCountByFreeDeliveryCost();
     }
 
+    public function getProductCountByCategory()
+    {
+        return $this->db->getProductCountByCategory();
+    }
+
+    /**
+     * @param integer $price
+     *
+     * @return mixed
+     */
+    public function getProductCountForPrice($price)
+    {
+        return $this->db->getProductCountByPrice($price);
+    }
+
     /**
      * @param array $products
      * @return array

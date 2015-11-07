@@ -21,6 +21,13 @@ if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
         echo "<h3 class='info center'>Success! </br>$count Product imported</br></h3>";
     }
 }
+
+if (! empty($_POST['filterOptions'])) {
+    var_dump($_POST);
+    $deliveryMethod = ($_POST['deliveryMethod']);
+    delete_option('deliveryMethod');
+    add_option('deliveryMethod', $deliveryMethod);
+}
 ?>
 <div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
      xmlns="http://www.w3.org/1999/html">
@@ -41,24 +48,75 @@ if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
 <?php
 $fp = new FeedProcessor();
 if($fp->hasFeedInDb()) {
-var_dump($fp->getFreeDeliveryProducts());
    ?>
+   <section>
     <div class="options">
-        <div class="count"><span>Total product found:</span><span id="count"> <?php echo $fp->getFeedCount(); ?></span></div>
         <div class="form">
-            <form name="swOptions">
+            <form name="swOptions"  method="post">
                 <table>
-                    <tr><th colspan="2">Filter products:</th></tr>
+                    <tr><th colspan="2"><h2>Filter products</h2></th></tr>
                     <tr>
-                        <td>Free Delivery</td>
+                        <th colspan="2" class="default">(DEFAULT) Randomly displaying product from (<?= $fp->getFeedCount() ?>) items.
+                        </th>
+                    </tr>
+                    <tr><th colspan="2">By Delivery Type</th></tr>
+                    <tr>
+                        <td><input
+                                <?php if(get_option('deliveryMethod') == '0'){ echo 'checked="checked"'; } ?>
+                                type="checkbox" name="deliveryMethod" value="0" id="deliveryMethod">Free Delivery</td>
                         <td>
-                            <?= $fp->getFreeDeliveryProducts() ?>
+                            (<?= $fp->getFreeDeliveryProducts() ?>)
                         </td>
                     </tr>
-                </table>
 
+                    <?php
+                    if(count($fp->getProductCountByCategory()) > 1) {
+                            echo '<tr><th colspan="2">By Category Name</th></tr>';
+
+                            foreach($fp->getProductCountByCategory() as $category) {
+                                echo '
+                            <tr>
+                                <td><input type="checkbox" name="categories[]" value="'.$category['categoryName'].'">'.$category['categoryName'].'</td>
+                                <td>
+                                    '.$category['count'].'
+                                </td>
+                            </tr>
+                            ';
+                            }
+                        }
+                        ?>
+                    <tr><th colspan="2">By price</th></tr>
+                    <tr>
+                        <td><input type="radio" name="maxPriceRadio" value="10">Less than £10</td>
+                        <td>
+                            (<?= $fp->getProductCountForPrice(10) ?>)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="maxPriceRadio" value="50">Less than £50</td>
+                        <td>
+                            (<?= $fp->getProductCountForPrice(50) ?>)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="maxPriceRadio" value="100">Less than £100</td>
+                        <td>
+                            (<?= $fp->getProductCountForPrice(100) ?>)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="maxPriceRadio" value="" id="maxPriceRange">
+                            <input class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
+                        <td><input class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
+                    </tr>
+                </table>
+                <?php submit_button('Save changes', 'primary', 'filterOptions'); ?>
             </form>
         </div>
     </div>
+    <div class="productCount">
+        <span class="count"> Will randomly display product from <span id="productCount"> (<?= $fp->getFeedCount() ?>) </span> items. </span>
+    </div>
+    </section>
 <?php
 }

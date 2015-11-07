@@ -2,6 +2,7 @@ var SW = {
     init: function () {
         this.loadVerticalFeed();
         this.loadHorizontalFeed();
+        this.deliveryMethod();
     },
 
     loadHorizontalFeed: function(){
@@ -41,7 +42,12 @@ var SW = {
         });
 
         jQuery('#nextVertical').trigger('click');
+    },
 
+    deliveryMethod: function() {
+        jQuery("#maxPriceRange").on('click', function () {
+            jQuery(".range").attr("readonly", false);
+        });
     }
 };
 

@@ -113,8 +113,23 @@ class DataFeedDBConnection
     {
         global $wpdb;
 
-        $sql = "SELECT categoryName, count(*) FROM  $this->dbTable group by categoryName;";
+        $sql = "SELECT categoryName, count(*) as count FROM  $this->dbTable group by categoryName  HAVING count > 20 ORDER BY count DESC ;";
         $result = $wpdb->get_results($sql, ARRAY_A);
+
+        return $result;
+    }
+
+    /**
+     * @param integer $price
+     *
+     * @return mixed
+     */
+    public function getProductCountByPrice($price)
+    {
+        global $wpdb;
+
+        $sql = "SELECT count(*) as amount FROM $this->dbTable where price < $price;";
+        $result = $wpdb->get_var($sql);
 
         return $result;
     }
