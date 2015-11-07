@@ -23,10 +23,15 @@ if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
 }
 
 if (! empty($_POST['filterOptions'])) {
-    var_dump($_POST);
     $deliveryMethod = ($_POST['deliveryMethod']);
     delete_option('deliveryMethod');
     add_option('deliveryMethod', $deliveryMethod);
+
+    $categories = array();
+    $categories = ($_POST['categories']);
+    delete_option('categories');
+    add_option('categories', $categories);
+    var_dump(get_option('categories'));
 }
 ?>
 <div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
@@ -53,13 +58,13 @@ if($fp->hasFeedInDb()) {
     <div class="options">
         <div class="form">
             <form name="swOptions"  method="post">
-                <table>
+                <table class="filter">
                     <tr><th colspan="2"><h2>Filter products</h2></th></tr>
                     <tr>
                         <th colspan="2" class="default">(DEFAULT) Randomly displaying product from (<?= $fp->getFeedCount() ?>) items.
                         </th>
                     </tr>
-                    <tr><th colspan="2">By Delivery Type</th></tr>
+                    <tr><th colspan="2" class="filterType">By Delivery Type</th></tr>
                     <tr>
                         <td><input
                                 <?php if(get_option('deliveryMethod') == '0'){ echo 'checked="checked"'; } ?>
@@ -71,21 +76,22 @@ if($fp->hasFeedInDb()) {
 
                     <?php
                     if(count($fp->getProductCountByCategory()) > 1) {
-                            echo '<tr><th colspan="2">By Category Name</th></tr>';
+                            echo '<tr><th colspan="2" class="filterType">By Category</th></tr>';
 
                             foreach($fp->getProductCountByCategory() as $category) {
-                                echo '
+                                ?>
                             <tr>
-                                <td><input type="checkbox" name="categories[]" value="'.$category['categoryName'].'">'.$category['categoryName'].'</td>
+                                <td><input <?php if(in_array($category['categoryName'], get_option('categories') )) { echo 'checked="checked"'; } ?>
+                                type="checkbox" name="categories[]" value="<?=$category['categoryName']?>"><?=$category['categoryName']?></td>
                                 <td>
-                                    '.$category['count'].'
+                                    <?=$category['count']?>
                                 </td>
                             </tr>
-                            ';
+                            <?php
                             }
                         }
                         ?>
-                    <tr><th colspan="2">By price</th></tr>
+                    <tr><th colspan="2" class="filterType">By price</th></tr>
                     <tr>
                         <td><input type="radio" name="maxPriceRadio" value="10">Less than £10</td>
                         <td>

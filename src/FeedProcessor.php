@@ -66,7 +66,7 @@ class FeedProcessor
      */
     private function getProducts()
     {
-        $data = $this->db->getLimitedRows(10);
+        $data = $this->db->getLimitedRows(20);
         $products = $this->getProductWithImage($data);
 
         return $products;

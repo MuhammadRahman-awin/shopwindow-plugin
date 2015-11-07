@@ -2,7 +2,7 @@ var SW = {
     init: function () {
         this.loadVerticalFeed();
         this.loadHorizontalFeed();
-        this.deliveryMethod();
+        this.togglePrceRangeInout();
     },
 
     loadHorizontalFeed: function(){
@@ -44,9 +44,13 @@ var SW = {
         jQuery('#nextVertical').trigger('click');
     },
 
-    deliveryMethod: function() {
-        jQuery("#maxPriceRange").on('click', function () {
+    togglePrceRangeInout: function() {
+        jQuery("#maxPriceRange")
+            .focus(function () {
             jQuery(".range").attr("readonly", false);
+        })
+        .focusout(function () {
+            jQuery(".range").attr("readonly", true);
         });
     }
 };

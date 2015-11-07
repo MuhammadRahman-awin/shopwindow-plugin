@@ -146,7 +146,6 @@ div .options{
     border: 1px solid green;
     margin-top: 100px;
     width: 25%;
-    padding-bottom: 30px;
     float: left;
 }
 div .options .form{
@@ -167,4 +166,15 @@ div .productCount span{
     font-style: oblique;
     font-weight: bold;
     font-size: 22px;
+}
+
+table.filter th.filterType{
+    padding: 10px 0px 10px 0px;
+    text-align: left;
+    text-decoration: underline;
+}
+
+p.submit{
+    float: left;
+    padding: 20px;
 }
