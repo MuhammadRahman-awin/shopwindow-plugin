@@ -54,6 +54,10 @@ class FeedProcessor
     public function displayWidget()
     {
         $data = $this->getProducts();
+        if (empty($data)) {
+            return '<p class="info">No product found with image and description</p>';
+        }
+
         if ($this->layout) {
             return $this->printer->horizontalWidget($this->title, $data);
         }

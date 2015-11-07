@@ -161,11 +161,8 @@ div .productCount{
     margin-top: 100px;
     width: 600px;
 }
-
-div .productCount span{
-    font-style: oblique;
-    font-weight: bold;
-    font-size: 22px;
+div .productCount h1{
+    color: green;
 }
 
 table.filter th.filterType{

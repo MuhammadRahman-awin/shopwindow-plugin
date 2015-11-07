@@ -2,6 +2,7 @@
 require_once('src/CSVImporter.php');
 require_once('src/FileUploadErrorHandler.php');
 require_once('src/FeedProcessor.php');
+require_once('src/OptionHandler.php');
 
 $max_size = ini_get('post_max_size');
 $max_file_size = ini_get('upload_max_filesize');
@@ -23,30 +24,13 @@ if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
 }
 
 if (! empty($_POST['filterOptions'])) {
-    $deliveryMethod = ($_POST['deliveryMethod']);
-    delete_option('deliveryMethod');
-    add_option('deliveryMethod', $deliveryMethod);
-
-    $categories = array();
-    $categories = ($_POST['categories']);
-    delete_option('categories');
-    add_option('categories', $categories);
-
-    $minPrice = ($_POST['minPrice']);
-    delete_option('minPrice');
-    add_option('minPrice', $minPrice);
-
-    $maxPrice = ($_POST['maxPrice']);
-    delete_option('maxPrice');
-    add_option('maxPrice', $maxPrice);
-
-    $maxPriceRadio = ($_POST['maxPriceRadio']);
-    delete_option('maxPriceRadio');
-    add_option('maxPriceRadio', $maxPriceRadio);
+    $optionHandler = new OptionHandler($_POST);
+    $optionHandler->updateOptions();
 }
+
 ?>
 <div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <h2>Import your shopwindow data feed to display in widget</h2>
         </br><h3 class="info">Maximum file size must be smaller than: <?php echo $max_file_size ?>B </h3>
     <p>[Update 'upload_max_filesize' directive in php.ini for larger import]</p>
@@ -70,16 +54,16 @@ if($fp->hasFeedInDb()) {
         <div class="form">
             <form name="swFilters" id="swFilters"  method="post">
                 <table class="filter">
-                    <tr><th colspan="2"><h2>Filter products</h2></th></tr>
                     <tr>
-                        <th colspan="2" class="default">(DEFAULT) Randomly display product from (<?= $fp->getFeedCount() ?>) items.
+                        <th colspan="2" class="default">(DEFAULT) Randomly display product in random order.
                         </th>
                     </tr>
+                    <tr><th colspan="2"><h2>Filter products</h2></th></tr>
                     <tr><th colspan="2" class="filterType">By Delivery Type</th></tr>
                     <tr>
                         <td><input
-                                <?php if(get_option('deliveryMethod') == '0'){ echo 'checked="checked"'; } ?>
-                                type="checkbox" name="deliveryMethod" value="0" id="deliveryMethod">Free Delivery</td>
+                                <?php if(get_option('sw_deliveryMethod') == 'free'){ echo 'checked="checked"'; } ?>
+                                type="checkbox" name="deliveryMethod" value="free" id="deliveryMethod">Free Delivery</td>
                         <td>
                             (<?= $fp->getFreeDeliveryProducts() ?>)
                         </td>
@@ -92,7 +76,7 @@ if($fp->hasFeedInDb()) {
                             foreach($fp->getProductCountByCategory() as $category) {
                                 ?>
                             <tr>
-                                <td><input <?php if(in_array($category['categoryName'], get_option('categories') )) { echo 'checked="checked"'; } ?>
+                                <td><input <?php if(in_array($category['categoryName'], get_option('sw_categories') )) { echo 'checked="checked"'; } ?>
                                 type="checkbox" name="categories[]" value="<?=$category['categoryName']?>"><?=$category['categoryName']?></td>
                                 <td>
                                     <?=$category['count']?>
@@ -104,21 +88,21 @@ if($fp->hasFeedInDb()) {
                         ?>
                     <tr><th colspan="2" class="filterType">By price</th></tr>
                     <tr>
-                        <td><input <?php if(get_option('maxPriceRadio') == '10'){ echo 'checked="checked"';} ?>
+                        <td><input <?php if(get_option('sw_maxPriceRadio') == '10'){ echo 'checked="checked"';} ?>
                                 class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10">Less than £10</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(10) ?>)
                         </td>
                     </tr>
                     <tr>
-                        <td><input <?php if(get_option('maxPriceRadio') == '50'){ echo 'checked="checked"';} ?>
+                        <td><input <?php if(get_option('sw_maxPriceRadio') == '50'){ echo 'checked="checked"';} ?>
                                 class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50">Less than £50</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(50) ?>)
                         </td>
                     </tr>
                     <tr>
-                        <td><input <?php if(get_option('maxPriceRadio') == '100'){ echo 'checked="checked"';} ?>
+                        <td><input <?php if(get_option('sw_maxPriceRadio') == '100'){ echo 'checked="checked"';} ?>
                                 class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100">Less than £100</td>
                         <td>
                             (<?= $fp->getProductCountForPrice(100) ?>)
@@ -126,10 +110,10 @@ if($fp->hasFeedInDb()) {
                     </tr>
                     <tr><th colspan="2" class="filterType">By price range</th></tr>
                     <tr>
-                        <td><input <?php if(get_option('maxPriceRadio') == ''){ echo 'checked="checked"';} ?>
-                                type="radio" name="maxPriceRadio" value="" id="maxPriceRange">
-                            <input value="<?= get_option('minPrice') ?>" class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
-                        <td><input value="<?= get_option('maxPrice') ?>" class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
+                        <td><input <?php if(get_option('sw_maxPriceRadio') == 'range'){ echo 'checked="checked"';} ?>
+                                type="radio" name="maxPriceRadio" value="range" id="maxPriceRange">
+                            <input value="<?= get_option('sw_minPrice') ?>" class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
+                        <td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
                     </tr>
                 </table>
                 <section class="submitButton">
@@ -140,7 +124,7 @@ if($fp->hasFeedInDb()) {
         </div>
     </div>
     <div class="productCount">
-        <span class="count"> Will randomly display product from <span id="productCount"> (<?= $fp->getFeedCount() ?>) </span> items. </span>
+        <h1 class="count"> <?= $fp->getFeedCount() ?> products found.</h1> </h1>
     </div>
     </section>
 <?php

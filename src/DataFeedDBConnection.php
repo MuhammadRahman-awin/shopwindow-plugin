@@ -69,9 +69,13 @@ class DataFeedDBConnection
     {
         global $wpdb;
 
-        $sql = "SELECT * FROM  $this->dbTable
-                WHERE description !=''
-                ORDER BY RAND() LIMIT " . $limit;
+        $extraWhere = $this->getWhere();
+
+        $sql = "SELECT * FROM  $this->dbTable" .
+                " WHERE description !=''";
+        $sql .= $extraWhere;
+        $sql .= "ORDER BY RAND() LIMIT " . $limit;
+        error_log(print_r($sql, 1));
         $result = $wpdb->get_results($sql, ARRAY_A);
 
         return $result;
@@ -83,7 +87,8 @@ class DataFeedDBConnection
     public function countFeedInDb()
     {
         global $wpdb;
-        $sql = "SELECT COUNT(*) FROM ".  $this->dbTable;
+        $extraWhere = $this->getWhere();
+        $sql = "SELECT COUNT(*) FROM ".  $this->dbTable . " WHERE price > 0 ". $extraWhere;
         $result = $wpdb->get_var($sql);
 
         return $result;
@@ -113,7 +118,13 @@ class DataFeedDBConnection
     {
         global $wpdb;
 
-        $sql = "SELECT categoryName, count(*) as count FROM  $this->dbTable group by categoryName  HAVING count > 20 ORDER BY count DESC ;";
+        $sql = "SELECT
+                  categoryName,
+                COUNT(*) as count
+                FROM  $this->dbTable
+                GROUP BY categoryName
+                HAVING count > 20
+                ORDER BY count DESC ;";
         $result = $wpdb->get_results($sql, ARRAY_A);
 
         return $result;
@@ -128,10 +139,40 @@ class DataFeedDBConnection
     {
         global $wpdb;
 
-        $sql = "SELECT count(*) as amount FROM $this->dbTable where price < $price;";
+        $sql = "SELECT COUNT(*) as amount FROM $this->dbTable where price < $price;";
         $result = $wpdb->get_var($sql);
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    private function getWhere()
+    {
+        $where = "";
+        if (get_option('sw_deliveryMethod') == 'free') {
+            $where .= "AND (deliveryCost=0 OR deliveryCost='') ";
+        }
+
+        $categories = get_option('sw_categories');
+        if (! empty($categories)) {
+            $where .= "AND categoryName in (\"". implode('","', $categories) . "\") ";
+        }
+
+        $maxPriceRadio = get_option('sw_maxPriceRadio');
+        if ($maxPriceRadio == 'range') {
+            $min = get_option('sw_minPrice');
+            $max = get_option('sw_maxPrice');
+            $where .= "AND price between $min AND $max ";
+        } else {
+            $max = (int)$maxPriceRadio;
+            if ($max > 0) {
+                $where .= "AND price < $max";
+            }
+        }
+
+        return $where;
     }
 
     /**
