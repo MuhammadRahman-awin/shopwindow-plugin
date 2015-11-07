@@ -3,6 +3,12 @@
 
 class WidgetPrinter
 {
+    /**
+     * @param $title
+     * @param array $data
+     *
+     * @return string
+     */
     public function horizontalWidget($title, array $data)
     {
         $productList = '
@@ -36,7 +42,7 @@ class WidgetPrinter
                 <tr class="price">';
         foreach($data as $product) {
             $productList .= '
-                <td class="price">'. $this->getCurrencySymbol($product['currency']).''.$product['price'].'</td>
+                <td class="price">'. $this->getCurrencySymbol($product['currency']).''.number_format($product['price'], 2).'</td>
             ';
         }
         $productList .= '
@@ -44,6 +50,12 @@ class WidgetPrinter
         return $productList;
     }
 
+    /**
+     * @param $title
+     * @param array $data
+     *
+     * @return string
+     */
     public function verticalWidget($title, array $data)
     {
         $productList = '<table class="vertical">
@@ -64,7 +76,7 @@ class WidgetPrinter
                         </td>
                     </tr>
                     <tr>
-                        <td class="price">'. $this->getCurrencySymbol($product['currency']).''.$product['price'].'</td>
+                        <td class="price">'. $this->getCurrencySymbol($product['currency']).''.number_format($product['price'], 2).'</td>
                     </tr>
             ';
         }
