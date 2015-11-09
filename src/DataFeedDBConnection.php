@@ -173,7 +173,6 @@ class DataFeedDBConnection
             clickDateTime = '"      . $row['clickDateTime'] ."',
             feed = '"               . $row['feedId'] . "';";
 
-        var_dump($insertOrUpdate);
         $wpdb->query($insertOrUpdate);
     }
 
