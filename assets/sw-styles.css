@@ -210,3 +210,7 @@ section.submitButton{
     float: left;
     padding: 20px;
 }
+
+.reportButton{
+    margin: 10px;
+}

@@ -126,10 +126,11 @@ if($fp->hasFeedInDb()) {
         </div>
     </div>
     <div class="productCount">
-        <h1 class="count"> Filtered item: <?= $fp->getFeedCount() ?></h1> </h1>
+        <h1 class="count"> Product found: <?= $fp->getFeedCount() ?></h1> </h1>
     </div>
-    </section>
-    <section class="analytics">
+       <input class="reportButton" type="button" value="Display Report" id="reportButton"/>
+   </section>
+    <section class="analytics" style="display: none;">
     <div class="analyticsIP">
         <?php
         $db = new DataFeedDBConnection();

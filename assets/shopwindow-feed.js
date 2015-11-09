@@ -3,6 +3,7 @@ var SW = {
         this.loadVerticalFeed();
         this.loadHorizontalFeed();
         this.togglePrceRangeInout();
+        this.displayReport();
         this.resetForm();
     },
 
@@ -79,6 +80,12 @@ var SW = {
             var id = classNameString.split("-");
             return id[1];
         }
+    },
+
+    displayReport: function() {
+        jQuery("#reportButton").on('click', function () {
+            jQuery('section.analytics').show();
+        });
     },
 
     resetForm: function() {
