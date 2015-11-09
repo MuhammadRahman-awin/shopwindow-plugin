@@ -35,6 +35,10 @@ class DataFeedDBConnection
      */
     public function insertRow($row)
     {
+        if (empty(($row['description']))) {
+            return ;
+        }
+
         global $wpdb;
 
         $query = "
@@ -77,7 +81,7 @@ class DataFeedDBConnection
         $sql = "SELECT * FROM  $this->dbTable" .
                 " WHERE description !=''";
         $sql .= $extraWhere;
-        $sql .= "ORDER BY RAND() LIMIT " . $limit;
+        $sql .= " ORDER BY RAND() LIMIT " . $limit;
         error_log(print_r($sql, 1));
         $result = $wpdb->get_results($sql, ARRAY_A);
 

@@ -31,9 +31,8 @@ class WidgetPrinter
         foreach($data as $product) {
             $productList .= '
                 <td class="name">
-                <a class="track-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                     '. $product['productName'].'
-                </a></td>
+                </td>
             ';
         }
 
@@ -70,9 +69,7 @@ class WidgetPrinter
                         </td>
                         <td class="description" rowspan="2">
                             '. substr($product['description'], 0, 130).'
-                            <a class="track-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
-                                ...more
-                            </a>
+                                ...
                         </td>
                     </tr>
                     <tr>

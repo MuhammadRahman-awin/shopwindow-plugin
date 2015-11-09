@@ -145,6 +145,7 @@ section {
 div .options{
     border: 1px solid green;
     margin-top: 100px;
+    margin-right: 10px;
     width: 25%;
     float: left;
 }
@@ -212,5 +213,6 @@ section.submitButton{
 }
 
 .reportButton{
-    margin: 10px;
+    padding-left: 40px;
+
 }

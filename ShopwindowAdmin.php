@@ -77,8 +77,13 @@ if($fp->hasFeedInDb()) {
                             foreach($fp->getProductCountByCategory() as $category) {
                                 ?>
                             <tr>
-                                <td><input <?php if(in_array($category['categoryName'], get_option('sw_categories') )) { echo 'checked="checked"'; } ?>
-                                type="checkbox" name="categories[]" value="<?=$category['categoryName']?>"><?=$category['categoryName']?></td>
+                                <td>
+                                    <input
+                                        <?php if(is_array(get_option('sw_categories')) && in_array($category['categoryName'], get_option('sw_categories') ))
+                                        { echo 'checked="checked"'; } ?>
+                                        type="checkbox" name="categories[]"
+                                        value="<?=$category['categoryName']?>"><?=$category['categoryName']?>
+                                </td>
                                 <td>
                                     <?=$category['count']?>
                                 </td>
@@ -128,7 +133,7 @@ if($fp->hasFeedInDb()) {
     <div class="productCount">
         <h1 class="count"> Product found: <?= $fp->getFeedCount() ?></h1> </h1>
     </div>
-       <input class="reportButton" type="button" value="Display Report" id="reportButton"/>
+       <input class="button reportButton" type="button" value="Display Report" id="reportButton"/>
    </section>
     <section class="analytics" style="display: none;">
     <div class="analyticsIP">
