@@ -173,11 +173,43 @@ class DataFeedDBConnection
         $wpdb->query($insertOrUpdate);
     }
 
-    public function getAnalytics()
+    public function getIPAnalytics()
     {
         global $wpdb;
 
-        $sql = "select clickIp, count(*) as click from ". $this->analyticsTable. " group by clickIp LIMIT 20;";
+        $sql = "SELECT clickIp, COUNT(*) AS click FROM ". $this->analyticsTable. " GROUP BY clickIp ORDER BY click DESC LIMIT 20;";
+        $result = $wpdb->get_results($sql, ARRAY_A);
+
+        return $result;
+    }
+
+    public function getClickAnalytics()
+    {
+        global $wpdb;
+
+        $sql = "
+            SELECT clickDateTime, df.merchantImageUrl, df.awDeepLink
+            FROM ". $this->analyticsTable . " da
+            JOIN ". $this->tableName ." df
+            ON df.id = da.feed
+            WHERE DATE(clickDateTime) = CURDATE() ORDER BY clickDateTime DESC LIMIT 20;
+        ";
+        $result = $wpdb->get_results($sql, ARRAY_A);
+
+        return $result;
+    }
+
+    public function getPopularAnalytics()
+    {
+        global $wpdb;
+
+        $sql = "
+            SELECT feed AS product, COUNT(*) AS count, df.merchantImageUrl, df.awDeepLink
+            FROM ". $this->analyticsTable . " da
+            JOIN ". $this->tableName ." df
+            ON df.id = da.feed
+            GROUP BY product ORDER BY count DESC LIMIT 20;
+        ";
         $result = $wpdb->get_results($sql, ARRAY_A);
 
         return $result;

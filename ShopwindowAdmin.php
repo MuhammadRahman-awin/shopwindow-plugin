@@ -59,7 +59,7 @@ if($fp->hasFeedInDb()) {
                         <th colspan="2" class="default">(DEFAULT) Randomly display product in random order.
                         </th>
                     </tr>
-                    <tr><th colspan="2"><h2>Filter products</h2></th></tr>
+                    <tr><th colspan="2"><h2>Filter products*</h2></th></tr>
                     <tr><th colspan="2" class="filterType">By Delivery Type</th></tr>
                     <tr>
                         <td><input
@@ -116,6 +116,7 @@ if($fp->hasFeedInDb()) {
                             <input value="<?= get_option('sw_minPrice') ?>" class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
                         <td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
                     </tr>
+                    <tr><td colspan="2"><i>*Product without valid image will not be displayed</i></td> </tr>
                 </table>
                 <section class="submitButton">
                     <input type="submit" name="filterOptions" id="filterOptions" class="button button-primary" value="Save changes">
@@ -125,13 +126,14 @@ if($fp->hasFeedInDb()) {
         </div>
     </div>
     <div class="productCount">
-        <h1 class="count"> <?= $fp->getFeedCount() ?> products found.</h1> </h1>
+        <h1 class="count"> Filtered item: <?= $fp->getFeedCount() ?></h1> </h1>
     </div>
     </section>
-    <div class="analytics">
+    <section class="analytics">
+    <div class="analyticsIP">
         <?php
         $db = new DataFeedDBConnection();
-        $analytics = $db->getAnalytics();
+        $analytics = $db->getIPAnalytics();
         ?>
         <table class="analytics">
             <tr><th colspan="2"><h1> User click analytics* </h1></th></tr>
@@ -146,5 +148,44 @@ if($fp->hasFeedInDb()) {
             <tr><td colspan="2"><i>*may not be 100% correct due to proxy or manual http header</i></td> </tr>
         </table>
     </div>
+    <div class="analyticsPopular">
+        <?php
+        $db = new DataFeedDBConnection();
+        $analytics = $db->getPopularAnalytics();
+        ?>
+        <table class="analytics">
+            <tr><th colspan="2"><h1> Popular Products </h1></th></tr>
+            <tr><th>Product</th><th>Click</th></tr>
+            <?php
+            foreach($analytics as $row) {
+                ?>
+                <tr>
+                    <td><a href="<?=$row['awDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/> </a></td>
+                    <td><?=$row['count']?></td></tr>
+                <?php
+            }
+            ?>
+        </table>
+    </div>
+    <div class="analyticsDaily">
+        <?php
+        $db = new DataFeedDBConnection();
+        $analytics = $db->getClickAnalytics();
+        ?>
+        <table class="analytics">
+            <tr><th colspan="2"><h1> User daily click </h1></th></tr>
+            <tr><th>Click time</th><th>Click</th></tr>
+            <?php
+            foreach($analytics as $row) {
+                ?>
+                <tr>
+                    <td><?=$row['clickDateTime']?></td>
+                    <td><a href="<?=$row['awDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/></a></td></tr>
+                <?php
+            }
+            ?>
+        </table>
+    </div>
+    </section>
 <?php
 }

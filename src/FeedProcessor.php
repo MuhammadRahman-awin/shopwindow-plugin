@@ -70,7 +70,7 @@ class FeedProcessor
      */
     private function getProducts()
     {
-        $data = $this->db->getLimitedRows(20);
+        $data = $this->db->getLimitedRows(5);
         $products = $this->getProductWithImage($data);
 
         return $products;
@@ -92,11 +92,17 @@ class FeedProcessor
         return $this->db->countFeedInDb();
     }
 
+    /**
+     * @return mixed
+     */
     public function getFreeDeliveryProducts()
     {
         return $this->db->getProductCountByFreeDeliveryCost();
     }
 
+    /**
+     * @return mixed
+     */
     public function getProductCountByCategory()
     {
         return $this->db->getProductCountByCategory();
@@ -118,6 +124,7 @@ class FeedProcessor
      */
     private function getProductWithImage($products)
     {
+        return $products;
         $productWithImage = array();
         $handle = curl_init();
 
