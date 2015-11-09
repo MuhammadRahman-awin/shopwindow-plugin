@@ -4,9 +4,11 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 class DataFeedDBConnection
 {
-
     /** @var string */
     private $dbTable = "";
+
+    /** @var string */
+    private $analyticsTable = "";
 
     /** @var string */
     private $tableName = "";
@@ -17,6 +19,7 @@ class DataFeedDBConnection
 
         $this->tableName = $wpdb->prefix . "datafeed";
         $this->dbTable = DB_NAME . "." . $this->tableName;
+        $this->analyticsTable = DB_NAME . ".". $wpdb->prefix. "datafeed_analytics";
 
         $this->createTableIfNotExist();
     }
@@ -146,6 +149,41 @@ class DataFeedDBConnection
     }
 
     /**
+     * @param array $row
+     */
+    public function saveAnalytics(array $row)
+    {
+        global $wpdb;
+
+        $insertOrUpdate = "
+        INSERT INTO " .$this->analyticsTable. "
+            (clickIp, clickDateTime, feed)
+        VALUES
+            (
+            '" .$row['clickIp']. "','" .
+             $row['clickDateTime']. "','" .
+             $row['feedId']. "'
+            )
+        ON DUPLICATE KEY UPDATE
+            clickIp = '"            . $row['clickIp'] ."',
+            clickDateTime = '"      . $row['clickDateTime'] ."',
+            feed = '"               . $row['feedId'] . "';";
+
+        var_dump($insertOrUpdate);
+        $wpdb->query($insertOrUpdate);
+    }
+
+    public function getAnalytics()
+    {
+        global $wpdb;
+
+        $sql = "select clickIp, count(*) as click from ". $this->analyticsTable. " group by clickIp LIMIT 20;";
+        $result = $wpdb->get_results($sql, ARRAY_A);
+
+        return $result;
+    }
+
+    /**
      * @return string
      */
     private function getWhere()
@@ -176,12 +214,17 @@ class DataFeedDBConnection
     }
 
     /**
-     *
+     * create necessary db tables
      */
     private function createTableIfNotExist()
     {
-        global $wpdb;
+        $this->createFeedTable();
+        $this->createAnalyticsTable();
+    }
 
+    private function createFeedTable()
+    {
+        global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE " . $this->dbTable. "(
@@ -199,6 +242,26 @@ class DataFeedDBConnection
                 ) $charset_collate;";
 
         $wpdb->get_var("SHOW TABLES LIKE '". $this->tableName . "'");
+        if($wpdb->num_rows != 1) {
+            dbDelta( $sql );
+        }
+    }
+
+    private function createAnalyticsTable()
+    {
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "
+          CREATE TABLE ". $this->analyticsTable ." (
+          id int(11) NOT NULL AUTO_INCREMENT,
+          clickIp varchar(45) NOT NULL,
+          clickDateTime datetime DEFAULT NULL,
+          feed int(11) DEFAULT NULL,
+          PRIMARY KEY (id)
+        ) $charset_collate;";
+
+        $wpdb->get_var("SHOW TABLES LIKE 'wp_datafeed_analytics'");
         if($wpdb->num_rows != 1) {
             dbDelta( $sql );
         }

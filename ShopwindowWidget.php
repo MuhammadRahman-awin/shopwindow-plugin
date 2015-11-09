@@ -180,6 +180,8 @@ function datafeedUninstall() {
 
     global $wpdb;
     $table = $wpdb->prefix."datafeed";
+    $tableAnalytics = $wpdb->prefix."datafeed_analytics";
 
     $wpdb->query("DROP TABLE IF EXISTS $table");
+    $wpdb->query("DROP TABLE IF EXISTS $tableAnalytics");
 }

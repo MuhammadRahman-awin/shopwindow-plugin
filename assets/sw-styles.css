@@ -157,12 +157,31 @@ div .options .default{
 }
 
 div .productCount{
-    margin-left: 30%;
+    margin-left: 40%;
     margin-top: 100px;
     width: 600px;
 }
 div .productCount h1{
     color: green;
+}
+
+div .analytics{
+    margin-left: 30%;
+    margin-top: 100px;
+    width: 400px;
+}
+
+table.analytics{
+    border: 1px solid maroon;
+}
+table.analytics th{
+    text-decoration: underline;
+    vertical-align: middle;
+    text-align: center;
+}
+table.analytics td{
+    vertical-align: middle;
+    text-align: center;
 }
 
 table.filter th.filterType{

@@ -3,6 +3,7 @@ require_once('src/CSVImporter.php');
 require_once('src/FileUploadErrorHandler.php');
 require_once('src/FeedProcessor.php');
 require_once('src/OptionHandler.php');
+require_once('src/DataFeedDBConnection.php');
 
 $max_size = ini_get('post_max_size');
 $max_file_size = ini_get('upload_max_filesize');
@@ -127,5 +128,23 @@ if($fp->hasFeedInDb()) {
         <h1 class="count"> <?= $fp->getFeedCount() ?> products found.</h1> </h1>
     </div>
     </section>
+    <div class="analytics">
+        <?php
+        $db = new DataFeedDBConnection();
+        $analytics = $db->getAnalytics();
+        ?>
+        <table class="analytics">
+            <tr><th colspan="2"><h1> User click analytics* </h1></th></tr>
+            <tr><th>User IP</th><th>Click</th></tr>
+            <?php
+            foreach($analytics as $row) {
+                ?>
+                <tr><td><?=$row['clickIp']?></td><td><?=$row['click']?></td></tr>
+                <?php
+            }
+            ?>
+            <tr><td colspan="2"><i>*may not be 100% correct due to proxy or manual http header</i></td> </tr>
+        </table>
+    </div>
 <?php
 }

@@ -15,7 +15,7 @@ var SW = {
                 success: function(response){
                     jQuery('#ajaxResponseHorizontal').html(response);
                     jQuery("#nextHorizontal").html("&raquo;");
-
+                    SW.processAnalytics();
                 },
                 error: function(errorThrown){
                     console.log(errorThrown);
@@ -35,6 +35,7 @@ var SW = {
                 success: function(response){
                     jQuery('#ajaxResponseVertical').html(response);
                     jQuery("#nextVertical").html('Next &raquo;')
+                    SW.processAnalytics();
                 },
                 error: function(errorThrown){
                     console.log(errorThrown);
@@ -55,6 +56,29 @@ var SW = {
         jQuery(".maxPriceRadio").focus(function () {
             jQuery(".range").attr("readonly", true);
         });
+    },
+
+    processAnalytics: function () {
+        jQuery("a[class^='track-'],a[class^='trackImage']").on('click', function(e){
+            var feedId = getFeedId(this.className);
+            jQuery.ajax({
+                url: shopwindow_params.ajaxurl,
+                data: {
+                    'action': 'track_user_click',
+                    'feedId': feedId
+                },
+                success: function(response){
+                },
+                error: function(errorThrown){
+                    console.log(errorThrown);
+                }
+            })
+        });
+
+        var getFeedId = function (classNameString) {
+            var id = classNameString.split("-");
+            return id[1];
+        }
     },
 
     resetForm: function() {

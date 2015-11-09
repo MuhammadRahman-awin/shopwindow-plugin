@@ -18,7 +18,7 @@ class WidgetPrinter
         foreach($data as $product) {
             $productList .= '
                 <td class="image">
-                    <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                    <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                         <img src='.$product['merchantImageUrl'].' />
                     </a>
                 </td>
@@ -31,7 +31,7 @@ class WidgetPrinter
         foreach($data as $product) {
             $productList .= '
                 <td class="name">
-                <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                <a class="track-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                     '. $product['productName'].'
                 </a></td>
             ';
@@ -64,13 +64,13 @@ class WidgetPrinter
             $productList .= '
                     <tr class="image">
                         <td class="image">
-                            <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                            <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                                 <img src='.$product['merchantImageUrl'].' />
                             </a>
                         </td>
                         <td class="description" rowspan="2">
                             '. substr($product['description'], 0, 130).'
-                            <a href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                            <a class="track-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                                 ...more
                             </a>
                         </td>
