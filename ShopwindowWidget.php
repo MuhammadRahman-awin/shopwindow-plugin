@@ -10,6 +10,7 @@ Author URI: http://mmrs151.tumblr.com/
 
 require_once('src/FeedProcessor.php');
 require_once('src/sw-ajax.php');
+require_once('src/OptionHandler.php');
 
 class ShopwindowWidget extends WP_Widget
 {
@@ -163,7 +164,7 @@ function my_admin_notice() {
     $fp = new FeedProcessor();
     if(! $fp->hasFeedInDb()) {
     ?>
-        <div class="error">
+        <div class="update-nag">
             <p><?php _e( '<a href="'.admin_url('admin.php?page=shopwindow-feed/ShopwindowAdmin.php').'">Import  your shopwindow data feed to display in widget!</a>', 'my-text-domain' ); ?></p>
         </div>
     <?php
@@ -182,11 +183,7 @@ function datafeedUninstall() {
     $table = $wpdb->prefix."datafeed";
     $tableAnalytics = $wpdb->prefix."datafeed_analytics";
 
-    delete_option('sw_deliveryMethod');
-    delete_option('sw_categories');
-    delete_option('sw_maxPriceRadio');
-    delete_option('sw_minPrice');
-    delete_option('sw_maxPrice');
+    delete_sw_options();
 
     $wpdb->query("DROP TABLE IF EXISTS $table");
     $wpdb->query("DROP TABLE IF EXISTS $tableAnalytics");

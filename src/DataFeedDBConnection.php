@@ -1,6 +1,7 @@
 <?php
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+require_once('OptionHandler.php');
 
 class DataFeedDBConnection
 {
@@ -26,6 +27,8 @@ class DataFeedDBConnection
 
     public function truncateTable()
     {
+        delete_sw_options();
+
         global $wpdb;
         $wpdb->query("TRUNCATE TABLE ". $this->dbTable);
     }
