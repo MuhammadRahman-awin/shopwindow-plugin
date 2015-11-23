@@ -64,7 +64,7 @@ table.vertical td.nextTd{
 }
 table.vertical img {
     width: 150px;
-    height: 150px;
+    height: 140px;
 }
 
 div .nextVertical button{
@@ -87,8 +87,8 @@ table.horizontal td{
     border: 1px solid rgba(51, 51, 51, 0.1);
 }
 table.horizontal img {
-    width: 130px;
-    height: 150px;
+    width: 150px;
+    height: 140px;
 }
 table.horizontal .title {
     vertical-align: middle;
@@ -214,5 +214,22 @@ section.submitButton{
 
 .reportButton{
     padding-left: 40px;
+
+}
+
+.hover img:hover {
+    opacity: .8;
+
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -o-transition: all 1s ease; /* IE 9 */
+    -ms-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+
+    -webkit-transform:scale(1.1); /* Safari and Chrome */
+    -moz-transform:scale(1.1); /* Firefox */
+    -ms-transform:scale(1.1); /* IE 9 */
+    -o-transform:scale(1.1); /* Opera */
+    transform:scale(1.1);
 
 }

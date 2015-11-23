@@ -17,7 +17,7 @@ class WidgetPrinter
                 <tr class="image">';
         foreach($data as $product) {
             $productList .= '
-                <td class="image">
+                <td class="hover image">
                     <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                         <img src='.$product['merchantImageUrl'].' />
                     </a>
@@ -62,7 +62,7 @@ class WidgetPrinter
         foreach($data as $product) {
             $productList .= '
                     <tr class="image">
-                        <td class="image">
+                        <td class="hover image">
                             <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
                                 <img src='.$product['merchantImageUrl'].' />
                             </a>

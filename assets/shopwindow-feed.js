@@ -15,6 +15,7 @@ var SW = {
                     jQuery('form#swFeedHorizontal').serialize(),
                 success: function(response){
                     jQuery('#ajaxResponseHorizontal').html(response);
+                    jQuery("#nextHorizontal").show();
                     jQuery("#nextHorizontal").html("&raquo;");
                     SW.processAnalytics();
                 },
@@ -35,6 +36,7 @@ var SW = {
                     jQuery('form#swFeedVertical').serialize(),
                 success: function(response){
                     jQuery('#ajaxResponseVertical').html(response);
+                    jQuery("#nextVertical").show();
                     jQuery("#nextVertical").html('Next &raquo;')
                     SW.processAnalytics();
                 },
@@ -60,7 +62,7 @@ var SW = {
     },
 
     processAnalytics: function () {
-        jQuery("a[class^='track-'],a[class^='trackImage']").on('click', function(e){
+        jQuery("a[class^='trackImage']").on('click', function(e){
             var feedId = getFeedId(this.className);
             jQuery.ajax({
                 url: shopwindow_params.ajaxurl,

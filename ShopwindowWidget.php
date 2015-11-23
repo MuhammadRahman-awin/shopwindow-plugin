@@ -4,8 +4,8 @@ Plugin Name: ShopWindow feed
 Version: 1.0
 Plugin URI: https://wordpress.org/plugins/shopwindow-feed
 Description: Sell your affiliate product from shopwindow product feed
-Author: mmrs151
-Author URI: http://mmrs151.tumblr.com/
+Author: digitalwindow
+Author URI: http://mmrs151.wordpress.com/
 */
 
 require_once('src/FeedProcessor.php');
@@ -91,7 +91,7 @@ class ShopwindowWidget extends WP_Widget
         </form>
         <div class="widgetContent">
             <div class="ajaxResponse'.$layout.'" id="ajaxResponse'.$layout.'"></div>
-            <div class="next'.$layout.'"><button id="next'.$layout.'" class="next"></button></div>
+            <div class="next'.$layout.'"><button id="next'.$layout.'" class="next" style="display:none"></button></div>
         </div>';
 
         echo $args['after_widget'];
@@ -145,7 +145,7 @@ function shopwindow_settings(){
         'manage_options',
         'shopwindow-feed/ShopwindowAdmin.php',
         '',
-        plugins_url( 'shopwindow-feed/icon.png' )
+        plugins_url( 'icon.png' , __FILE__)
     );
     add_submenu_page('shopwindow-feed/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-feed/ShopwindowAdmin.php');
     add_submenu_page('shopwindow-feed/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');

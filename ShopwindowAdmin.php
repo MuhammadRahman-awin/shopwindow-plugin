@@ -12,22 +12,29 @@ if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) ){
     echo "<h1 class='error center'>Failed!</h1><h3 class='error'></br>The uploaded file exceeds the limit in php.ini</br></h3>";
 }
 
-if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
-    $errorHandler = new FileUploadErrorHandler($_FILES["dataFeed"]);
-    if (! $errorHandler->valid) {
-        echo "<h3 class='error center'>Failed! </br>". $errorHandler->message . "</br></h3>";
-    } else {
-        $csvImporter = new CSVImporter($_FILES["dataFeed"]["tmp_name"]);
-        $csvImporter->importToTable();
-        $count = count(file($_FILES["dataFeed"]["tmp_name"]));
-        echo "<h3 class='info center'>Success! </br>$count Product imported</br></h3>";
+if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
+
+    if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
+        $errorHandler = new FileUploadErrorHandler($_FILES["dataFeed"]);
+        if (! $errorHandler->valid) {
+            echo "<h3 class='error center'>Failed! </br>". $errorHandler->message . "</br></h3>";
+        } else {
+            $csvImporter = new CSVImporter($_FILES["dataFeed"]["tmp_name"]);
+            $csvImporter->importToTable();
+            $count = count(file($_FILES["dataFeed"]["tmp_name"]));
+            echo "<h3 class='info center'>Success! </br>$count Product imported</br></h3>";
+        }
     }
 }
 
-if (! empty($_POST['filterOptions'])) {
-    $optionHandler = new OptionHandler($_POST);
-    $optionHandler->updateOptions();
+if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
+
+    if (! empty($_POST['filterOptions'])) {
+        $optionHandler = new OptionHandler($_POST);
+        $optionHandler->updateOptions();
+    }
 }
+
 
 ?>
 <div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
@@ -37,7 +44,7 @@ if (! empty($_POST['filterOptions'])) {
     <p>[Update 'upload_max_filesize' directive in php.ini for larger import]</p>
 
     <form enctype="multipart/form-data" name="csvUpload" method="post" action="">
-
+        <?php echo wp_nonce_field( 'sw_admin_option'); ?>
         <h3>
             <span>
                 <input type="file" name="dataFeed" id="dataFeed">
@@ -54,6 +61,7 @@ if($fp->hasFeedInDb()) {
     <div class="options">
         <div class="form">
             <form name="swFilters" id="swFilters"  method="post">
+                <?php echo wp_nonce_field( 'sw_admin_option'); ?>
                 <table class="filter">
                     <tr>
                         <th colspan="2" class="default">(DEFAULT) Randomly display product in random order.
@@ -118,8 +126,8 @@ if($fp->hasFeedInDb()) {
                     <tr>
                         <td><input <?php if(get_option('sw_maxPriceRadio') == 'range'){ echo 'checked="checked"';} ?>
                                 type="radio" name="maxPriceRadio" value="range" id="maxPriceRange">
-                            <input value="<?= get_option('sw_minPrice') ?>" class="range" size="3" maxlength="3" type="text" name="minPrice" placeholder="min" readonly></td>
-                        <td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="text" name="maxPrice" placeholder="max" readonly></td>
+                            <input value="<?= get_option('sw_minPrice') ?>" class="range" size="3" maxlength="3" type="number" name="minPrice" placeholder="min" readonly></td>
+                        <td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="number" name="maxPrice" placeholder="max" readonly></td>
                     </tr>
                     <tr><td colspan="2"><i>*Product without valid image will not be displayed</i></td> </tr>
                 </table>
