@@ -22,7 +22,7 @@ if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
             $csvImporter = new CSVImporter($_FILES["dataFeed"]["tmp_name"]);
             $csvImporter->importToTable();
             $count = count(file($_FILES["dataFeed"]["tmp_name"]));
-            echo "<h3 class='info center'>Success! </br>$count Product imported</br></h3>";
+            echo "<h3 class='info center'>Success! </br>$count Row processed</br></h3>";
         }
     }
 }
