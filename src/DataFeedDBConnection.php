@@ -38,7 +38,7 @@ class DataFeedDBConnection
      */
     public function insertRow($row)
     {
-        if (empty(($row['description']))) {
+        if (empty($row['description'])) {
             return ;
         }
 
