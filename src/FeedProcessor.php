@@ -70,7 +70,7 @@ class FeedProcessor
      */
     private function getProducts()
     {
-        $data = $this->db->getLimitedRows(20);
+        $data = $this->db->getLimitedRows((int)$this->productCount);
         $products = $this->getProductWithImage($data);
 
         return $products;
@@ -124,6 +124,7 @@ class FeedProcessor
      */
     private function getProductWithImage($products)
     {
+        return $products;
         $productWithImage = array();
         $handle = curl_init();
 
