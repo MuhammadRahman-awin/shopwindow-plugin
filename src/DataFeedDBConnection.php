@@ -49,6 +49,7 @@ class DataFeedDBConnection
             (
             categoryName,
             awDeepLink,
+            merchantDeepLink,
             merchantImageUrl,
             description,
             productName,
@@ -60,6 +61,7 @@ class DataFeedDBConnection
             (
             '" .esc_sql($row['category_name']). "','" .
             $row['aw_deep_link']. "&plugin=shopwindow-feed','" .
+            $row['merchant_deep_link']. "','" .
             $row['merchant_image_url']. "','" .
             esc_sql($row['description']). "','" .
             esc_sql($row['product_name']). "','" .
@@ -85,7 +87,7 @@ class DataFeedDBConnection
                 " WHERE description !=''";
         $sql .= $extraWhere;
         $sql .= " ORDER BY RAND() LIMIT " . $limit;
-        error_log(print_r($sql, 1));
+//        error_log(print_r($sql, 1));
         $result = $wpdb->get_results($sql, ARRAY_A);
 
         return $result;
@@ -232,7 +234,7 @@ class DataFeedDBConnection
         }
 
         $categories = get_option('sw_categories');
-        if (! empty($categories)) {
+        if ($categories) {
             $where .= "AND categoryName in (\"". implode('","', $categories) . "\") ";
         }
 
@@ -269,6 +271,7 @@ class DataFeedDBConnection
                   id int(11) NOT NULL AUTO_INCREMENT,
                   categoryName varchar(45) DEFAULT NULL,
                   awDeepLink varchar(500) DEFAULT NULL,
+                  merchantDeepLink varchar(500) DEFAULT NULL,
                   merchantImageUrl varchar(500) DEFAULT NULL,
                   description text CHARACTER SET utf8mb4,
                   productName varchar(255) DEFAULT NULL,

@@ -149,7 +149,7 @@ if($fp->hasFeedInDb()) {
         $db = new DataFeedDBConnection();
         $analytics = $db->getIPAnalytics();
         ?>
-        <table class="analytics">
+        <table class="analytics" style="display:none;">
             <tr><th colspan="2"><h1> User click analytics* </h1></th></tr>
             <tr><th>User IP</th><th>Click</th></tr>
             <?php
@@ -174,7 +174,7 @@ if($fp->hasFeedInDb()) {
             foreach($analytics as $row) {
                 ?>
                 <tr>
-                    <td><a href="<?=$row['awDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/> </a></td>
+                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/> </a></td>
                     <td><?=$row['count']?></td></tr>
                 <?php
             }
@@ -194,7 +194,7 @@ if($fp->hasFeedInDb()) {
                 ?>
                 <tr>
                     <td><?=$row['clickDateTime']?></td>
-                    <td><a href="<?=$row['awDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/></a></td></tr>
+                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/></a></td></tr>
                 <?php
             }
             ?>

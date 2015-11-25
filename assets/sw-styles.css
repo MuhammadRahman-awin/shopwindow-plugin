@@ -146,7 +146,7 @@ div .options{
     border: 1px solid green;
     margin-top: 100px;
     margin-right: 10px;
-    width: 35%;
+    width: 30%;
     float: left;
 }
 div .options .form{
@@ -172,7 +172,7 @@ div .productCount h1{
 section .analytics{
     margin-left: 1%;
     margin-top: 10px;
-    width: 400px;
+    width: 250px;
 }
 div .analyticsIP{
     width: 25%;
@@ -231,5 +231,8 @@ section.submitButton{
     -ms-transform:scale(1.1); /* IE 9 */
     -o-transform:scale(1.1); /* Opera */
     transform:scale(1.1);
+}
 
+.range {
+    width: 70px;
 }
