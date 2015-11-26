@@ -58,10 +58,22 @@ class FileUploadErrorHandler
      */
     private function getFileErrorMessage(array $file)
     {
-	$mimes = array('application/csv','text/csv');
-	if(! in_array($file["type"], $mimes)){
-            $this->valid = false;
-            $this->message = "Invalid csv file ?";
+        $mimes = array(
+            'text/plain',
+            'text/comma-separated-values',
+            'text/csv',
+            'application/csv',
+            'application/excel',
+            'application/vnd.ms-excel',
+            'application/vnd.msexcel',
+            'text/anytext',
+            'application/octet-stream',
+            'text/tsv'
+        );
+
+        if(! in_array($file["type"], $mimes)){
+                $this->valid = false;
+                $this->message = "Invalid csv file ?";
+            }
         }
-    }
 }
