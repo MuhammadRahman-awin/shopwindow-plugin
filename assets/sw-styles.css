@@ -24,6 +24,10 @@
 table.vertical tr{
     border-bottom: 1px solid rgba(51, 51, 51, 0.1);
 }
+table.vertical tr.priceBorder{
+    height: 120px;
+    border-bottom: 1px dashed rgba(51, 51, 51, 0.1);
+}
 table.vertical tr td{
     border: none;
 }
@@ -52,12 +56,12 @@ table.vertical .price {
     font-family: inherit;
     vertical-align: middle;
 }
-table.vertical .description {
+table.vertical .productName {
     color: #000;
     vertical-align: middle;
     padding: 5px;
     font-size: small;
-    text-align: justify;
+    text-align: center;
 }
 table.vertical td.nextTd{
     text-align: right;

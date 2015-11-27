@@ -174,7 +174,7 @@ if($fp->hasFeedInDb()) {
             foreach($analytics as $row) {
                 ?>
                 <tr>
-                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/> </a></td>
+                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/> </a></td>
                     <td><?=$row['count']?></td></tr>
                 <?php
             }
@@ -194,7 +194,7 @@ if($fp->hasFeedInDb()) {
                 ?>
                 <tr>
                     <td><?=$row['clickDateTime']?></td>
-                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['merchantImageUrl']?>"/></a></td></tr>
+                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/></a></td></tr>
                 <?php
             }
             ?>

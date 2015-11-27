@@ -31,6 +31,7 @@ class DataFeedDBConnection
 
         global $wpdb;
         $wpdb->query("TRUNCATE TABLE ". $this->dbTable);
+        $wpdb->query("TRUNCATE TABLE ". $this->analyticsTable);
     }
 
     /**
@@ -38,10 +39,6 @@ class DataFeedDBConnection
      */
     public function insertRow($row)
     {
-        if (empty($row['description'])) {
-            return ;
-        }
-
         global $wpdb;
 
         $query = "
@@ -50,7 +47,7 @@ class DataFeedDBConnection
             categoryName,
             awDeepLink,
             merchantDeepLink,
-            merchantImageUrl,
+            awImageUrl,
             description,
             productName,
             deliveryCost,
@@ -62,7 +59,7 @@ class DataFeedDBConnection
             '" .esc_sql($row['category_name']). "','" .
             $row['aw_deep_link']. "&plugin=shopwindow-feed','" .
             $row['merchant_deep_link']. "','" .
-            $row['merchant_image_url']. "','" .
+            $row['aw_image_url']. "','" .
             esc_sql($row['description']). "','" .
             esc_sql($row['product_name']). "','" .
             $row['delivery_cost']. "','" .
@@ -196,7 +193,7 @@ class DataFeedDBConnection
         global $wpdb;
 
         $sql = "
-            SELECT clickDateTime, df.merchantImageUrl, df.awDeepLink
+            SELECT clickDateTime, df.awImageUrl, df.awDeepLink
             FROM ". $this->analyticsTable . " da
             JOIN ". $this->tableName ." df
             ON df.id = da.feed
@@ -212,7 +209,7 @@ class DataFeedDBConnection
         global $wpdb;
 
         $sql = "
-            SELECT feed AS product, COUNT(*) AS count, df.merchantImageUrl, df.awDeepLink
+            SELECT feed AS product, COUNT(*) AS count, df.awImageUrl, df.awDeepLink
             FROM ". $this->analyticsTable . " da
             JOIN ". $this->tableName ." df
             ON df.id = da.feed
@@ -272,7 +269,7 @@ class DataFeedDBConnection
                   categoryName varchar(45) DEFAULT NULL,
                   awDeepLink varchar(500) DEFAULT NULL,
                   merchantDeepLink varchar(500) DEFAULT NULL,
-                  merchantImageUrl varchar(500) DEFAULT NULL,
+                  awImageUrl varchar(500) DEFAULT NULL,
                   description text CHARACTER SET utf8mb4,
                   productName varchar(255) DEFAULT NULL,
                   deliveryCost varchar(255) DEFAULT NULL,

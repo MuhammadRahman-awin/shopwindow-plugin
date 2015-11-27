@@ -19,7 +19,7 @@ class WidgetPrinter
             $productList .= '
                 <td class="hover image">
                     <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
-                        <img src='.$product['merchantImageUrl'].' />
+                        <img src='.$product['awImageUrl'].' />
                     </a>
                 </td>
             ';
@@ -61,19 +61,19 @@ class WidgetPrinter
                             <tr><th class="title" colspan="2">'. $title.'</th></tr>';
         foreach($data as $product) {
             $productList .= '
-                    <tr class="image">
-                        <td class="hover image">
+                    <tr class="priceBorder">
+                        <td class="hover image" rowspan="2">
                             <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
-                                <img src='.$product['merchantImageUrl'].' />
+                                <img src='.$product['awImageUrl'].' />
                             </a>
                         </td>
-                        <td class="description" rowspan="2">
-                            '. substr($product['description'], 0, 130).'
-                                ...
+                        <td class="productName">
+                            '. $product['productName'] .'
                         </td>
                     </tr>
                     <tr>
                         <td class="price">'. $this->getCurrencySymbol($product['currency']).''.number_format($product['price'], 2).'</td>
+
                     </tr>
             ';
         }

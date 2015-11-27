@@ -71,9 +71,8 @@ class FeedProcessor
     private function getProducts()
     {
         $data = $this->db->getLimitedRows((int)$this->productCount);
-        $products = $this->getProductWithImage($data);
 
-        return $products;
+        return $data;
     }
 
     /**
@@ -116,30 +115,5 @@ class FeedProcessor
     public function getProductCountForPrice($price)
     {
         return $this->db->getProductCountByPrice($price);
-    }
-
-    /**
-     * @param array $products
-     * @return array
-     */
-    private function getProductWithImage($products)
-    {
-        return $products;
-        $productWithImage = array();
-        $handle = curl_init();
-
-        foreach($products as $product) {
-            curl_setopt($handle, CURLOPT_URL, $product['merchantImageUrl']);
-            curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-            curl_exec($handle);
-            $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-            if($httpCode == 200) {
-                $productWithImage[] = $product;
-            }
-
-            if (count($productWithImage) === (int)$this->productCount) {
-                return $productWithImage;
-            }
-        }
     }
 }
