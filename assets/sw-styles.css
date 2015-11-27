@@ -80,6 +80,7 @@ div .nextVertical button{
 }
 div .nextVertical button:hover{
     font-size: 14px;
+    color:darkmagenta;
 }
 
 /* HORIZONTAL WIDGET ELEMENTS */
@@ -140,6 +141,7 @@ div .nextHorizontal button{
 }
 div .nextHorizontal button:hover{
     font-size: 32px;
+    color: darkmagenta;
 }
 
 section {
