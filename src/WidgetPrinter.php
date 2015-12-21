@@ -82,10 +82,10 @@ class WidgetPrinter
         return $productList;
     }
 
-	/**
-	 * @param Let$name
-	 * @return string
-	 */
+    /**
+     * @param Let$name
+     * @return string
+     */
     private function getCurrencySymbol($name)
     {
         if (strtoupper($name) === 'GBP') {

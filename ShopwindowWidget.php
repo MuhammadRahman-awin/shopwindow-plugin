@@ -11,6 +11,7 @@ Author URI: http://mmrs151.wordpress.com/
 require_once('src/FeedProcessor.php');
 require_once('src/sw-ajax.php');
 require_once('src/OptionHandler.php');
+require_once('src/ShortCodeHandler.php');
 
 class ShopwindowWidget extends WP_Widget
 {
@@ -133,6 +134,16 @@ function init_shopwindow_widget()
 {
     register_widget('ShopwindowWidget');
 }
+############################# END OF WIDGET ############################################
+
+##############################################
+# SHORT CODES
+##############################################
+
+$shortCode = new ShortCodeHandler();
+add_shortcode('SHOPWINDOW', array($shortCode, 'initShortCode'));
+
+############################# END OF SHORT CODES ############################################
 
 ###############################################
 # MENU PAGES #

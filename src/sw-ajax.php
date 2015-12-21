@@ -7,6 +7,7 @@ add_action( 'wp_ajax_nopriv_get_sw_product', 'get_sw_product' );
 
 function get_sw_product()
 {
+//    var_dump($_REQUEST);
     $title = $_REQUEST['title'];
     $count = $_REQUEST['displayCount'];
     $layout = $_REQUEST['layout'];
