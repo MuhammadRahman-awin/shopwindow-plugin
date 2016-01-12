@@ -72,13 +72,15 @@ class DataFeedDBConnection
 
     /**
      * @param int $limit
+     * @param null $keywords
+     *
      * @return array
      */
-    public function getLimitedRows($limit)
+    public function getLimitedRows($limit, $keywords=null)
     {
         global $wpdb;
 
-        $extraWhere = $this->getWhere();
+        $extraWhere = $this->getWhere($keywords);
 
         $sql = "SELECT * FROM  $this->dbTable" .
                 " WHERE description !=''";
@@ -221,9 +223,11 @@ class DataFeedDBConnection
     }
 
     /**
+     * @param null $keywords
+     *
      * @return string
      */
-    private function getWhere()
+    private function getWhere($keywords=null)
     {
         $where = "";
         if (get_option('sw_deliveryMethod') == 'free') {
@@ -245,6 +249,16 @@ class DataFeedDBConnection
             if ($max > 0) {
                 $where .= "AND price < $max";
             }
+        }
+
+        if (! empty($keywords)) {
+            $array_name = explode(',', $keywords);
+            foreach ($array_name as $val) {
+                $query_parts[] = "'%".esc_sql($val)."%'";
+            }
+            $stringLike = " AND productName LIKE";
+            $stringLike .= implode(' OR productName LIKE ', $query_parts);
+            $where .= $stringLike;
         }
 
         return $where;

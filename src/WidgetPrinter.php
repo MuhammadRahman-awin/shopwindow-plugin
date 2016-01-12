@@ -1,15 +1,32 @@
 <?php
 
-
 class WidgetPrinter
 {
+    /**
+     * @param $layout
+     * @param $title
+     * @param array $data
+     *
+     * @return string
+     */
+    public function getWidget($layout, $title, array $data)
+    {
+        if ($layout === 'horizontal') {
+            return $this->horizontalWidget($title, $data);
+        } elseif ($layout ===  'vertical') {
+            return $this->verticalWidget($title, $data);
+        } elseif ($layout === 'horizontalSc') {
+            return $this->horizontalWidgetSc($title, $data);
+        }
+    }
+
     /**
      * @param $title
      * @param array $data
      *
      * @return string
      */
-    public function horizontalWidget($title, array $data)
+    private function horizontalWidget($title, array $data)
     {
         $productList = '
             <table class="horizontal">
@@ -55,7 +72,7 @@ class WidgetPrinter
      *
      * @return string
      */
-    public function verticalWidget($title, array $data)
+    private function verticalWidget($title, array $data)
     {
         $productList = '<table class="vertical">
                             <tr><th class="title" colspan="2">'. $title.'</th></tr>';
@@ -79,6 +96,52 @@ class WidgetPrinter
         }
         $productList .= '</table>';
 
+        return $productList;
+    }
+
+    /**
+     * @param $title
+     * @param array $data
+     *
+     * @return string
+     */
+    private function horizontalWidgetSc($title, array $data)
+    {
+        $productList = '
+            <table class="horizontal">
+                <tr><th class="title" colspan="'.count($data).';">'. $title.'</th></tr>
+                <tr class="image">';
+        foreach($data as $product) {
+            $productList .= '
+                <td class="hover image">
+                    <a class="trackImage-'.$product['id'].'" href='.$product['awDeepLink'].' target="_blank" alt="'. $product['productName'].'" title="'. $product['productName'].'">
+                        <img src='.$product['awImageUrl'].' />
+                    </a>
+                </td>
+            ';
+        }
+
+        $productList .= '
+                </tr>
+                <tr class="name">';
+        foreach($data as $product) {
+            $productList .= '
+                <td class="name">
+                    '. $product['productName'].'
+                </td>
+            ';
+        }
+
+        $productList .= '
+                </tr>
+                <tr class="price">';
+        foreach($data as $product) {
+            $productList .= '
+                <td class="price">'. $this->getCurrencySymbol($product['currency']).''.number_format($product['price'], 2).'</td>
+            ';
+        }
+        $productList .= '
+                </tr>';
         return $productList;
     }
 

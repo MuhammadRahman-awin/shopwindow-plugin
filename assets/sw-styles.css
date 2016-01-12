@@ -131,7 +131,6 @@ div .nextHorizontal{
     top: -220px;
     float: right;
 }
-
 div .nextHorizontal button{
     width: 30px;
     height: 50px;
@@ -140,6 +139,23 @@ div .nextHorizontal button{
     cursor: pointer;
 }
 div .nextHorizontal button:hover{
+    font-size: 32px;
+    color: darkmagenta;
+}
+
+div .nextHorizontalSc{
+    position: relative;
+    top: -220px;
+    float: right;
+}
+div .nextHorizontalSc button{
+    width: 30px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+div .nextHorizontalSc button:hover{
     font-size: 32px;
     color: darkmagenta;
 }

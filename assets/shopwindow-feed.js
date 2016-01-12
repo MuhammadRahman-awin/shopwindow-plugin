@@ -2,6 +2,7 @@ var SW = {
     init: function () {
         this.loadVerticalFeed();
         this.loadHorizontalFeed();
+        this.loadHorizontalFeedShortCode();
         this.togglePrceRangeInout();
         this.displayReport();
         this.resetForm();
@@ -47,6 +48,29 @@ var SW = {
         });
 
         jQuery('#nextVertical').trigger('click');
+    },
+
+    loadHorizontalFeedShortCode: function() {
+        jQuery("#nextHorizontalSc").on('click', function () {
+            console.log('foox');
+
+            jQuery.ajax({
+                url: shopwindow_params.ajaxurl,
+                data:
+                    jQuery('form#swFeedHorizontalSc').serialize(),
+                success: function(response){
+                    jQuery('#ajaxResponseHorizontalSc').html(response);
+                    jQuery("#nextHorizontalSc").show();
+                    jQuery("#nextHorizontalSc").html("&raquo;");
+                    SW.processAnalytics();
+                },
+                error: function(errorThrown){
+                    console.log(errorThrown);
+                }
+            })
+        });
+
+        jQuery('#nextHorizontalSc').trigger('click');
     },
 
     togglePrceRangeInout: function() {

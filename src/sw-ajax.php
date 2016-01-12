@@ -11,6 +11,7 @@ function get_sw_product()
     $title = $_REQUEST['title'];
     $count = $_REQUEST['displayCount'];
     $layout = $_REQUEST['layout'];
+    $keywords = $_REQUEST['keywords'];
 
     $feedProcessor = new FeedProcessor();
 
@@ -20,10 +21,11 @@ function get_sw_product()
     if (! empty($count)) {
         $feedProcessor->setProductCount($count);
     }
-    if ($layout === 'horizontal') {
-        $feedProcessor->setLayout($layout);
-    }
+    $feedProcessor->setLayout($layout);
 
+    if (! empty($keywords)) {
+        $feedProcessor->setKeywords($keywords);
+    }
     echo $feedProcessor->displayWidget();
 
 	die();

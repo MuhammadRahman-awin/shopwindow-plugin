@@ -6,7 +6,7 @@ require_once("WidgetPrinter.php");
 class FeedProcessor
 {
     /** @var  string */
-    private $layout;
+    private $layout='vertical';
 
     /**
      * @param string $layout */
@@ -20,6 +20,9 @@ class FeedProcessor
 
     /** @var  WidgetPrinter */
     private $printer;
+
+    /** @var  array */
+    private $keywords;
 
     public function __construct()
     {
@@ -45,7 +48,14 @@ class FeedProcessor
      * @param string $layout
      */
     public function setLayout( $layout ) {
-        $this->layout = $layout;
+        if (! empty($layout)) {
+            $this->layout = $layout;
+        }
+    }
+
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
     }
 
     /**
@@ -58,21 +68,7 @@ class FeedProcessor
             return '<p class="info">No product found with image and description</p>';
         }
 
-        if ($this->layout) {
-            return $this->printer->horizontalWidget($this->title, $data);
-        }
-
-        return $this->printer->verticalWidget($this->title, $data);
-    }
-
-    /**
-     * @return array
-     */
-    private function getProducts()
-    {
-        $data = $this->db->getLimitedRows((int)$this->productCount);
-
-        return $data;
+        return $this->printer->getWidget($this->layout, $this->title, $data);
     }
 
     /**
@@ -115,5 +111,15 @@ class FeedProcessor
     public function getProductCountForPrice($price)
     {
         return $this->db->getProductCountByPrice($price);
+    }
+
+    /**
+     * @return array
+     */
+    private function getProducts()
+    {
+        $data = $this->db->getLimitedRows((int)$this->productCount, $this->keywords);
+
+        return $data;
     }
 }
