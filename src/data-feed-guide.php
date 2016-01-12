@@ -16,7 +16,5 @@
 <h2>Shortcode Examples</h2>
 <ol>
     <li>[SHOPWINDOW title='hello world' no_of_product=2]</li>
-</ol>
-<ol>
     <li>[SHOPWINDOW no_of_product=3 title='Iron Man vs Captain America' keywords='Iron Man, Captain America' ]</li>
 </ol>
