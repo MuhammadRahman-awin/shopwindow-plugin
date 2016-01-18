@@ -39,7 +39,16 @@ class ShopwindowWidget extends WP_Widget
                             name="<?php echo $this->get_field_name( 'title' ); ?>"
                             type="text"
                             value="<?php echo $instance["title"] ?>"
-                            />
+                        />
+                    </td>
+                </tr>
+                <tr><td>Keywords</td>
+                    <td>
+                        <input
+                            name="<?php echo $this->get_field_name( 'keywords' ); ?>"
+                            type="text" placeholder="comma separated"
+                            value="<?php echo $instance["keywords"] ?>"
+                        />
                     </td>
                 </tr>
                 <tr><td>Number of product to display</td>
@@ -48,7 +57,7 @@ class ShopwindowWidget extends WP_Widget
                             name="<?php echo $this->get_field_name( 'displayCount' ); ?>"
                             type="number" min=1 step=1
                             value="<?php echo $instance["displayCount"] ?>"
-                            />
+                        />
                     </td>
                 </tr>
                 <tr><td>Display product horizontally</td>
@@ -58,7 +67,7 @@ class ShopwindowWidget extends WP_Widget
                             name="<?php echo $this->get_field_name( 'layout' ); ?>"
                             value="horizontal"
                             <?php if($instance["layout"] === 'horizontal'){ echo 'checked="checked"'; } ?>
-                            />
+                        />
                     </td>
                 </tr>
             </table>
@@ -88,6 +97,7 @@ class ShopwindowWidget extends WP_Widget
             <input name="title" type="hidden" value="' .$instance['title'].'"/>
             <input name="displayCount" type="hidden" value="' .$instance['displayCount'].'"/>
             <input name="layout" type="hidden" value="' .$instance['layout'].'"/>
+            <input name="keywords" type="hidden" value="' .$instance['keywords'].'"/>
             <input name="action" type="hidden" value="get_sw_product"/>
         </form>
         <div class="widgetContent">
