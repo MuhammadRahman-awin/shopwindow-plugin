@@ -29,7 +29,7 @@ class WidgetPrinter
     private function horizontalWidget($title, array $data)
     {
         $productList = '
-            <table class="horizontal">
+            <table class="horizontal aw-datafeed">
                 <tr><th class="title" colspan="'.count($data).';">'. $title.'</th></tr>
                 <tr class="image">';
         foreach($data as $product) {
@@ -74,7 +74,7 @@ class WidgetPrinter
      */
     private function verticalWidget($title, array $data)
     {
-        $productList = '<table class="vertical">
+        $productList = '<table class="vertical aw-datafeed">
                             <tr><th class="title" colspan="2">'. $title.'</th></tr>';
         foreach($data as $product) {
             $productList .= '

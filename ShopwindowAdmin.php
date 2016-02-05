@@ -37,10 +37,9 @@ if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
 
 
 ?>
-<div class="wrap" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<section class="wrap">
     <h2>Import your shopwindow data feed to display in widget</h2>
-        </br><h3 class="info">Maximum file size must be smaller than: <?php echo $max_file_size ?>B </h3>
+    <h3 class="info">Maximum file size must be smaller than: <?php echo $max_file_size ?>B </h3>
     <p>[Update 'upload_max_filesize' directive in php.ini for larger import]</p>
 
     <form enctype="multipart/form-data" name="csvUpload" method="post" action="">
@@ -52,23 +51,34 @@ if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
             </span>
         </h3>
     </form>
-</div>
+</section>
+
 <?php
 $fp = new FeedProcessor();
 if($fp->hasFeedInDb()) {
    ?>
+
+    <div class="productCount">
+        <div class="count"> You have <span class="counter"><?= $fp->getFeedCount() ?></span> products in your data store to choose from</h1> </div>
+    </div>
    <section>
     <div class="options">
         <div class="form">
             <form name="swFilters" id="swFilters"  method="post">
                 <?php echo wp_nonce_field( 'sw_admin_option'); ?>
-                <table class="filter">
+                <table class="aw-filter" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th colspan="2" class="default">(DEFAULT) Randomly display product in random order.
+                        <th colspan="2" class="title">
+                            <h2>Filter products*</h2> 
                         </th>
                     </tr>
-                    <tr><th colspan="2"><h2>Filter products*</h2></th></tr>
-                    <tr><th colspan="2" class="filterType">By Delivery Type</th></tr>
+                    <tr>
+                        <td colspan="2">
+                            (DEFAULT) Randomly display product in random order.
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="filterType">By Delivery Type</th></tr>
                     <tr>
                         <td><input
                                 <?php if(get_option('sw_deliveryMethod') == 'free'){ echo 'checked="checked"'; } ?>
@@ -130,51 +140,35 @@ if($fp->hasFeedInDb()) {
                         <td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="number" name="maxPrice" placeholder="max" readonly></td>
                     </tr>
                     <tr><td colspan="2"><i>*Product without valid image will not be displayed</i></td> </tr>
+                    <tr>
+                        <td colspan="2" class="buttons">
+                            <input type="submit" name="filterOptions" id="filterOptions" class="button button-primary" value="Save changes">
+                            <input type="button" name="resetFilters" id="resetFilters" class="button" value="Reset filters">
+                        </td>
+                    </tr>
                 </table>
-                <section class="submitButton">
-                    <input type="submit" name="filterOptions" id="filterOptions" class="button button-primary" value="Save changes">
-                    <input type="button" name="resetFilters" id="resetFilters" class="button" value="Reset filters">
-                </section>
             </form>
         </div>
     </div>
-    <div class="productCount">
-        <h1 class="count"> Product found: <?= $fp->getFeedCount() ?></h1> </h1>
+    <div class="display">
+        <input class="button reportButton" type="button" value="Display Report" id="reportButton"/>
     </div>
-       <input class="button reportButton" type="button" value="Display Report" id="reportButton"/>
-   </section>
-    <section class="analytics" style="display: none;">
-    <div class="analyticsIP">
-        <?php
-        $db = new DataFeedDBConnection();
-        $analytics = $db->getIPAnalytics();
-        ?>
-        <table class="analytics" style="display:none;">
-            <tr><th colspan="2"><h1> User click analytics* </h1></th></tr>
-            <tr><th>User IP</th><th>Click</th></tr>
-            <?php
-            foreach($analytics as $row) {
-                ?>
-                <tr><td><?=$row['clickIp']?></td><td><?=$row['click']?></td></tr>
-                <?php
-            }
-            ?>
-            <tr><td colspan="2"><i>*may not be 100% correct due to proxy or manual http header</i></td> </tr>
-        </table>
-    </div>
+
+    <section class="analytics" style="display: block;">
+
     <div class="analyticsPopular">
         <?php
         $db = new DataFeedDBConnection();
         $analytics = $db->getPopularAnalytics();
         ?>
-        <table class="analytics">
+        <table class="aw-filter analytics"  cellspacing="0" cellpadding="0">
             <tr><th colspan="2"><h1> Popular Products </h1></th></tr>
             <tr><th>Product</th><th>Click</th></tr>
             <?php
             foreach($analytics as $row) {
                 ?>
                 <tr>
-                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/> </a></td>
+                    <td class="image"><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/> </a></td>
                     <td><?=$row['count']?></td></tr>
                 <?php
             }
@@ -186,20 +180,21 @@ if($fp->hasFeedInDb()) {
         $db = new DataFeedDBConnection();
         $analytics = $db->getClickAnalytics();
         ?>
-        <table class="analytics">
+        <table class="aw-filter analytics" cellspacing="0" cellpadding="0">
             <tr><th colspan="2"><h1> User daily click </h1></th></tr>
-            <tr><th>Click time</th><th>Click</th></tr>
+            <tr><th class="text-center">Click time</th><th>Click</th></tr>
             <?php
             foreach($analytics as $row) {
                 ?>
                 <tr>
                     <td><?=$row['clickDateTime']?></td>
-                    <td><a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/></a></td></tr>
+                    <td class="image"> <a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/></a></td></tr>
                 <?php
             }
             ?>
         </table>
     </div>
-    </section>
+    </section>  
+   </section>
 <?php
 }
