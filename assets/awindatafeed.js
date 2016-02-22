@@ -6,12 +6,13 @@ var SW = {
         this.togglePrceRangeInout();
         this.displayReport();
         this.resetForm();
+        this.displayAnalytics();
     },
 
     loadHorizontalFeed: function(){
         jQuery("#nextHorizontal").on('click', function () {
             jQuery.ajax({
-                url: shopwindow_params.ajaxurl,
+                url: awindatafeed_params.ajaxurl,
                 data:
                     jQuery('form#swFeedHorizontal').serialize(),
                 success: function(response){
@@ -32,7 +33,7 @@ var SW = {
     loadVerticalFeed: function() {
         jQuery("#nextVertical").on('click', function () {
             jQuery.ajax({
-                url: shopwindow_params.ajaxurl,
+                url: awindatafeed_params.ajaxurl,
                 data:
                     jQuery('form#swFeedVertical').serialize(),
                 success: function(response){
@@ -55,7 +56,7 @@ var SW = {
             console.log('foox');
 
             jQuery.ajax({
-                url: shopwindow_params.ajaxurl,
+                url: awindatafeed_params.ajaxurl,
                 data:
                     jQuery('form#swFeedHorizontalSc').serialize(),
                 success: function(response){
@@ -89,7 +90,7 @@ var SW = {
         jQuery("a[class^='trackImage']").on('click', function(e){
             var feedId = getFeedId(this.className);
             jQuery.ajax({
-                url: shopwindow_params.ajaxurl,
+                url: awindatafeed_params.ajaxurl,
                 data: {
                     'action': 'track_user_click',
                     'feedId': feedId
@@ -120,6 +121,12 @@ var SW = {
             form.find('input:text, input:password, input:file, select, textarea').val('');
             form.find('input:radio, input:checkbox')
                 .removeAttr('checked').removeAttr('selected');
+        });
+    },
+
+    displayAnalytics: function() {
+        jQuery( "#reportButton" ).click(function() {
+            jQuery( "#analytics" ).show('slow');
         });
     }
 };

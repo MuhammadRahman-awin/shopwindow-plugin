@@ -5,7 +5,7 @@
 </h3>
 <h1>Shortcodes</h1>
 <ol>
-    <li>[SHOPWINDOW] - Default shortcode</li>
+    <li>[AWIN_DATA_FEED] - Default shortcode</li>
 </ol>
 <h2>Shortcode Options</h2>
 <ol>
@@ -15,6 +15,6 @@
 </ol>
 <h2>Shortcode Examples</h2>
 <ol>
-    <li>[SHOPWINDOW title='hello world' no_of_product=2]</li>
-    <li>[SHOPWINDOW no_of_product=3 title='Iron Man vs Captain America' keywords='Iron Man, Captain America' ]</li>
+    <li>[AWIN_DATA_FEED title='hello world' no_of_product=2]</li>
+    <li>[AWIN_DATA_FEED no_of_product=3 title='Iron Man vs Captain America' keywords='Iron Man, Captain America' ]</li>
 </ol>

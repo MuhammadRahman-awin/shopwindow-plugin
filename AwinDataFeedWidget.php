@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: ShopWindow feed
+Plugin Name: Awin Data Feed
 Version: 1.0
-Plugin URI: https://wordpress.org/plugins/shopwindow-feed
-Description: Sell your affiliate product from shopwindow product feed
+Plugin URI: https://wordpress.org/plugins/awin-data-feed
+Description: Sell your affiliate product from affiliate window product data feed
 Author: digitalwindow
 Author URI: http://mmrs151.wordpress.com/
 */
@@ -13,18 +13,18 @@ require_once('src/sw-ajax.php');
 require_once('src/OptionHandler.php');
 require_once('src/ShortCodeHandler.php');
 
-class ShopwindowWidget extends WP_Widget
+class AwinDataFeedWidget extends WP_Widget
 {
     public function __construct()
     {
         $widget_details = array(
-            'className' => 'ShopwindowWidget',
-            'description' => 'Sell your affiliate product from shopwindow product feed'
+            'className' => 'AwinDataFeedWidget',
+            'description' => 'Sell your affiliate product from Affiliate Window product data feed'
         );
         $this->add_stylesheet();
         $this->setScript();
 
-        parent::__construct('ShopwindowWidget', 'Shopwindow product feed', $widget_details);
+        parent::__construct('AwinDataFeedWidget', 'Affiliate Window data feed', $widget_details);
     }
 
     public function form($instance)
@@ -110,8 +110,8 @@ class ShopwindowWidget extends WP_Widget
     }
 
     private function add_stylesheet() {
-        wp_register_style( 'shopwindow-style', plugins_url('assets/sw-styles.css', __FILE__) );
-        wp_enqueue_style( 'shopwindow-style' );
+        wp_register_style( 'awindatafeed-style', plugins_url('assets/aw-styles.css', __FILE__) );
+        wp_enqueue_style( 'awindatafeed-style' );
     }
 
     private function setScript()
@@ -120,8 +120,8 @@ class ShopwindowWidget extends WP_Widget
         $path = plugin_dir_url( __FILE__ );
 
         // Enqueue our script
-        wp_enqueue_script( 'shopwindow-feed',
-            $path. 'assets/shopwindow-feed.js',
+        wp_enqueue_script( 'awindatafeed',
+            $path. 'assets/awindatafeed.js',
             array( 'jquery' ),
             '1.0.0', true );
 
@@ -135,14 +135,14 @@ class ShopwindowWidget extends WP_Widget
             'ajaxurl' => admin_url( 'admin-ajax.php', $protocol ),
         );
         // Print the script to our page
-        wp_localize_script( 'shopwindow-feed', 'shopwindow_params', $params );
+        wp_localize_script( 'awindatafeed', 'awindatafeed_params', $params );
     }
 }
 
-add_action('widgets_init', 'init_shopwindow_widget');
-function init_shopwindow_widget()
+add_action('widgets_init', 'init_awindatafeed_widget');
+function init_awindatafeed_widget()
 {
-    register_widget('ShopwindowWidget');
+    register_widget('AwinDataFeedWidget');
 }
 ############################# END OF WIDGET ############################################
 
@@ -151,25 +151,25 @@ function init_shopwindow_widget()
 ##############################################
 
 $shortCode = new ShortCodeHandler();
-add_shortcode('SHOPWINDOW', array($shortCode, 'initShortCode'));
+add_shortcode('AWIN_DATA_FEED', array($shortCode, 'initShortCode'));
 
 ############################# END OF SHORT CODES ############################################
 
-###############################################
+#####################################################
 # MENU PAGES #
-###############################################
-add_action( 'admin_menu', "shopwindow_settings");
-function shopwindow_settings(){
+#####################################################
+add_action( 'admin_menu', "awin_data_feed_settings");
+function awin_data_feed_settings(){
     add_menu_page (
-        'Shopwindow',
-        'Shopwindow',
+        'Awin Data Feed',
+        'Awin Data Feed',
         'manage_options',
-        'shopwindow-feed/ShopwindowAdmin.php',
+        'awin-data-feed/AwinDataFeedAdmin.php',
         '',
         plugins_url( 'icon.png' , __FILE__)
     );
-    add_submenu_page('shopwindow-feed/ShopwindowAdmin.php', 'Settings', 'Settings', 'manage_options', 'shopwindow-feed/ShopwindowAdmin.php');
-    add_submenu_page('shopwindow-feed/ShopwindowAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
+    add_submenu_page('awin-data-feed/AwinDataFeedAdmin.php', 'Settings', 'Settings', 'manage_options', 'awin-data-feed/AwinDataFeedAdmin.php');
+    add_submenu_page('awin-data-feed/AwinDataFeedAdmin.php', 'Data Feed Guide', 'Data Feed Guide', 'manage_options', 'data-feed-guide', 'data_feed_guide');
 
     function data_feed_guide()
     {
@@ -186,7 +186,7 @@ function my_admin_notice() {
     if(! $fp->hasFeedInDb()) {
     ?>
         <div class="update-nag">
-            <p><?php _e( '<a href="'.admin_url('admin.php?page=shopwindow-feed/ShopwindowAdmin.php').'">Import  your shopwindow data feed to display in widget!</a>', 'my-text-domain' ); ?></p>
+            <p><?php _e( '<a href="'.admin_url('admin.php?page=awin-data-feed/AwinDataFeedAdmin.php').'">Import  your affiliate window data feed to display in widget!</a>', 'my-text-domain' ); ?></p>
         </div>
     <?php
     }
