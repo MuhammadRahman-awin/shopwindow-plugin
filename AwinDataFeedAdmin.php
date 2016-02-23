@@ -181,13 +181,14 @@ if($fp->hasFeedInDb()) {
         $analytics = $db->getClickAnalytics();
         ?>
         <table class="aw-filter analytics" cellspacing="0" cellpadding="0">
-            <tr><th colspan="2"><h1> User daily click </h1></th></tr>
-            <tr><th class="text-center">Click time</th><th>Click</th></tr>
+            <tr><th colspan="3"><h1> User daily click </h1></th></tr>
+            <tr><th class="text-center">Click time</th><th>IP</th><th>Product</th></tr>
             <?php
             foreach($analytics as $row) {
                 ?>
                 <tr>
                     <td><?=$row['clickDateTime']?></td>
+                    <td><?=$row['clickIp']?></td>
                     <td class="image"> <a href="<?=$row['merchantDeepLink']?>" target="_blank"><img src="<?=$row['awImageUrl']?>"/></a></td></tr>
                 <?php
             }

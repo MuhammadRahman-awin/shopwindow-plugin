@@ -195,7 +195,7 @@ class DataFeedDBConnection
         global $wpdb;
 
         $sql = "
-            SELECT clickDateTime, df.awImageUrl, df.merchantDeepLink
+            SELECT clickDateTime, clickIp, df.awImageUrl, df.merchantDeepLink
             FROM ". $this->analyticsTable . " da
             JOIN ". $this->tableName ." df
             ON df.id = da.feed
