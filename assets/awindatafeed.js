@@ -126,6 +126,7 @@ var SW = {
 
     displayAnalytics: function() {
         jQuery( "#reportButton" ).click(function() {
+            jQuery("#reportButton").hide();
             jQuery( "#analytics" ).show('slow');
         });
     }

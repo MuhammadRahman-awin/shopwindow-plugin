@@ -151,7 +151,7 @@ if($fp->hasFeedInDb()) {
         </div>
     </div>
     <div class="display">
-        <input class="button reportButton" type="button" value="Display Report" id="reportButton"/>
+        <input class="button reportButton" type="button" value="Display Analytics" id="reportButton"/>
     </div>
 
     <section id="analytics" class="analytics" style="display: none;">
