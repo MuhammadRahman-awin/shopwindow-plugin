@@ -1,9 +1,10 @@
 <?php
 abstract class Datafeed_AbstractSubPage
 {
+	/** @var  array */
 	protected $settings_page_properties;
 
-	public function __construct( $settings_page_properties )
+	public function __construct( array $settings_page_properties )
 	{
 		$this->settings_page_properties = $settings_page_properties;
 	}
@@ -17,7 +18,6 @@ abstract class Datafeed_AbstractSubPage
 	public function add_menu_and_page()
 	{
 		add_menu_page(
-//			$this->settings_page_properties['parent_slug'],
 			$this->settings_page_properties['page_title'],
 			$this->settings_page_properties['menu_title'],
 			$this->settings_page_properties['capability'],
@@ -26,17 +26,19 @@ abstract class Datafeed_AbstractSubPage
 		);
 		add_submenu_page(
 			$this->settings_page_properties['parent_slug'],
-			'Settings',
-			'Settings',
+			$this->settings_page_properties['sub_menu_title'],
+			$this->settings_page_properties['sub_menu_title'],
 			$this->settings_page_properties['capability'],
-			$this->settings_page_properties['menu_slug']);
+			$this->settings_page_properties['menu_slug']
+		);
 		add_submenu_page(
 			$this->settings_page_properties['parent_slug'],
 			$this->settings_page_properties['help_menu_title'],
 			$this->settings_page_properties['help_menu_title'],
 			'manage_options',
 			'data-feed-guide',
-			'data_feed_guide');
+			array( $this, 'render_guide' )
+		);
 	}
 
 	public function register_settings()
