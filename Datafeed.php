@@ -27,6 +27,7 @@ function datafeed_init() {
 		'menu_title'        => 'Datafeed',
 		'sub_menu_title'    => 'Settings',
 		'help_menu_title'   => 'Datafeed Guide',
+		'help_menu_slug'    => 'data-feed-guide',
 		'capability'        => 'manage_options',
 		'menu_slug'         => 'datafeed-settings',
 		'option_group'      => 'datafeed_option_group',

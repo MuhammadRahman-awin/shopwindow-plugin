@@ -4,6 +4,9 @@ abstract class Datafeed_AbstractSubPage
 	/** @var  array */
 	protected $settings_page_properties;
 
+	/**
+	 * @param array $settings_page_properties
+	 */
 	public function __construct( array $settings_page_properties )
 	{
 		$this->settings_page_properties = $settings_page_properties;
@@ -35,8 +38,8 @@ abstract class Datafeed_AbstractSubPage
 			$this->settings_page_properties['parent_slug'],
 			$this->settings_page_properties['help_menu_title'],
 			$this->settings_page_properties['help_menu_title'],
-			'manage_options',
-			'data-feed-guide',
+			$this->settings_page_properties['capability'],
+			$this->settings_page_properties['help_menu_slug'],
 			array( $this, 'render_guide' )
 		);
 	}
@@ -54,15 +57,8 @@ abstract class Datafeed_AbstractSubPage
 		return get_option( $this->settings_page_properties['option_name'], $this->get_default_settings_data() );
 	}
 
-	public function render_settings_page()
-	{
+	public function render_settings_page() {}
 
-	}
+	public function render_guide() {}
 
-	public function get_default_settings_data()
-	{
-		$defaults = array();
-
-		return $defaults;
-	}
 }
