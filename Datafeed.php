@@ -8,6 +8,10 @@ License: GPL-2.0+
 
 use Datafeed\Plugin;
 use Datafeed\SettingsPage;
+use Datafeed\DBAdapter;
+use Datafeed\Processor;
+use Datafeed\Printer;
+use Datafeed\OptionHandler;
 
 spl_autoload_register( 'datafeed_autoloader' );
 function datafeed_autoloader( $class_name ) {
@@ -35,11 +39,26 @@ function datafeed_init() {
 		'menu_slug'         => 'datafeed-settings',
 		'option_group'      => 'datafeed_option_group',
 		'option_name'       => 'datafeed_option_name',
-		'icon'              => plugins_url( 'icon.png' , __FILE__)
+		'icon'              => plugins_url( 'icon.png' , __FILE__),
 	);
-
 	$plugin['settings_page'] = function ( $plugin ) {
-		return new SettingsPage( $plugin['settings_page_properties'] );
+		return new SettingsPage( $plugin['processor'], $plugin['settings_page_properties'] );
+	};
+
+	$plugin['option_handler'] = function ( $plugin ) {
+		return new OptionHandler(array());
+	};
+
+	$plugin['db_adapter'] = function ( $plugin ) {
+		return new DBAdapter($plugin['option_handler']);
+	};
+
+	$plugin['printer'] = function ( $plugin ) {
+		return new Printer();
+	};
+
+	$plugin['processor'] = function ( $plugin ) {
+		return new Processor($plugin['db_adapter'], $plugin['printer']);
 	};
 
 	$plugin->run();

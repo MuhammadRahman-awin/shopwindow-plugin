@@ -4,7 +4,6 @@ namespace Datafeed;
 class Plugin extends Pimple {
 	public function run()
 	{
-		var_dump($this->values);
 		foreach ( $this->values as $key => $content ) { // Loop on contents
 			$content = $this[ $key ];
 

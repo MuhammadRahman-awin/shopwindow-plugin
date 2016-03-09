@@ -6,12 +6,17 @@ abstract class AbstractSubPage
 	/** @var  array */
 	protected $settings_page_properties;
 
+	/** @var  Processor */
+	protected $processor;
+
 	/**
+	 * @param Processor $processor
 	 * @param array $settings_page_properties
 	 */
-	public function __construct( array $settings_page_properties )
+	public function __construct(Processor $processor, array $settings_page_properties )
 	{
 		$this->settings_page_properties = $settings_page_properties;
+		$this->processor = $processor;
 	}
 
 	public function run()
@@ -27,7 +32,8 @@ abstract class AbstractSubPage
 			$this->settings_page_properties['menu_title'],
 			$this->settings_page_properties['capability'],
 			$this->settings_page_properties['menu_slug'],
-			array( $this, 'render_settings_page' )
+			array( $this, 'render_settings_page' ),
+			$this->settings_page_properties['icon']
 		);
 		add_submenu_page(
 			$this->settings_page_properties['parent_slug'],

@@ -3,7 +3,7 @@ namespace Datafeed;
 
 class SettingsPage extends AbstractSubPage
 {
-public function render_settings_page()
+	public function render_settings_page()
 	{
 		$max_file_size = ini_get('upload_max_filesize');
 		?>
@@ -25,11 +25,10 @@ public function render_settings_page()
 		</section>
 
 		<?php
-		$fp = new FeedProcessor();
-		if($fp->hasFeedInDb()) {
+		if($this->processor->hasFeedInDb()) {
 			?>
 			<div class="productCount">
-				<div class="count"> You have <span class="counter"><?= $fp->getFeedCount() ?></span> products in your data store to choose from</h1> </div>
+				<div class="count"> You have <span class="counter"><?= $this->processor->getFeedCount() ?></span> products in your data store to choose from</h1> </div>
 			</div>
 			<section>
 				<div class="options">
@@ -54,15 +53,15 @@ public function render_settings_page()
 											<?php if(get_option('sw_deliveryMethod') == 'free'){ echo 'checked="checked"'; } ?>
 											type="checkbox" name="deliveryMethod" value="free" id="deliveryMethod">Free Delivery</td>
 									<td>
-										(<?= $fp->getFreeDeliveryProducts() ?>)
+										(<?= $this->processor->getFreeDeliveryProducts() ?>)
 									</td>
 								</tr>
 
 								<?php
-								if(count($fp->getProductCountByCategory()) > 1) {
+								if(count($this->processor->getProductCountByCategory()) > 1) {
 									echo '<tr><th colspan="2" class="filterType">By Category</th></tr>';
 
-									foreach($fp->getProductCountByCategory() as $category) {
+									foreach($this->processor->getProductCountByCategory() as $category) {
 										?>
 										<tr>
 											<td>
@@ -85,21 +84,21 @@ public function render_settings_page()
 									<td><input <?php if(get_option('sw_maxPriceRadio') == '10'){ echo 'checked="checked"';} ?>
 											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10">Less than £10</td>
 									<td>
-										(<?= $fp->getProductCountForPrice(10) ?>)
+										(<?= $this->processor->getProductCountForPrice(10) ?>)
 									</td>
 								</tr>
 								<tr>
 									<td><input <?php if(get_option('sw_maxPriceRadio') == '50'){ echo 'checked="checked"';} ?>
 											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50">Less than £50</td>
 									<td>
-										(<?= $fp->getProductCountForPrice(50) ?>)
+										(<?= $this->processor->getProductCountForPrice(50) ?>)
 									</td>
 								</tr>
 								<tr>
 									<td><input <?php if(get_option('sw_maxPriceRadio') == '100'){ echo 'checked="checked"';} ?>
 											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100">Less than £100</td>
 									<td>
-										(<?= $fp->getProductCountForPrice(100) ?>)
+										(<?= $this->processor->getProductCountForPrice(100) ?>)
 									</td>
 								</tr>
 								<tr><th colspan="2" class="filterType">By price range</th></tr>
