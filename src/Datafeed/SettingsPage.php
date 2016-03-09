@@ -1,6 +1,7 @@
 <?php
+namespace Datafeed;
 
-class Datafeed_SettingsPage extends Datafeed_AbstractSubPage
+class SettingsPage extends AbstractSubPage
 {
 public function render_settings_page()
 	{

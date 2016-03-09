@@ -1,5 +1,7 @@
 <?php
-abstract class Datafeed_AbstractSubPage
+namespace Datafeed;
+
+abstract class AbstractSubPage
 {
 	/** @var  array */
 	protected $settings_page_properties;
