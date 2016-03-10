@@ -1,25 +1,21 @@
 <?php
 
-require_once('WidgetPrinter.php');
+namespace Datafeed;
 
-class ShortCodeHandler
+class ShortcodeHandler
 {
-    /** @var WidgetPrinter */
-    private $printer;
+	public function run()
+	{
+		add_shortcode('AWIN_DATA_FEED', array($this, 'renderShortCode'));
+	}
 
-    public function __construct()
-    {
-        $this->printer = new WidgetPrinter();
-    }
+	public function renderShortCode($attr)
+	{
+		$layout = 'horizontalSc';
+		$attr['layout'] = $layout;
+		$layout = ucfirst($layout);
 
-    public function initShortCode($attr)
-    {
-//        var_dump($attr);
-        $layout = 'horizontalSc';
-        $attr['layout'] = $layout;
-        $layout = ucfirst($layout);
-
-        return '
+		return '
         <form name="swFeedSc" id="swFeed'.$layout.'">
             <input name="title" type="hidden" value="' .$attr['title'].'"/>
             <input name="keywords" type="hidden" value="' .$attr['keywords'].'"/>
@@ -31,5 +27,5 @@ class ShortCodeHandler
             <div class="ajaxResponse'.$layout.'" id="ajaxResponse'.$layout.'"></div>
             <div class="next'.$layout.'"><button id="next'.$layout.'" class="next" style="display:none"></button></div>
         </div>';
-    }
+	}
 }

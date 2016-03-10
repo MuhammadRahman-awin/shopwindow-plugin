@@ -37,7 +37,8 @@ function datafeed_init() {
 		'icon'              => plugins_url( 'icon.png' , __FILE__),
 	);
 	$container['settings_page'] = function ( $container ) {
-		return new Datafeed\SettingsPage(
+		return new Datafeed\SettingsMenu(
+			$container['option_handler'],
 			$container['importer'],
 			$container['upload_error_handler'],
 			$container['processor'],
@@ -53,12 +54,12 @@ function datafeed_init() {
 		return new \Datafeed\DBAdapter($container['option_handler']);
 	};
 
-	$container['printer'] = function ( $container ) {
-		return new \Datafeed\Printer();
+	$container['widget_printer'] = function ( $container ) {
+		return new \Datafeed\WidgetPrinter();
 	};
 
 	$container['processor'] = function ( $container ) {
-		return new \Datafeed\Processor($container['db_adapter'], $container['printer']);
+		return new \Datafeed\Processor($container['db_adapter'], $container['widget_printer']);
 	};
 
 	$container['upload_error_handler'] = function ( $container ) {
@@ -69,10 +70,17 @@ function datafeed_init() {
 		return new \Datafeed\Importer( $container['db_adapter']);
 	};
 
+	$container['shortcode_handler'] = function ( $container ) {
+		return new \Datafeed\ShortcodeHandler();
+	};
+
 	$container['widget'] = function ( $container ) {
 		return new \Datafeed\Widget();
 	};
 
+	$container['ajax_handler'] = function ( $container ) {
+		return new \Datafeed\AjaxHandler($container['processor'], $container['db_adapter']);
+	};
 
 	$container->run();
 }

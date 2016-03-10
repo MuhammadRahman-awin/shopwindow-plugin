@@ -2,7 +2,7 @@
 
 namespace Datafeed;
 
-class Printer
+class WidgetPrinter
 {
 	/**
 	 * @param $layout

@@ -4,8 +4,9 @@ namespace Datafeed;
 use Datafeed\Processor;
 use Datafeed\UploadErrorHandler;
 use Datafeed\Importer;
+use Datafeed\OptionHandler;
 
-abstract class AbstractSubPage
+abstract class AbstractSettings
 {
 	/** @var  array */
 	protected $settings_page_properties;
@@ -19,18 +20,24 @@ abstract class AbstractSubPage
 	/** @var  Importer */
 	protected $importer;
 
+	/** @var  OptionHandler */
+	protected $optionHandler;
+
 	/**
+	 * @param OptionHandler $optionHandler
 	 * @param Importer $importer
 	 * @param UploadErrorHandler $handler
 	 * @param Processor $processor
 	 * @param array $settings_page_properties
 	 */
 	public function __construct(
+		OptionHandler $optionHandler,
 		Importer $importer,
 		UploadErrorHandler $handler,
 		Processor $processor,
 		array $settings_page_properties
 	) {
+		$this->optionHandler = $optionHandler;
 		$this->importer = $importer;
 		$this->errorHandler = $handler;
 		$this->processor = $processor;
@@ -41,6 +48,8 @@ abstract class AbstractSubPage
 	{
 		add_action( 'admin_menu', array( $this, 'add_menu_and_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_notices', array( $this, 'datafeed_admin_notice' ) );
+		register_deactivation_hook( __FILE__, 'datafeedUninstall' );
 	}
 
 	public function add_menu_and_page()
@@ -76,6 +85,28 @@ abstract class AbstractSubPage
 			$this->settings_page_properties['option_group'],
 			$this->settings_page_properties['option_name']
 		);
+	}
+
+	public function datafeed_admin_notice() {
+		if(! $this->processor->hasFeedInDb()) {
+			?>
+			<div class="update-nag">
+				<p><?php _e( '<a href="'.admin_url('admin.php?page=datafeed-settings').'">Import  your affiliate window data feed to display in widget!</a>', 'my-text-domain' ); ?></p>
+			</div>
+			<?php
+		}
+	}
+
+	public function datafeedUninstall() {
+
+		global $wpdb;
+		$table = $wpdb->prefix."datafeed";
+		$tableAnalytics = $wpdb->prefix."datafeed_analytics";
+
+		$this->optionHandler->delete_sw_options();
+
+		$wpdb->query("DROP TABLE IF EXISTS $table");
+		$wpdb->query("DROP TABLE IF EXISTS $tableAnalytics");
 	}
 
 	public function get_settings_data()

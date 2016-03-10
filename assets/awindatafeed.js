@@ -21,7 +21,7 @@ var SW = {
                     jQuery("#nextHorizontal").html("&raquo;");
                     SW.processAnalytics();
                 },
-                error: function(errorThrown){
+                error: function(errorThrown) {
                     console.log(errorThrown);
                 }
             })

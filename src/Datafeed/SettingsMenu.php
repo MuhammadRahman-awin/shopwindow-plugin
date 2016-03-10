@@ -1,7 +1,7 @@
 <?php
 namespace Datafeed;
 
-class SettingsPage extends AbstractSubPage
+class SettingsMenu extends AbstractSettings
 {
 	public function render_settings_page()
 	{
@@ -25,8 +25,7 @@ class SettingsPage extends AbstractSubPage
 		if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
 
 			if (! empty($_POST['filterOptions'])) {
-				$optionHandler = new OptionHandler($_POST);
-				$optionHandler->updateOptions();
+				$this->optionHandler->updateOptions($_POST);
 			}
 		}
 

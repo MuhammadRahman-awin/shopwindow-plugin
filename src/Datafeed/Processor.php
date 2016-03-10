@@ -3,7 +3,7 @@
 namespace Datafeed;
 
 use Datafeed\DBAdapter;
-use Datafeed\Printer;
+use Datafeed\WidgetPrinter;
 
 class Processor
 {
@@ -28,9 +28,9 @@ class Processor
 
 	/**
 	 * @param DBAdapter $adapter
-	 * @param Printer $printer
+	 * @param WidgetPrinter $printer
 	 */
-	public function __construct(DBAdapter $adapter, Printer $printer)
+	public function __construct(DBAdapter $adapter, WidgetPrinter $printer)
 	{
 		$this->db = $adapter;
 		$this->printer = $printer;
