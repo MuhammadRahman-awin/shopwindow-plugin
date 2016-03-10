@@ -6,13 +6,7 @@ Version: 1.0.0
 License: GPL-2.0+
 */
 
-use Datafeed\Plugin;
-use Datafeed\SettingsPage;
-use Datafeed\DBAdapter;
-use Datafeed\Processor;
-use Datafeed\Printer;
-use Datafeed\OptionHandler;
-use Datafeed\UploadErrorHandler;
+use Datafeed\PluginContainer;
 
 spl_autoload_register( 'datafeed_autoloader' );
 function datafeed_autoloader( $class_name ) {
@@ -25,11 +19,11 @@ function datafeed_autoloader( $class_name ) {
 
 add_action( 'plugins_loaded', 'datafeed_init' ); // Hook initialization function
 function datafeed_init() {
-	$plugin = new Plugin(); // Create container
-	$plugin['path'] = realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR;
-	$plugin['url'] = plugin_dir_url( __FILE__ );
-	$plugin['version'] = '1.0.0';
-	$plugin['settings_page_properties'] = array(
+	$container = new PluginContainer(); // Create container
+	$container['path'] = realpath( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR;
+	$container['url'] = plugin_dir_url( __FILE__ );
+	$container['version'] = '1.0.0';
+	$container['settings_page_properties'] = array(
 		'parent_slug'       => 'datafeed-settings',
 		'page_title'        => 'Datafeed',
 		'menu_title'        => 'Datafeed',
@@ -42,31 +36,44 @@ function datafeed_init() {
 		'option_name'       => 'datafeed_option_name',
 		'icon'              => plugins_url( 'icon.png' , __FILE__),
 	);
-	$plugin['settings_page'] = function ( $plugin ) {
-		return new SettingsPage( $plugin['upload_error_handler'], $plugin['processor'], $plugin['settings_page_properties'] );
+	$container['settings_page'] = function ( $container ) {
+		return new Datafeed\SettingsPage(
+			$container['importer'],
+			$container['upload_error_handler'],
+			$container['processor'],
+			$container['settings_page_properties']
+		);
 	};
 
-	$plugin['option_handler'] = function ( $plugin ) {
-		return new OptionHandler(array());
+	$container['option_handler'] = function ( $container ) {
+		return new \Datafeed\OptionHandler(array());
 	};
 
-	$plugin['db_adapter'] = function ( $plugin ) {
-		return new DBAdapter($plugin['option_handler']);
+	$container['db_adapter'] = function ( $container ) {
+		return new \Datafeed\DBAdapter($container['option_handler']);
 	};
 
-	$plugin['printer'] = function ( $plugin ) {
-		return new Printer();
+	$container['printer'] = function ( $container ) {
+		return new \Datafeed\Printer();
 	};
 
-	$plugin['processor'] = function ( $plugin ) {
-		return new Processor($plugin['db_adapter'], $plugin['printer']);
+	$container['processor'] = function ( $container ) {
+		return new \Datafeed\Processor($container['db_adapter'], $container['printer']);
 	};
 
-	$plugin['upload_error_handler'] = function ( $plugin ) {
-		return new UploadErrorHandler(array());
+	$container['upload_error_handler'] = function ( $container ) {
+		return new \Datafeed\UploadErrorHandler(array());
+	};
+
+	$container['importer'] = function ( $container ) {
+		return new \Datafeed\Importer( $container['db_adapter']);
+	};
+
+	$container['widget'] = function ( $container ) {
+		return new \Datafeed\Widget();
 	};
 
 
-	$plugin->run();
+	$container->run();
 }
 

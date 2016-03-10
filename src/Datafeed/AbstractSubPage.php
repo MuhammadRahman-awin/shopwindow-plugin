@@ -3,6 +3,7 @@ namespace Datafeed;
 
 use Datafeed\Processor;
 use Datafeed\UploadErrorHandler;
+use Datafeed\Importer;
 
 abstract class AbstractSubPage
 {
@@ -15,13 +16,22 @@ abstract class AbstractSubPage
 	/** @var  UploadErrorHandler */
 	protected $errorHandler;
 
+	/** @var  Importer */
+	protected $importer;
+
 	/**
-	 * @param \Datafeed\UploadErrorHandler $handler
+	 * @param Importer $importer
+	 * @param UploadErrorHandler $handler
 	 * @param Processor $processor
 	 * @param array $settings_page_properties
 	 */
-	public function __construct(UploadErrorHandler $handler, Processor $processor, array $settings_page_properties )
-	{
+	public function __construct(
+		Importer $importer,
+		UploadErrorHandler $handler,
+		Processor $processor,
+		array $settings_page_properties
+	) {
+		$this->importer = $importer;
 		$this->errorHandler = $handler;
 		$this->processor = $processor;
 		$this->settings_page_properties = $settings_page_properties;

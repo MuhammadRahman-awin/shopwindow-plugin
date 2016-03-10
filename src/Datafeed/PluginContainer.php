@@ -1,7 +1,7 @@
 <?php
 namespace Datafeed;
 
-class Plugin extends Pimple {
+class PluginContainer extends Pimple {
 	public function run()
 	{
 		foreach ( $this->values as $key => $content ) { // Loop on contents

@@ -14,8 +14,8 @@ class SettingsPage extends AbstractSubPage
 				if (! $this->errorHandler->valid) {
 					echo "<h3 class='error center'>Failed! </br>". $this->errorHandler->message . "</br></h3>";
 				} else {
-					$csvImporter = new CSVImporter($_FILES["dataFeed"]["tmp_name"]);
-					$csvImporter->importToTable();
+					$this->importer->setFile($_FILES["dataFeed"]["tmp_name"]);
+					$this->importer->importToTable();
 					$count = count(file($_FILES["dataFeed"]["tmp_name"]));
 					echo "<h3 class='info center'>Success! </br>$count Row processed</br></h3>";
 				}
