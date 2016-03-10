@@ -21,7 +21,7 @@ class DBAdapter
 	/** @var  OptionHandler */
 	private $handler;
 
-	public function __construct(OptionHandler $handler)
+	public function __construct(OptionHandler $handler=null)
 	{
 		global $wpdb;
 

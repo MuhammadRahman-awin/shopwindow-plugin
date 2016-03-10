@@ -1,6 +1,9 @@
 <?php
 namespace Datafeed;
 
+use Datafeed\Processor;
+use Datafeed\UploadErrorHandler;
+
 abstract class AbstractSubPage
 {
 	/** @var  array */
@@ -9,14 +12,19 @@ abstract class AbstractSubPage
 	/** @var  Processor */
 	protected $processor;
 
+	/** @var  UploadErrorHandler */
+	protected $errorHandler;
+
 	/**
+	 * @param \Datafeed\UploadErrorHandler $handler
 	 * @param Processor $processor
 	 * @param array $settings_page_properties
 	 */
-	public function __construct(Processor $processor, array $settings_page_properties )
+	public function __construct(UploadErrorHandler $handler, Processor $processor, array $settings_page_properties )
 	{
-		$this->settings_page_properties = $settings_page_properties;
+		$this->errorHandler = $handler;
 		$this->processor = $processor;
+		$this->settings_page_properties = $settings_page_properties;
 	}
 
 	public function run()

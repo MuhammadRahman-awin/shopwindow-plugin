@@ -2,18 +2,23 @@
 require_once('FeedProcessor.php');
 require_once('DataFeedDBConnection.php');
 
+use Datafeed\Processor as FeedProcessor;
+use Datafeed\DBAdapter as DataFeedDBConnection;
+use Datafeed\Printer;
+
 add_action( 'wp_ajax_get_sw_product', 'get_sw_product' );
 add_action( 'wp_ajax_nopriv_get_sw_product', 'get_sw_product' );
 
 function get_sw_product()
 {
-//    var_dump($_REQUEST);
     $title = $_REQUEST['title'];
     $count = $_REQUEST['displayCount'];
     $layout = $_REQUEST['layout'];
     $keywords = $_REQUEST['keywords'];
 
-    $feedProcessor = new FeedProcessor();
+    $db = new DataFeedDBConnection();
+    $printer = new Printer();
+    $feedProcessor = new FeedProcessor($db, $printer);
 
     if (! empty($title)) {
         $feedProcessor->setTitle($title);

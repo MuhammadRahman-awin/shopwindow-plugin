@@ -6,6 +6,30 @@ class SettingsPage extends AbstractSubPage
 	public function render_settings_page()
 	{
 		$max_file_size = ini_get('upload_max_filesize');
+
+		if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
+
+			if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
+				$this->errorHandler->handleError($_FILES["dataFeed"]);
+				if (! $this->errorHandler->valid) {
+					echo "<h3 class='error center'>Failed! </br>". $this->errorHandler->message . "</br></h3>";
+				} else {
+					$csvImporter = new CSVImporter($_FILES["dataFeed"]["tmp_name"]);
+					$csvImporter->importToTable();
+					$count = count(file($_FILES["dataFeed"]["tmp_name"]));
+					echo "<h3 class='info center'>Success! </br>$count Row processed</br></h3>";
+				}
+			}
+		}
+
+		if ( ! empty( $_POST ) && check_admin_referer( 'sw_admin_option' ) ) {
+
+			if (! empty($_POST['filterOptions'])) {
+				$optionHandler = new OptionHandler($_POST);
+				$optionHandler->updateOptions();
+			}
+		}
+
 		?>
 
 		<section class="wrap">

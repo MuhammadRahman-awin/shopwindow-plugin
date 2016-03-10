@@ -12,6 +12,7 @@ use Datafeed\DBAdapter;
 use Datafeed\Processor;
 use Datafeed\Printer;
 use Datafeed\OptionHandler;
+use Datafeed\UploadErrorHandler;
 
 spl_autoload_register( 'datafeed_autoloader' );
 function datafeed_autoloader( $class_name ) {
@@ -42,7 +43,7 @@ function datafeed_init() {
 		'icon'              => plugins_url( 'icon.png' , __FILE__),
 	);
 	$plugin['settings_page'] = function ( $plugin ) {
-		return new SettingsPage( $plugin['processor'], $plugin['settings_page_properties'] );
+		return new SettingsPage( $plugin['upload_error_handler'], $plugin['processor'], $plugin['settings_page_properties'] );
 	};
 
 	$plugin['option_handler'] = function ( $plugin ) {
@@ -60,6 +61,11 @@ function datafeed_init() {
 	$plugin['processor'] = function ( $plugin ) {
 		return new Processor($plugin['db_adapter'], $plugin['printer']);
 	};
+
+	$plugin['upload_error_handler'] = function ( $plugin ) {
+		return new UploadErrorHandler(array());
+	};
+
 
 	$plugin->run();
 }
