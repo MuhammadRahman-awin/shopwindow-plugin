@@ -9,6 +9,11 @@ class ShortcodeHandler
 		add_shortcode('AWIN_DATA_FEED', array($this, 'renderShortCode'));
 	}
 
+	/**
+	 * @param array $attr
+	 *
+	 * @return string
+	 */
 	public function renderShortCode($attr)
 	{
 		$layout = 'horizontalSc';

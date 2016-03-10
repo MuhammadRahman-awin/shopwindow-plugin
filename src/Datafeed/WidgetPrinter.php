@@ -148,7 +148,7 @@ class WidgetPrinter
 	}
 
 	/**
-	 * @param Let$name
+	 * @param string $name
 	 * @return string
 	 */
 	private function getCurrencySymbol($name)

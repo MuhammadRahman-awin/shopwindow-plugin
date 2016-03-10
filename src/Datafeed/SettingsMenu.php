@@ -11,8 +11,8 @@ class SettingsMenu extends AbstractSettings
 
 			if (isset($_POST['submit']) && ! empty($_FILES["dataFeed"])) {
 				$this->errorHandler->handleError($_FILES["dataFeed"]);
-				if (! $this->errorHandler->valid) {
-					echo "<h3 class='error center'>Failed! </br>". $this->errorHandler->message . "</br></h3>";
+				if (! $this->errorHandler->isValid()) {
+					echo "<h3 class='error center'>Failed! </br>". $this->errorHandler->getMessage() . "</br></h3>";
 				} else {
 					$this->importer->setFile($_FILES["dataFeed"]["tmp_name"]);
 					$this->importer->importToTable();

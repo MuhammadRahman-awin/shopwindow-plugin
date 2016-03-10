@@ -21,6 +21,9 @@ class DBAdapter
 	/** @var  OptionHandler */
 	private $handler;
 
+	/**
+	 * @param OptionHandler|null $handler
+	 */
 	public function __construct(OptionHandler $handler=null)
 	{
 		global $wpdb;
@@ -79,7 +82,7 @@ class DBAdapter
 	}
 
 	/**
-	 * @param int $limit
+	 * @param integer $limit
 	 * @param null $keywords
 	 *
 	 * @return array
@@ -94,14 +97,13 @@ class DBAdapter
 		       " WHERE description !=''";
 		$sql .= $extraWhere;
 		$sql .= " ORDER BY RAND() LIMIT " . $limit;
-//        error_log(print_r($sql, 1));
 		$result = $wpdb->get_results($sql, ARRAY_A);
 
 		return $result;
 	}
 
 	/**
-	 * @return mixed
+	 * @return integer
 	 */
 	public function countFeedInDb()
 	{
@@ -114,7 +116,7 @@ class DBAdapter
 	}
 
 	/**
-	 * @return mixed
+	 * @return integer
 	 */
 	public function getProductCountByFreeDeliveryCost()
 	{
@@ -133,6 +135,9 @@ class DBAdapter
 		return $result;
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getProductCountByCategory()
 	{
 		global $wpdb;
@@ -152,7 +157,7 @@ class DBAdapter
 	/**
 	 * @param integer $price
 	 *
-	 * @return mixed
+	 * @return integer
 	 */
 	public function getProductCountByPrice($price)
 	{
@@ -188,6 +193,9 @@ class DBAdapter
 		$wpdb->query($insertOrUpdate);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getIPAnalytics()
 	{
 		global $wpdb;
@@ -198,6 +206,9 @@ class DBAdapter
 		return $result;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getClickAnalytics()
 	{
 		global $wpdb;
@@ -214,6 +225,9 @@ class DBAdapter
 		return $result;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getPopularAnalytics()
 	{
 		global $wpdb;

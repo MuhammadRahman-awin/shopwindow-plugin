@@ -32,7 +32,6 @@ class Importer
 		}
 	}
 
-
 	public function importToTable()
 	{
 		$this->adapter->truncateTable();

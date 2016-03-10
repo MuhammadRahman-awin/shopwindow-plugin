@@ -4,14 +4,35 @@ namespace Datafeed;
 
 class UploadErrorHandler
 {
-	public $message;
+	/** @var  string */
+	private $message;
 
-	public $valid = true;
+	/** @var bool */
+	private $valid = true;
 
+	/**
+	 * @param array $fileData
+	 */
 	public function handleError(array $fileData)
 	{
 		$this->getFileErrorMessage($fileData);
 		$this->getFileErrorCodeToMessage($fileData['error']);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function isValid()
+	{
+		return $this->valid;
 	}
 
 	/**

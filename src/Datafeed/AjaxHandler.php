@@ -13,7 +13,10 @@ class AjaxHandler
 	/** @var DBAdapter */
 	private $adapter;
 
-
+	/**
+	 * @param \Datafeed\Processor $processor
+	 * @param \Datafeed\DBAdapter $adapter
+	 */
 	public function __construct(Processor $processor, DBAdapter $adapter)
 	{
 		$this->processor = $processor;
@@ -59,7 +62,7 @@ class AjaxHandler
 
 		$this->adapter->saveAnalytics($row);
 
-		wp_die(); // this is required to terminate immediately and return a proper response
+		wp_die();
 	}
 
 	private function getUserIp()
