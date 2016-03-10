@@ -49,7 +49,7 @@ abstract class AbstractSettings
 		add_action( 'admin_menu', array( $this, 'add_menu_and_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_notices', array( $this, 'datafeed_admin_notice' ) );
-		register_deactivation_hook( __FILE__, 'datafeedUninstall' );
+
 	}
 
 	public function add_menu_and_page()
@@ -95,18 +95,6 @@ abstract class AbstractSettings
 			</div>
 			<?php
 		}
-	}
-
-	public function datafeedUninstall() {
-
-		global $wpdb;
-		$table = $wpdb->prefix."datafeed";
-		$tableAnalytics = $wpdb->prefix."datafeed_analytics";
-
-		$this->optionHandler->delete_sw_options();
-
-		$wpdb->query("DROP TABLE IF EXISTS $table");
-		$wpdb->query("DROP TABLE IF EXISTS $tableAnalytics");
 	}
 
 	public function get_settings_data()

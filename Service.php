@@ -1,9 +1,11 @@
 <?php
 /*
-Plugin Name: Datafeed
-Description: A plugin with DI
-Version: 1.0.0
-License: GPL-2.0+
+Plugin Name: Awin Data Feed
+Version: 1.0
+Plugin URI: https://wordpress.org/plugins/awin-data-feed
+Description: Sell your affiliate product from affiliate window product data feed
+Author: digitalwindow
+Author URI: http://mmrs151.wordpress.com/
 */
 
 use Datafeed\PluginContainer;
@@ -85,3 +87,22 @@ function datafeed_init() {
 	$container->run();
 }
 
+/**
+ * wordpress requires it to be in the main plugin file
+ */
+register_deactivation_hook( __FILE__, 'datafeedUninstall' );
+function datafeedUninstall()
+{
+	global $wpdb;
+	$table = $wpdb->prefix."datafeed";
+	$tableAnalytics = $wpdb->prefix."datafeed_analytics";
+
+	delete_option('sw_deliveryMethod');
+	delete_option('sw_categories');
+	delete_option('sw_maxPriceRadio');
+	delete_option('sw_minPrice');
+	delete_option('sw_maxPrice');
+
+	$wpdb->query("DROP TABLE IF EXISTS $table");
+	$wpdb->query("DROP TABLE IF EXISTS $tableAnalytics");
+}
