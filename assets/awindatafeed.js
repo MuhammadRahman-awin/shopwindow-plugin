@@ -1,12 +1,12 @@
-var SW = {
+var AWDATAFEED = {
     init: function () {
         this.loadVerticalFeed();
         this.loadHorizontalFeed();
         this.loadHorizontalFeedShortCode();
         this.togglePrceRangeInout();
-        this.displayReport();
         this.resetForm();
         this.displayAnalytics();
+        this.processAnalytics();
     },
 
     loadHorizontalFeed: function(){
@@ -18,8 +18,8 @@ var SW = {
                 success: function(response){
                     jQuery('#ajaxResponseHorizontal').html(response);
                     jQuery("#nextHorizontal").show();
-                    jQuery("#nextHorizontal").html("&raquo;");
-                    SW.processAnalytics();
+                    jQuery("#nextHorizontal").html("&raquo;"); // »
+                    AWDATAFEED.processAnalytics();
                 },
                 error: function(errorThrown) {
                     console.log(errorThrown);
@@ -40,7 +40,7 @@ var SW = {
                     jQuery('#ajaxResponseVertical').html(response);
                     jQuery("#nextVertical").show();
                     jQuery("#nextVertical").html('Next &raquo;')
-                    SW.processAnalytics();
+                    AWDATAFEED.processAnalytics();
                 },
                 error: function(errorThrown){
                     console.log(errorThrown);
@@ -53,7 +53,6 @@ var SW = {
 
     loadHorizontalFeedShortCode: function() {
         jQuery("#nextHorizontalSc").on('click', function () {
-            console.log('foox');
 
             jQuery.ajax({
                 url: awindatafeed_params.ajaxurl,
@@ -63,7 +62,7 @@ var SW = {
                     jQuery('#ajaxResponseHorizontalSc').html(response);
                     jQuery("#nextHorizontalSc").show();
                     jQuery("#nextHorizontalSc").html("&raquo;");
-                    SW.processAnalytics();
+                    AWDATAFEED.processAnalytics();
                 },
                 error: function(errorThrown){
                     console.log(errorThrown);
@@ -109,12 +108,6 @@ var SW = {
         }
     },
 
-    displayReport: function() {
-        jQuery("#reportButton").on('click', function () {
-            jQuery('section.analytics').show();
-        });
-    },
-
     resetForm: function() {
         jQuery("#resetFilters").on('click', function () {
             var form = jQuery('form#swFilters');
@@ -126,10 +119,9 @@ var SW = {
 
     displayAnalytics: function() {
         jQuery( "#reportButton" ).click(function() {
-            jQuery("#reportButton").hide();
-            jQuery( "#analytics" ).show('slow');
+            jQuery( "#analytics" ).toggle('slow');
         });
     }
 };
 
-jQuery(document).ready(function() { SW.init(); });
+jQuery(document).ready(function() { AWDATAFEED.init(); });

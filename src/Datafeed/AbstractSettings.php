@@ -5,6 +5,7 @@ use Datafeed\Processor;
 use Datafeed\UploadErrorHandler;
 use Datafeed\Importer;
 use Datafeed\OptionHandler;
+use Datafeed\DBAdapter;
 
 abstract class AbstractSettings
 {
@@ -23,7 +24,12 @@ abstract class AbstractSettings
 	/** @var  OptionHandler */
 	protected $optionHandler;
 
+	/** * @var DBAdapter */
+	protected $adapter;
+
+
 	/**
+	 * @param \Datafeed\DBAdapter $adapter
 	 * @param OptionHandler $optionHandler
 	 * @param Importer $importer
 	 * @param UploadErrorHandler $handler
@@ -31,12 +37,14 @@ abstract class AbstractSettings
 	 * @param array $settings_page_properties
 	 */
 	public function __construct(
+		DBAdapter $adapter,
 		OptionHandler $optionHandler,
 		Importer $importer,
 		UploadErrorHandler $handler,
 		Processor $processor,
 		array $settings_page_properties
 	) {
+		$this->adapter = $adapter;
 		$this->optionHandler = $optionHandler;
 		$this->importer = $importer;
 		$this->errorHandler = $handler;

@@ -40,6 +40,7 @@ function datafeed_init() {
 	);
 	$container['settings_page'] = function ( $container ) {
 		return new Datafeed\SettingsMenu(
+			$container['db_adapter'],
 			$container['option_handler'],
 			$container['importer'],
 			$container['upload_error_handler'],
@@ -49,7 +50,7 @@ function datafeed_init() {
 	};
 
 	$container['option_handler'] = function ( $container ) {
-		return new \Datafeed\OptionHandler(array());
+		return new \Datafeed\OptionHandler();
 	};
 
 	$container['db_adapter'] = function ( $container ) {

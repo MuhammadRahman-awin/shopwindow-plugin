@@ -150,8 +150,7 @@ class SettingsMenu extends AbstractSettings
 
 					<div class="analyticsPopular">
 						<?php
-						$db = new DataFeedDBConnection();
-						$analytics = $db->getPopularAnalytics();
+						$analytics = $this->adapter->getPopularAnalytics();
 						?>
 						<table class="aw-filter analytics"  cellspacing="0" cellpadding="0">
 							<tr><th colspan="2"><h1> Popular Products </h1></th></tr>
@@ -169,8 +168,7 @@ class SettingsMenu extends AbstractSettings
 					</div>
 					<div class="analyticsDaily">
 						<?php
-						$db = new DataFeedDBConnection();
-						$analytics = $db->getClickAnalytics();
+						$analytics = $this->adapter->getClickAnalytics();
 						?>
 						<table class="aw-filter analytics" cellspacing="0" cellpadding="0">
 							<tr><th colspan="3"><h1> User daily click </h1></th></tr>

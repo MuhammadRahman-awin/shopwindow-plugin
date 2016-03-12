@@ -24,7 +24,7 @@ class DBAdapter
 	/**
 	 * @param OptionHandler|null $handler
 	 */
-	public function __construct(OptionHandler $handler=null)
+	public function __construct(OptionHandler $handler)
 	{
 		global $wpdb;
 
@@ -207,7 +207,7 @@ class DBAdapter
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
 	public function getClickAnalytics()
 	{
@@ -226,7 +226,7 @@ class DBAdapter
 	}
 
 	/**
-	 * @return string
+	 * @return array
 	 */
 	public function getPopularAnalytics()
 	{

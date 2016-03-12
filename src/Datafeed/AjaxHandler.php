@@ -25,8 +25,13 @@ class AjaxHandler
 
 	public function run()
 	{
+		/** get_sw_product */
 		add_action( 'wp_ajax_get_sw_product', array( $this, 'get_sw_product' ) );
 		add_action( 'wp_ajax_nopriv_get_sw_product', array( $this, 'get_sw_product' ) );
+
+		/** track_user_click */
+		add_action( 'wp_ajax_track_user_click', array( $this, 'track_user_click') );
+		add_action( 'wp_ajax_nopriv_track_user_click', array( $this, 'track_user_click') );
 	}
 
 	public function get_sw_product()
@@ -47,6 +52,7 @@ class AjaxHandler
 		if (! empty($keywords)) {
 			$this->processor->setKeywords($keywords);
 		}
+
 		echo $this->processor->displayWidget();
 
 		wp_die(); // this is required to terminate immediately and return a proper response
@@ -55,17 +61,16 @@ class AjaxHandler
 	public function track_user_click()
 	{
 		$row = array(
+			'feedId'    => $_REQUEST['feedId'],
 			'clickIp' => $this->getUserIp(),
-			'clickDateTime' => current_time( 'mysql' ),
-			'feedId'    => $_REQUEST['feedId']
+			'clickDateTime' => current_time( 'mysql' )
 		);
 
 		$this->adapter->saveAnalytics($row);
 
-		wp_die();
 	}
 
-	private function getUserIp()
+	public function getUserIp()
 	{
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
