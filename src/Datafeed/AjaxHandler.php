@@ -54,7 +54,6 @@ class AjaxHandler
 		}
 
 		echo $this->processor->displayWidget();
-
 		wp_die(); // this is required to terminate immediately and return a proper response
 	}
 
@@ -67,7 +66,7 @@ class AjaxHandler
 		);
 
 		$this->adapter->saveAnalytics($row);
-
+		wp_die();
 	}
 
 	public function getUserIp()

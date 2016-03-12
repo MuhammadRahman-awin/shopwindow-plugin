@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) OR exit;
 /*
 Plugin Name: Awin Data Feed
 Version: 1.0
@@ -36,7 +37,7 @@ function datafeed_init() {
 		'menu_slug'         => 'datafeed-settings',
 		'option_group'      => 'datafeed_option_group',
 		'option_name'       => 'datafeed_option_name',
-		'icon'              => plugins_url( 'icon.png' , __FILE__),
+		'icon'              => plugins_url( 'assets/icon.png' , __FILE__),
 	);
 	$container['settings_page'] = function ( $container ) {
 		return new Datafeed\SettingsMenu(
@@ -86,24 +87,4 @@ function datafeed_init() {
 	};
 
 	$container->run();
-}
-
-/**
- * wordpress requires it to be in the main plugin file
- */
-register_deactivation_hook( __FILE__, 'datafeedUninstall' );
-function datafeedUninstall()
-{
-	global $wpdb;
-	$table = $wpdb->prefix."datafeed";
-	$tableAnalytics = $wpdb->prefix."datafeed_analytics";
-
-	delete_option('sw_deliveryMethod');
-	delete_option('sw_categories');
-	delete_option('sw_maxPriceRadio');
-	delete_option('sw_minPrice');
-	delete_option('sw_maxPrice');
-
-	$wpdb->query("DROP TABLE IF EXISTS $table");
-	$wpdb->query("DROP TABLE IF EXISTS $tableAnalytics");
 }
