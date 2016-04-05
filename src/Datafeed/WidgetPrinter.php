@@ -50,7 +50,7 @@ class WidgetPrinter
 		foreach($data as $product) {
 			$productList .= '
                 <td class="name">
-                    '. $product['productName'].'
+                    '. $this->wrapWords($product['productName']).'
                 </td>
             ';
 		}
@@ -87,7 +87,7 @@ class WidgetPrinter
                             </a>
                         </td>
                         <td class="productName">
-                            '. $product['productName'] .'
+                            '. $this->wrapWords($product['productName']) .'
                         </td>
                     </tr>
                     <tr>
@@ -129,7 +129,7 @@ class WidgetPrinter
 		foreach($data as $product) {
 			$productList .= '
                 <td class="name">
-                    '. $product['productName'].'
+                    '. $this->wrapWords($product['productName']).'
                 </td>
             ';
 		}
@@ -158,5 +158,17 @@ class WidgetPrinter
 		} elseif(strtoupper($name) === 'USD') {
 			return "$";
 		}
+	}
+
+	private function wrapWords($text, $count=7)
+	{
+		$exploded = explode(' ', $text);
+		if (count($exploded) <= $count) {
+			return $text;
+		}
+		$slice = array_slice($exploded, 0, $count);
+		$imploded = implode(' ', $slice);
+
+		return $imploded;
 	}
 }
