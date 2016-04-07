@@ -8,7 +8,7 @@ class Widget extends \WP_Widget
 	{
 		$widget_details = array(
 			'className' => 'Widget',
-			'description' => 'Sell your affiliate product from Affiliate Window product data feed'
+			'description' => __('Sell your affiliate product from Affiliate Window product data feed', 'awin-data-feed')
 		);
 
 		$this->add_stylesheet();
@@ -25,6 +25,8 @@ class Widget extends \WP_Widget
 	public function init_datafeed_widget()
 	{
 		register_widget('Datafeed\Widget');
+		$plugin_dir = plugin_dir_path(plugin_basename(__FILE__));
+		load_plugin_textdomain( 'awin-data-feed', null, $plugin_dir . '/../languages' );
 	}
 
 	public function form($instance)
@@ -33,7 +35,7 @@ class Widget extends \WP_Widget
 		<div xmlns="http://www.w3.org/1999/html">
         <span>
             <table border="0">
-	            <tr><td>Title</td>
+	            <tr><td><?php _e('Title', 'awin-data-feed'); ?></td>
 		            <td>
 			            <input
 				            name="<?php echo $this->get_field_name( 'title' ); ?>"
@@ -42,7 +44,7 @@ class Widget extends \WP_Widget
 				            />
 		            </td>
 	            </tr>
-	            <tr><td>Keywords</td>
+	            <tr><td><?php _e('Keywords', 'awin-data-feed'); ?></td>
 		            <td>
 			            <input
 				            name="<?php echo $this->get_field_name( 'keywords' ); ?>"
@@ -51,7 +53,7 @@ class Widget extends \WP_Widget
 				            />
 		            </td>
 	            </tr>
-	            <tr><td>Number of product to display</td>
+	            <tr><td><?php _e('Number of product to display', 'awin-data-feed'); ?></td>
 		            <td>
 			            <input
 				            name="<?php echo $this->get_field_name( 'displayCount' ); ?>"
@@ -60,7 +62,7 @@ class Widget extends \WP_Widget
 				            />
 		            </td>
 	            </tr>
-	            <tr><td>Display product horizontally</td>
+	            <tr><td><?php _e('Display product horizontally', 'awin-data-feed'); ?></td>
 		            <td>
 			            <input
 				            type="checkbox"

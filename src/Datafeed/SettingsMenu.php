@@ -32,16 +32,16 @@ class SettingsMenu extends AbstractSettings
 		?>
 
 		<section class="wrap">
-			<h2>Import your shopwindow data feed to display in widget</h2>
-			<h3 class="info">Maximum file size must be smaller than: <?php echo $max_file_size ?>B </h3>
-			<p>[Update 'upload_max_filesize' directive in php.ini for larger import]</p>
+			<h2><?php _e('Import your shopwindow data feed to display in widget', 'awin-data-feed')?></h2>
+			<h3 class="info"><?php printf( __('Maximum file size must be smaller than: %sB', 'awin-data-feed'),  $max_file_size); ?> </h3>
+			<p>[<?php _e('Update \'upload_max_filesize\' directive in php.ini for larger import', 'awin-data-feed')?>]</p>
 
 			<form enctype="multipart/form-data" name="csvUpload" method="post" action="">
 				<?php echo wp_nonce_field( 'sw_admin_option'); ?>
 				<h3>
             <span>
                 <input type="file" name="dataFeed" id="dataFeed">
-                <input type="submit" name="submit" id="submit" class="button button-primary" value="Import Data Feed">
+                <input type="submit" name="submit" id="submit" class="button button-primary" value="<?php echo __('Import Data Feed', 'awin-data-feed')?>">
             </span>
 				</h3>
 			</form>
@@ -51,7 +51,9 @@ class SettingsMenu extends AbstractSettings
 		if($this->processor->hasFeedInDb()) {
 			?>
 			<div class="productCount">
-				<div class="count"> You have <span class="counter"><?= $this->processor->getFeedCount() ?></span> products in your data store to choose from</h1> </div>
+				<div class="count"> <?php printf(
+						__('You have <span class="counter">%s</span> products in your data store to choose from', 'awin-data-feed'), $this->processor->getFeedCount()
+					); ?></h1> </div>
 			</div>
 			<section>
 				<div class="options">
@@ -61,29 +63,29 @@ class SettingsMenu extends AbstractSettings
 							<table class="aw-filter" cellspacing="0" cellpadding="0">
 								<tr>
 									<th colspan="2" class="title">
-										<h2>Filter products*</h2>
+										<h2><?php _e('Filter products*', 'awin-data-feed');?></h2>
 									</th>
 								</tr>
 								<tr>
 									<td colspan="2">
-										(DEFAULT) Randomly display product in random order.
+										<?php _e('(DEFAULT) Randomly display product in random order.', 'awin-data-feed'); ?>
 									</td>
 								</tr>
 								<tr>
-									<th colspan="2" class="filterType">By Delivery Type</th></tr>
+									<th colspan="2" class="filterType"><?php _e('By Delivery Type', 'awin-data-feed'); ?></th></tr>
 								<tr>
 									<td><input
 											<?php if(get_option('sw_deliveryMethod') == 'free'){ echo 'checked="checked"'; } ?>
-											type="checkbox" name="deliveryMethod" value="free" id="deliveryMethod">Free Delivery</td>
+											type="checkbox" name="deliveryMethod" value="free" id="deliveryMethod"><?php _e('Free Delivery', 'awin-data-feed'); ?></td>
 									<td>
 										(<?= $this->processor->getFreeDeliveryProducts() ?>)
 									</td>
 								</tr>
 
 								<?php
-								if(count($this->processor->getProductCountByCategory()) > 1) {
-									echo '<tr><th colspan="2" class="filterType">By Category</th></tr>';
-
+								if(count($this->processor->getProductCountByCategory()) > 1) {?>
+									<tr><th colspan="2" class="filterType"><?php _e('By Category', 'awin-data-feed'); ?></th></tr>
+								<?php
 									foreach($this->processor->getProductCountByCategory() as $category) {
 										?>
 										<tr>
@@ -102,40 +104,40 @@ class SettingsMenu extends AbstractSettings
 									}
 								}
 								?>
-								<tr><th colspan="2" class="filterType">By price</th></tr>
+								<tr><th colspan="2" class="filterType"><?php _e('By price', 'awin-data-feed'); ?></th></tr>
 								<tr>
 									<td><input <?php if(get_option('sw_maxPriceRadio') == '10'){ echo 'checked="checked"';} ?>
-											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10">Less than £10</td>
+											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="10"><?php _e('Less than 10', 'awin-data-feed');?></td>
 									<td>
 										(<?= $this->processor->getProductCountForPrice(10) ?>)
 									</td>
 								</tr>
 								<tr>
 									<td><input <?php if(get_option('sw_maxPriceRadio') == '50'){ echo 'checked="checked"';} ?>
-											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50">Less than £50</td>
+											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="50"><?php _e('Less than 50', 'awin-data-feed'); ?></td>
 									<td>
 										(<?= $this->processor->getProductCountForPrice(50) ?>)
 									</td>
 								</tr>
 								<tr>
 									<td><input <?php if(get_option('sw_maxPriceRadio') == '100'){ echo 'checked="checked"';} ?>
-											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100">Less than £100</td>
+											class="maxPriceRadio" type="radio" name="maxPriceRadio" value="100"><?php _e('Less than 100', 'awin-data-feed'); ?></td>
 									<td>
 										(<?= $this->processor->getProductCountForPrice(100) ?>)
 									</td>
 								</tr>
-								<tr><th colspan="2" class="filterType">By price range</th></tr>
+								<tr><th colspan="2" class="filterType"><?php _e('By price range', 'awin-data-feed');?></th></tr>
 								<tr>
 									<td><input <?php if(get_option('sw_maxPriceRadio') == 'range'){ echo 'checked="checked"';} ?>
 											type="radio" name="maxPriceRadio" value="range" id="maxPriceRange">
-										<input value="<?= get_option('sw_minPrice') ?>" class="range" size="3" maxlength="3" type="number" name="minPrice" placeholder="min" readonly></td>
-									<td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="number" name="maxPrice" placeholder="max" readonly></td>
+										<input value="<?= get_option('sw_minPrice') ?>" class="range" size="3" maxlength="3" type="number" name="minPrice" placeholder="<?php _e('min', 'awin-data-feed');?>" readonly></td>
+									<td><input value="<?= get_option('sw_maxPrice') ?>" class="range" size="3" maxlength="3" type="number" name="maxPrice" placeholder="<?php _e('max', 'awin-data-feed');?>" readonly></td>
 								</tr>
-								<tr><td colspan="2"><i>*Product without valid image will not be displayed</i></td> </tr>
+								<tr><td colspan="2"><i>*<?php _e('Product without valid image will not be displayed', 'awin-data-feed'); ?></i></td> </tr>
 								<tr>
 									<td colspan="2" class="buttons">
-										<input type="submit" name="filterOptions" id="filterOptions" class="button button-primary" value="Save changes">
-										<input type="button" name="resetFilters" id="resetFilters" class="button" value="Reset filters">
+										<input type="submit" name="filterOptions" id="filterOptions" class="button button-primary" value="<?php _e('Save changes', 'awin-data-feed');?>">
+										<input type="button" name="resetFilters" id="resetFilters" class="button" value="<?php _e('Reset filters', 'awin-data-feed');?>">
 									</td>
 								</tr>
 							</table>
@@ -143,7 +145,7 @@ class SettingsMenu extends AbstractSettings
 					</div>
 				</div>
 				<div class="display">
-					<input class="button reportButton" type="button" value="Display Analytics" id="reportButton"/>
+					<input class="button reportButton" type="button" value="<?php _e('Display Analytics', 'awin-data-feed') ?>" id="reportButton"/>
 				</div>
 
 				<section id="analytics" class="analytics" style="display: none;">
@@ -153,8 +155,8 @@ class SettingsMenu extends AbstractSettings
 						$analytics = $this->adapter->getPopularAnalytics();
 						?>
 						<table class="aw-filter analytics"  cellspacing="0" cellpadding="0">
-							<tr><th colspan="2"><h1> Popular Products </h1></th></tr>
-							<tr><th>Product</th><th>Click</th></tr>
+							<tr><th colspan="2"><h1> <?php _e('Popular Products', 'awin-data-feed'); ?> </h1></th></tr>
+							<tr><th><?php _e('Product', 'awin-data-feed'); ?></th><th><?php _e('Click', 'awin-data-feed'); ?></th></tr>
 							<?php
 							foreach($analytics as $row) {
 								?>
@@ -171,8 +173,10 @@ class SettingsMenu extends AbstractSettings
 						$analytics = $this->adapter->getClickAnalytics();
 						?>
 						<table class="aw-filter analytics" cellspacing="0" cellpadding="0">
-							<tr><th colspan="3"><h1> User daily click </h1></th></tr>
-							<tr><th class="text-center">Click time</th><th>IP</th><th>Product</th></tr>
+							<tr><th colspan="3"><h1><?php _e('User daily click', 'awin-data-feed'); ?>  </h1></th></tr>
+							<tr><th class="text-center"><?php _e('Click Time', 'awin-data-feed'); ?></th>
+								<th><?php _e('IP', 'awin-data-feed'); ?></th>
+								<th><?php _e('Product', 'awin-data-feed'); ?></th></tr>
 							<?php
 							foreach($analytics as $row) {
 								?>
@@ -195,25 +199,26 @@ class SettingsMenu extends AbstractSettings
 	{?>
 
 		<div class="wrap">
-			<h3 class="info"> Please refer to
+			<h3 class="info"> <?php _e('Please refer to', 'awin-data-feed') ?>
 				<a href="http://wiki.affiliatewindow.com/index.php/Downloading_A_Feed" target="_blank">
 					http://wiki.affiliatewindow.com/index.php/Downloading_A_Feed
 				</a>
 			</h3>
-			<h1>Shortcodes</h1>
+			<h1><?php _e('Shortcodes', 'awin-data-feed'); ?></h1>
 			<ol>
-				<li>[AWIN_DATA_FEED] - Default shortcode</li>
+				<li>[AWIN_DATA_FEED] - <?php _e('Default shortcode', 'awin-data-feed'); ?></li>
 			</ol>
-			<h2>Shortcode Options</h2>
+			<h2><?php _e('Shortcode Options', 'awin-data-feed'); ?></h2>
 			<ol>
-				<li>title='any title in quote'</li>
-				<li>no_of_product=any number</li>
-				<li>keywords='comma separated value in quote'</li>
+				<li>title='<?php _e('any title in quote', 'awin-data-feed'); ?>'</li>
+				<li>no_of_product=<?php _e('any number', 'awin-data-feed'); ?></li>
+				<li>keywords='<?php _e('comma separated word in quote', 'awin-data-feed'); ?>'</li>
 			</ol>
-			<h2>Shortcode Examples</h2>
+			<h2><?php _e('Shortcode Examples', 'awin-data-feed'); ?></h2>
 			<ol>
-				<li>[AWIN_DATA_FEED title='hello world' no_of_product=2]</li>
-				<li>[AWIN_DATA_FEED no_of_product=3 title='Iron Man vs Captain America' keywords='Iron Man, Captain America' ]</li>
+				<li>[AWIN_DATA_FEED title='<?php _e('hello world', 'awin-data-feed'); ?>' no_of_product=2]</li>
+				<li>[AWIN_DATA_FEED no_of_product=3 title='<?php _e('Iron Man vs Captain America', 'awin-data-feed'); ?>'
+						keywords='<?php _e('Iron Man, Captain America', 'awin-data-feed'); ?>' ]</li>
 			</ol>
 		</div>
 

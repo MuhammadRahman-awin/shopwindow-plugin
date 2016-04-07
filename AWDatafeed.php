@@ -7,6 +7,8 @@ Plugin URI: https://wordpress.org/plugins/awin-data-feed
 Description: Sell your affiliate product from affiliate window product data feed
 Author: digitalwindow
 Author URI: http://mmrs151.wordpress.com/
+Text Domain: awin-data-feed
+Domain Path: /languages
 */
 
 use Datafeed\PluginContainer;
@@ -28,10 +30,10 @@ function datafeed_init() {
 	$container['version'] = '1.0.0';
 	$container['settings_page_properties'] = array(
 		'parent_slug'       => 'datafeed-settings',
-		'page_title'        => 'Datafeed',
-		'menu_title'        => 'Datafeed',
-		'sub_menu_title'    => 'Settings',
-		'help_menu_title'   => 'Datafeed Guide',
+		'page_title'        => __('Datafeed', 'awin-data-feed'),
+		'menu_title'        => __('Datafeed', 'awin-data-feed'),
+		'sub_menu_title'    => __('Settings', 'awin-data-feed'),
+		'help_menu_title'   => __('Datafeed Guide', 'awin-data-feed'),
 		'help_menu_slug'    => 'data-feed-guide',
 		'capability'        => 'manage_options',
 		'menu_slug'         => 'datafeed-settings',

@@ -63,8 +63,8 @@ abstract class AbstractSettings
 	public function add_menu_and_page()
 	{
 		add_menu_page(
-			$this->settings_page_properties['page_title'],
-			$this->settings_page_properties['menu_title'],
+			__($this->settings_page_properties['page_title'], 'awin-data-feed'),
+			__($this->settings_page_properties['menu_title'], 'awin-data-feed'),
 			$this->settings_page_properties['capability'],
 			$this->settings_page_properties['menu_slug'],
 			array( $this, 'render_settings_page' ),
@@ -72,15 +72,15 @@ abstract class AbstractSettings
 		);
 		add_submenu_page(
 			$this->settings_page_properties['parent_slug'],
-			$this->settings_page_properties['sub_menu_title'],
-			$this->settings_page_properties['sub_menu_title'],
+			__($this->settings_page_properties['sub_menu_title'], 'awin-data-feed'),
+			__($this->settings_page_properties['sub_menu_title'], 'awin-data-feed'),
 			$this->settings_page_properties['capability'],
 			$this->settings_page_properties['menu_slug']
 		);
 		add_submenu_page(
 			$this->settings_page_properties['parent_slug'],
-			$this->settings_page_properties['help_menu_title'],
-			$this->settings_page_properties['help_menu_title'],
+			__($this->settings_page_properties['help_menu_title'], 'awin-data-feed'),
+			__($this->settings_page_properties['help_menu_title'], 'awin-data-feed'),
 			$this->settings_page_properties['capability'],
 			$this->settings_page_properties['help_menu_slug'],
 			array( $this, 'render_guide' )
@@ -99,7 +99,7 @@ abstract class AbstractSettings
 		if(! $this->processor->hasFeedInDb()) {
 			?>
 			<div class="update-nag">
-				<p><?php _e( '<a href="'.admin_url('admin.php?page=datafeed-settings').'">Import  your affiliate window data feed to display in widget!</a>', 'my-text-domain' ); ?></p>
+				<p><a href="<?php admin_url('admin.php?page=datafeed-settings')?>"><?php _e( 'Import  your affiliate window data feed to display in widget!', 'awin-data-feed')?></p>
 			</div>
 			<?php
 		}
